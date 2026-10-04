@@ -109,10 +109,10 @@
                 <p class="text-gray-300 text-sm mt-1">Elige tus productos y envíalos directo a nuestro WhatsApp.</p>
             </div>
             
-            <!-- Selector para cambiar moneda (Euros € o Bolívares Bs BCV) -->
+            <!-- Selector para cambiar moneda ($ o Bs) -->
             <div class="flex gap-2 bg-gray-800/80 p-1.5 rounded-xl border border-gray-700">
-                <button onclick="setCurrency('EUR')" id="btn-currency-eur" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm">
-                    Euros (€)
+                <button onclick="setCurrency('USD')" id="btn-currency-usd" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm">
+                    Dólares ($)
                 </button>
                 <button onclick="setCurrency('LOCAL')" id="btn-currency-local" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all">
                     Bolívares (Bs)
@@ -192,10 +192,10 @@
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <select id="cust-payment" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 bg-white">
-                                <option value="Efectivo EUR">Efectivo (€)</option>
+                                <option value="Efectivo USD">Efectivo ($)</option>
                                 <option value="Pago Móvil">Pago Móvil (Bs)</option>
-                                <option value="Punto de Venta">Punto de Venta (Bs)</option>
-                                <option value="Transferencia">Transferencia (Bs)</option>
+                                <option value="Zelle">Zelle</option>
+                                <option value="Punto de Venta">Punto de Venta</option>
                             </select>
                             <input type="text" id="cust-notes" placeholder="Notas (Ej: Sin salsa...)" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500">
                         </div>
@@ -255,7 +255,7 @@
                     <input type="text" id="config-phone-input" placeholder="ej: 584121234567" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Tasa de Cambio Oficial Euro BCV (Bs por €1):</label>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Tasa de Cambio en Bolívares (Bs por $1):</label>
                     <input type="number" id="config-rate-input" placeholder="ej: 36.5" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
                 </div>
                 <button onclick="saveConfig()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 rounded-lg text-sm transition-all">
@@ -271,8 +271,8 @@
     <script>
         // A. CONFIGURACIÓN DEL NEGOCIO (Teléfono y Tasa de cambio)
         let whatsappNumber = localStorage.getItem('app_whatsapp_number') || '584120000000'; // Pon tu número aquí
-        let exchangeRateEUR = parseFloat(localStorage.getItem('app_exchange_eur')) || 42.0; // Tasa oficial Euro BCV (respaldo inicial)
-        let selectedCurrency = 'EUR'; // 'EUR' o 'LOCAL' (Bolívares)
+        let exchangeRate = parseFloat(localStorage.getItem('app_exchange_rate')) || 36.5;   // Tasa por defecto
+        let selectedCurrency = 'USD'; // 'USD' o 'LOCAL'
         let currentCategory = 'Todos';
         let cart = JSON.parse(localStorage.getItem('app_cart_items')) || [];
 
@@ -289,7 +289,7 @@
                 id: 1,
                 name: "Hamburguesa Doble Queso",
                 category: "Hamburguesas",
-                priceEUR: 8.50,
+                priceUSD: 8.50,
                 description: "Doble carne 100% de res, queso cheddar fundido, tocineta crujiente y salsa especial de la casa.",
                 image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80"
             },
@@ -297,7 +297,7 @@
                 id: 2,
                 name: "Hamburguesa Crispy Chicken",
                 category: "Hamburguesas",
-                priceEUR: 7.00,
+                priceUSD: 7.00,
                 description: "Pechuga de pollo empanizada super crujiente, lechuga fresca, pepinillos y mayonesa de ajo.",
                 image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80"
             },
@@ -305,7 +305,7 @@
                 id: 3,
                 name: "Pizza Pepperoni Suprema",
                 category: "Pizzas",
-                priceEUR: 12.00,
+                priceUSD: 12.00,
                 description: "Masa artesanal, salsa napolitana, extra queso mozzarella y abundante pepperoni de primera.",
                 image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80"
             },
@@ -313,7 +313,7 @@
                 id: 4,
                 name: "Coca-Cola Original 1.5L",
                 category: "Bebidas",
-                priceEUR: 2.50,
+                priceUSD: 2.50,
                 description: "Bebida refrescante bien fría para acompañar tu comida.",
                 image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80"
             },
@@ -321,44 +321,23 @@
                 id: 5,
                 name: "Milkshake de Oreo",
                 category: "Postres",
-                priceEUR: 4.50,
+                priceUSD: 4.50,
                 description: "Batido cremoso de helado de chocolate, trozos de galleta Oreo y crema batida.",
                 image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80"
             }
         ];
 
-        // D. CONSULTA AUTOMÁTICA A LA API DE LA TASA OFICIAL DEL EURO BCV
-        async function fetchBcvRates() {
-            try {
-                // Consulta la tasa oficial del Euro publicada por el BCV
-                const resEur = await fetch('https://ve.dolarapi.com/v1/monedas/eur');
-                if (resEur.ok) {
-                    const dataEur = await resEur.json();
-                    if (dataEur.promedio) {
-                        exchangeRateEUR = dataEur.promedio;
-                        localStorage.setItem('app_exchange_eur', exchangeRateEUR);
-                        console.log(`Tasa oficial Euro BCV actualizada: Bs. ${exchangeRateEUR}`);
-                    }
-                }
-                renderProducts(getFilteredProducts());
-                updateCartUI();
-            } catch (err) {
-                console.warn("API BCV no disponible temporalmente, usando valor guardado:", err);
-            }
-        }
-
-        // E. FUNCIONALIDAD DE PRECIOS Y MONEDAS (EXCLUSIVAMENTE EUR Y BS BCV)
-        function formatPrice(amountEUR) {
-            if (selectedCurrency === 'EUR') {
-                return `€${amountEUR.toFixed(2)}`;
+        // D. FUNCIONALIDAD DE PRECIOS Y MONEDAS
+        function formatPrice(amountUSD) {
+            if (selectedCurrency === 'USD') {
+                return `$${amountUSD.toFixed(2)}`;
             } else {
-                // Conversión directa a Bolívares usando la tasa oficial del Euro BCV
-                const localVal = amountEUR * exchangeRateEUR;
+                const localVal = amountUSD * exchangeRate;
                 return `Bs ${localVal.toFixed(2)}`;
             }
         }
 
-        // F. MOSTRAR CATEGORÍAS
+        // E. MOSTRAR CATEGORÍAS
         function renderCategories() {
             const container = document.getElementById('category-tabs');
             container.innerHTML = categories.map(cat => `
@@ -381,15 +360,15 @@
 
         function setCurrency(curr) {
             selectedCurrency = curr;
-            const btnEur = document.getElementById('btn-currency-eur');
+            const btnUsd = document.getElementById('btn-currency-usd');
             const btnLocal = document.getElementById('btn-currency-local');
 
-            if (curr === 'EUR') {
-                btnEur.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
+            if (curr === 'USD') {
+                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
                 btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
             } else {
                 btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
-                btnEur.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
+                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
             }
 
             renderProducts(getFilteredProducts());
@@ -428,7 +407,7 @@
                             <!-- Si la imagen falla al cargar, muestra una por defecto -->
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/500x300/e2e8f0/64748b?text=Imagen+Producto'">
                             <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-gray-800 shadow-sm">
-                                ${formatPrice(p.priceEUR)}
+                                ${formatPrice(p.priceUSD)}
                             </span>
                         </div>
                         <div class="p-4">
@@ -488,12 +467,12 @@
         function updateCartUI() {
             const container = document.getElementById('cart-items-container');
             const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
-            const totalEUR = cart.reduce((sum, i) => sum + (i.priceUSD * i.quantity), 0);
+            const totalUSD = cart.reduce((sum, i) => sum + (i.priceUSD * i.quantity), 0);
 
             document.getElementById('cart-count-badge').textContent = totalCount;
             document.getElementById('mobile-cart-badge').textContent = totalCount;
-            document.getElementById('cart-total').textContent = formatPrice(totalEUR);
-            document.getElementById('mobile-bar-total').textContent = formatPrice(totalEUR);
+            document.getElementById('cart-total').textContent = formatPrice(totalUSD);
+            document.getElementById('mobile-bar-total').textContent = formatPrice(totalUSD);
 
             if (cart.length === 0) {
                 container.innerHTML = `
@@ -510,7 +489,7 @@
                     <img src="${item.image}" class="w-16 h-16 rounded-lg object-cover" onerror="this.src='https://placehold.co/100x100/e2e8f0/64748b?text=Foto'">
                     <div class="flex-1">
                         <h4 class="text-sm font-bold text-gray-800 line-clamp-1">${item.name}</h4>
-                        <span class="text-xs text-brand-600 font-semibold">${formatPrice(item.priceEUR)}</span>
+                        <span class="text-xs text-brand-600 font-semibold">${formatPrice(item.priceUSD)}</span>
                         <div class="flex items-center space-x-2 mt-1">
                             <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold flex items-center justify-center text-xs">-</button>
                             <span class="text-xs font-semibold text-gray-700">${item.quantity}</span>
@@ -530,7 +509,7 @@
 
         function toggleConfigModal() {
             document.getElementById('config-phone-input').value = whatsappNumber;
-            document.getElementById('config-rate-input').value = exchangeRateEUR;
+            document.getElementById('config-rate-input').value = exchangeRate;
             document.getElementById('config-modal').classList.toggle('hidden');
         }
 
@@ -543,8 +522,8 @@
                 localStorage.setItem('app_whatsapp_number', phoneVal);
             }
             if (!isNaN(rateVal) && rateVal > 0) {
-                exchangeRateEUR = rateVal;
-                localStorage.setItem('app_exchange_eur', rateVal);
+                exchangeRate = rateVal;
+                localStorage.setItem('app_exchange_rate', rateVal);
             }
 
             toggleConfigModal();
@@ -570,16 +549,16 @@
             }
 
             let itemsSummary = '';
-            let totalEUR = 0;
+            let totalUSD = 0;
 
             cart.forEach(item => {
-                const subtotalItemEUR = item.priceEUR * item.quantity;
-                totalEUR += subtotalItemEUR;
-                itemsSummary += `• ${item.quantity}x ${item.name} - ${formatPrice(subtotalItemEUR)}\n`;
+                const subtotalItemUSD = item.priceUSD * item.quantity;
+                totalUSD += subtotalItemUSD;
+                itemsSummary += `• ${item.quantity}x ${item.name} - ${formatPrice(subtotalItemUSD)}\n`;
             });
 
-            const totalFormatted = formatPrice(totalEUR);
-            const totalLocalFormatted = `Bs ${(totalEUR * exchangeRateEUR).toFixed(2)}`;
+            const totalFormatted = formatPrice(totalUSD);
+            const totalLocalFormatted = `Bs ${(totalUSD * exchangeRate).toFixed(2)}`;
 
             let message = `*NUEVO PEDIDO DE COMPRA* 🛒\n\n`;
             message += `*Cliente:* ${name}\n`;
@@ -589,8 +568,10 @@
             message += `\n-------------------------------\n`;
             message += `*DETALLE DEL PEDIDO:*\n${itemsSummary}`;
             message += `-------------------------------\n`;
-            message += `*TOTAL:* €${totalEUR.toFixed(2)} (${totalLocalFormatted} BCV)`;
-            
+            message += `*TOTAL:* ${totalFormatted}`;
+            if (selectedCurrency === 'USD') {
+                message += ` (${totalLocalFormatted})`;
+            }
 
             const encodedUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(encodedUrl, '_blank');
@@ -601,7 +582,6 @@
             renderCategories();
             renderProducts(products);
             updateCartUI();
-            fetchBcvRates(); // <-- Ejecuta la sincronización automática con el BCV
         };
     </script>
 </body>
