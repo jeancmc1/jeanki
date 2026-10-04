@@ -1,587 +1,492 @@
-<!DOCTYPE html> <!-- Declaración del tipo de documento HTML5 -->
-<html lang="es"> <!-- Apertura de la etiqueta raíz HTML configurada en idioma español -->
-<head> <!-- Inicio de la cabecera que contiene metadatos y enlaces de librerías -->
-    <meta charset="UTF-8"> <!-- Codificación de caracteres para permitir acentos y caracteres especiales -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste para diseño adaptable a pantallas móviles y escritorio -->
-    <title>Menú Online & Pedidos por WhatsApp</title> <!-- Título visible en la pestaña del navegador -->
+<!DOCTYPE html> <!-- Declaración del documento en formato estándar HTML5 -->
+<html lang="es"> <!-- Apertura de la etiqueta raíz HTML configurada en español -->
+<head> <!-- Inicio del encabezado que aloja metadatos, fuentes y librerías externas -->
+    <meta charset="UTF-8"> <!-- Codificación de caracteres compatible con acentos y caracteres latinos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configuración de escala responsiva para móviles y PC -->
+    <title>Menú Digital & Pedidos por WhatsApp</title> <!-- Título visual de la página web en la pestaña del navegador -->
 
-    <!-- Carga de la librería Tailwind CSS desde CDN para estilos utilitarios modernos -->
-    <script src="https://cdn.tailwindcss.com"></script> <!-- Enlace al script CDN de Tailwind CSS -->
+    <!-- Carga de Tailwind CSS mediante red CDN para aplicar clases de diseño rápido -->
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Enlace a la librería CDN de Tailwind CSS -->
 
-    <!-- Carga de la librería Lucide Icons para mostrar iconos interactivos -->
-    <script src="https://unpkg.com/lucide@latest"></script> <!-- Enlace al CDN oficial de Lucide Icons -->
+    <!-- Carga de Lucide Icons para renderizar los iconos de compras, ajustes y categorías -->
+    <script src="https://unpkg.com/lucide@latest"></script> <!-- Enlace a la librería CDN de iconos Lucide -->
 
-    <script> <!-- Apertura del script para configurar la paleta de colores personalizada en Tailwind -->
-        tailwind.config = { <!-- Inicialización del objeto de configuración de Tailwind CSS -->
-            theme: { <!-- Extensión del tema gráfico del sitio -->
-                extend: { <!-- Inclusión de nuevos valores sin sobrescribir los predeterminados -->
-                    colors: { <!-- Definición de los nombres y códigos de la paleta de colores -->
-                        paleta: { <!-- Grupo de colores corporativos extraídos de la marca -->
-                            crema: '#FFF9EF',       <!-- Tono hueso/crema suave para fondos cálidos -->
-                            arena: '#F6E1C2',       <!-- Tono arena/beige para bordes y contenedores sutiles -->
-                            fucsia: '#EB3687',      <!-- Magenta/Fucsia primario para botones y precios -->
-                            fucsiaOscuro: '#C82470',<!-- Fucsia oscuro para el efecto hover al presionar -->
-                            rosa: '#F96BAC',        <!-- Rosa vibrante secundario para badges y detalles -->
-                            azulMarino: '#0049A5',  <!-- Azul marino oscuro para textos y títulos principales -->
-                            azulVibrante: '#5072ED',<!-- Azul eléctrico para acentos y degradados -->
-                            azulClaro: '#5E89FF',   <!-- Azul suave para elementos de contraste -->
-                            verdeOliva: '#799916',  <!-- Verde para botones de acción y WhatsApp -->
-                            verdeMedio: '#97B350',  <!-- Tono verde intermedio para indicadores -->
-                            verdeLima: '#BCD670'    <!-- Verde claro para alertas o fondos secundarios -->
-                        } <!-- Cierre del objeto de la paleta -->
-                    } <!-- Cierre de la definición de colores -->
-                } <!-- Cierre de la extensión del tema -->
-            } <!-- Cierre de la clave theme -->
-        } <!-- Cierre de la configuración tailwind.config -->
-    </script> <!-- Fin del script de Tailwind -->
-
-    <style> <!-- Apertura del bloque de estilos personalizados CSS -->
-        :root { <!-- Definición de variables CSS nativas disponibles en todo el documento -->
-            --color-primario: #EB3687; <!-- Variable para el color primario fucsia -->
-            --color-primario-oscuro: #C82470; <!-- Variable para el tono fucsia en hover -->
-            --color-secundario: #0049A5; <!-- Variable para el color azul marino -->
-            --color-fondo: #FFF9EF; <!-- Variable para el fondo crema general -->
-            --color-arena: #F6E1C2; <!-- Variable para el tono arena -->
+    <style> <!-- Apertura del bloque de reglas de estilo personalizadas CSS -->
+        :root { <!-- Variables nativas CSS para control visual de colores -->
+            --color-primario: #EB3687; <!-- Color magenta/fucsia para llamadas a la acción y precios -->
+            --color-primario-hover: #C82470; <!-- Color fucsia oscuro para el sombreado al presionar -->
+            --color-secundario: #0049A5; <!-- Color azul marino oscuro para títulos y cabeceras -->
+            --color-fondo: #FFF9EF; <!-- Color de fondo crema suave para toda la página -->
         } <!-- Fin de las variables root -->
 
-        body { <!-- Estilos base para el cuerpo de la página -->
-            background-color: var(--color-fondo); <!-- Color de fondo predeterminado si falla la imagen -->
-            background-image: <!-- Degradado suave que se activa cuando no hay foto de fondo -->
-                radial-gradient(at 0% 0%, rgba(246, 225, 194, 0.6) 0px, transparent 50%), <!-- Sombra arena en esquina superior -->
-                radial-gradient(at 100% 100%, rgba(249, 107, 172, 0.15) 0px, transparent 50%); <!-- Sombra fucsia suave en esquina inferior -->
-            background-size: cover; <!-- Ajusta el fondo para cubrir toda la pantalla -->
-            background-position: center; <!-- Centra la posición del fondo -->
-            background-attachment: fixed; <!-- Mantiene fijo el fondo durante el desplazamiento -->
-            min-height: 100vh; <!-- Asegura una altura mínima de pantalla completa -->
+        body { <!-- Reglas aplicadas al cuerpo del documento -->
+            background-color: var(--color-fondo); <!-- Color base crema -->
+            min-height: 100vh; <!-- Altura mínima de la pantalla completa -->
         } <!-- Fin de estilos de body -->
 
-        .bg-custom-image { <!-- Clase que se asigna dinámicamente cuando el usuario sube imagen de fondo -->
-            background-size: cover !important; <!-- Obliga a que la imagen cubra todo el viewport -->
-            background-position: center !important; <!-- Asegura que la imagen quede centrada -->
-            background-repeat: no-repeat !important; <!-- Evita que la foto de fondo se repita en mosaico -->
-            background-attachment: fixed !important; <!-- Mantiene la foto estática mientras se hace scroll -->
-        } <!-- Fin de la clase bg-custom-image -->
+        /* ========================================================
+           DIMENSIÓN ESTÁNDAR Y CAMBIO DIRECTO DE IMAGEN EN HOVER
+           ======================================================== */
+        .contenedor-foto-estandar { <!-- Caja con tamaño 100% estandarizado para todas las imágenes -->
+            position: relative; <!-- Posición relativa para contener la insignia de precio -->
+            width: 100%; <!-- Ocupa todo el ancho de la tarjeta -->
+            height: 13rem; <!-- Altura estándar fija (208px) para que todas las fotos sean idénticas -->
+            overflow: hidden; <!-- Corta cualquier elemento sobrante -->
+            background-color: #f1f5f9; <!-- Fondo gris de respaldo mientras carga -->
+        } <!-- Fin de contenedor-foto-estandar -->
 
-        .fondo-overlay { <!-- Capa semitransparente para dar contraste a los textos sobre cualquier foto -->
-            background-color: rgba(255, 249, 239, 0.88); <!-- Color crema con 88% de opacidad -->
-            backdrop-filter: blur(8px); <!-- Filtro de desenfoque de fondo en navegadores modernos -->
-            -webkit-backdrop-filter: blur(8px); <!-- Compatibilidad del desenfoque para navegadores Safari/iOS -->
-        } <!-- Fin de fondo-overlay -->
+        .foto-producto { <!-- Clase aplicada a las fotos del catálogo -->
+            width: 100%; <!-- Ocupa el 100% del ancho del contenedor -->
+            height: 100%; <!-- Ocupa el 100% de la altura estándar fijada -->
+            object-fit: cover; <!-- Recorta la foto proporcionalmente sin deformarla ni estirarla -->
+            display: block; <!-- Se comporta como bloque sólido -->
+            transition: transform 0.3s ease; <!-- Animación suave al interactuar -->
+        } <!-- Fin de foto-producto -->
 
-        .tarjeta-cristal { <!-- Estilo tipo glassmorphism translúcido para las tarjetas de producto -->
-            background: rgba(255, 255, 255, 0.90); <!-- Fondo blanco con 90% de opacidad -->
-            backdrop-filter: blur(12px); <!-- Efecto de cristal esmerilado detrás de la tarjeta -->
-            -webkit-backdrop-filter: blur(12px); <!-- Desenfoque de cristal para dispositivos Apple -->
-            border: 1px solid rgba(246, 225, 194, 0.8); <!-- Borde fino color arena suave -->
-            box-shadow: 0 10px 25px -5px rgba(0, 73, 165, 0.06), 0 8px 10px -6px rgba(0, 73, 165, 0.04); <!-- Sombra suave azul marina -->
-        } <!-- Fin de tarjeta-cristal -->
+        /* Comportamiento del cambio: la imagen hover está oculta y la base visible */
+        .img-vista-normal { <!-- Foto 1 que se visualiza por defecto -->
+            display: block; <!-- Visible por defecto -->
+        } <!-- Fin de img-vista-normal -->
 
-        .contenedor-imagen-hover { <!-- Contenedor relativo que aloja ambas imágenes del producto -->
-            position: relative; <!-- Posición relativa para ubicar las imágenes absolutas superpuestas -->
-            overflow: hidden; <!-- Oculta cualquier desbordamiento al hacer zoom con el cursor -->
-            width: 100%; <!-- Ocupa todo el ancho disponible de la tarjeta -->
-            height: 12rem; <!-- Altura fija uniforme de 192px (h-48) para todas las fotos -->
-            background-color: #f1f5f9; <!-- Fondo gris claro provisional mientras carga la imagen -->
-        } <!-- Fin de contenedor-imagen-hover -->
+        .img-vista-hover { <!-- Foto 2 que reemplaza a la primera al pasar el cursor -->
+            display: none; <!-- Completamente oculta por defecto, NUNCA se ven las dos juntas -->
+        } <!-- Fin de img-vista-hover -->
 
-        .img-base, .img-hover { <!-- Reglas compartidas para la imagen principal y la secundaria -->
-            position: absolute; <!-- Posiciona ambas imágenes en las mismas coordenadas exactas -->
-            inset: 0; <!-- Estira la imagen en top:0, left:0, right:0, bottom:0 -->
-            width: 100%; <!-- Ocupa el ancho completo del contenedor -->
-            height: 100%; <!-- Ocupa la altura completa del contenedor -->
-            object-fit: cover; <!-- Recorta la foto proporcionalmente sin deformarla -->
-            transition: opacity 0.4s ease, transform 0.5s ease; <!-- Transición suave de disolución y zoom -->
-        } <!-- Fin de reglas compartidas de imágenes -->
+        /* Al posar el puntero (hover) sobre la tarjeta: se oculta la foto 1 y se muestra la foto 2 */
+        .tarjeta-item:hover .img-vista-normal { <!-- Al pasar el puntero sobre la tarjeta del producto -->
+            display: none; <!-- Desaparece la foto principal -->
+        } <!-- Fin de hover vista normal -->
 
-        .img-base { <!-- Estilos específicos de la primera foto (visible por defecto) -->
-            opacity: 1; <!-- Visible al inicio -->
-            z-index: 10; <!-- Capa inferior respecto a la foto secundaria -->
-        } <!-- Fin de img-base -->
+        .tarjeta-item:hover .img-vista-hover { <!-- Al pasar el puntero sobre la tarjeta del producto -->
+            display: block; <!-- Aparece inmediatamente la segunda foto en el mismo espacio exacto -->
+            transform: scale(1.04); <!-- Efecto de realce sutil -->
+        } <!-- Fin de hover vista hover -->
 
-        .img-hover { <!-- Estilos específicos de la segunda foto (oculta por defecto) -->
-            opacity: 0; <!-- Totalmente transparente al inicio -->
-            z-index: 20; <!-- Capa superior para sobreponerse suavemente -->
-        } <!-- Fin de img-hover -->
-
-        .tarjeta-producto:hover .img-base { <!-- Comportamiento de la primera foto al pasar el cursor -->
-            opacity: 0; <!-- Se desvanece por completo -->
-            transform: scale(1.06); <!-- Hace un zoom sutil del 6% -->
-        } <!-- Fin de hover img-base -->
-
-        .tarjeta-producto:hover .img-hover { <!-- Comportamiento de la segunda foto al pasar el cursor -->
-            opacity: 1; <!-- Se hace totalmente visible de inmediato -->
-            transform: scale(1.06); <!-- Acompaña el zoom para una animación continua -->
-        } <!-- Fin de hover img-hover -->
-
-        .tarjeta-producto.sin-hover:hover .img-base { <!-- Comportamiento cuando un producto solo tiene una foto -->
-            opacity: 1; <!-- Mantiene la visibilidad de la única imagen -->
-            transform: scale(1.06); <!-- Aplica zoom sutil sin intentar ocultarla -->
-        } <!-- Fin de sin-hover -->
-
-        .transicion-panel { <!-- Animación de entrada y salida para el panel lateral del carrito -->
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; <!-- Curva de aceleración fluida -->
-        } <!-- Fin de transicion-panel -->
-    </style> <!-- Cierre del bloque de estilos CSS -->
-</head> <!-- Fin de la cabecera head -->
-<body class="text-slate-800 antialiased font-sans flex flex-col min-h-screen"> <!-- Inicio del cuerpo con tipografía y disposición vertical -->
-
-    <!-- Capa fija semitransparente que garantiza lectura óptima sobre fotos de fondo -->
-    <div id="capaFondo" class="fixed inset-0 pointer-events-none z-[-1] fondo-overlay"></div> <!-- Div protector de fondo -->
+        /* Si el producto solo tiene una imagen (sin hover), hace un ligero realce sin ocultarse */
+        .tarjeta-item.foto-unica:hover .img-vista-normal { <!-- En caso de tener únicamente una foto -->
+            display: block !important; <!-- Permanece visible -->
+            transform: scale(1.04); <!-- Realce sutil -->
+        } <!-- Fin de foto-unica -->
+    </style> <!-- Cierre de estilos personalizados CSS -->
+</head> <!-- Cierre de la cabecera head -->
+<body class="text-slate-800 antialiased font-sans flex flex-col min-h-screen"> <!-- Inicio del cuerpo del menú -->
 
     <!-- ========================================================
-         1. CABECERA SUPERIOR Y NAVEGACIÓN
+         1. CABECERA SUPERIOR
          ======================================================== -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-paleta-arena/60 shadow-sm"> <!-- Barra fija superior -->
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4"> <!-- Contenedor centrado con padding y flexbox -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm"> <!-- Barra de cabecera fija -->
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4"> <!-- Contenedor centrado -->
             
-            <!-- Bloque del Logo y Nombre Comercial -->
-            <div class="flex items-center gap-3"> <!-- Contenedor horizontal para logo y textos de cabecera -->
-                <div id="contenedorLogo" class="w-12 h-12 rounded-full overflow-hidden bg-paleta-arena flex items-center justify-center border-2 border-paleta-fucsia shadow-inner"> <!-- Círculo contenedor del logo -->
-                    <i data-lucide="store" class="w-6 h-6 text-paleta-azulMarino"></i> <!-- Icono provisional de tienda si no hay imagen -->
+            <div class="flex items-center gap-3"> <!-- Bloque de marca y logo -->
+                <div id="contenedorLogo" class="w-11 h-11 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center border-2 border-[#EB3687]"> <!-- Contenedor circular del logo -->
+                    <i data-lucide="store" class="w-6 h-6 text-[#0049A5]"></i> <!-- Icono predeterminado de comercio -->
                 </div> <!-- Cierre de contenedorLogo -->
-                <div> <!-- Contenedor de textos del negocio -->
-                    <h1 id="txtNombreNegocio" class="text-lg md:text-xl font-black text-paleta-azulMarino tracking-tight">Mi Negocio</h1> <!-- Nombre de la marca -->
-                    <p class="text-xs text-slate-500 flex items-center gap-1 font-medium"> <!-- Estado operativo del comercio -->
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <!-- Indicador verde parpadeante de en línea -->
-                        Abierto &bullet; Pedidos por WhatsApp <!-- Leyenda explicativa -->
-                    </p> <!-- Cierre del párrafo de estado -->
-                </div> <!-- Cierre del contenedor de textos del negocio -->
-            </div> <!-- Cierre del bloque de logo y nombre -->
+                <div> <!-- Textos del negocio -->
+                    <h1 id="txtNombreNegocio" class="text-lg md:text-xl font-black text-[#0049A5] tracking-tight">Mi Negocio</h1> <!-- Nombre de la tienda -->
+                    <p class="text-xs text-slate-500 flex items-center gap-1 font-medium"> <!-- Estado operativo -->
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> <!-- Punto verde activo -->
+                        Pedidos por WhatsApp <!-- Leyenda de atención directa -->
+                    </p> <!-- Fin de párrafo -->
+                </div> <!-- Fin de textos -->
+            </div> <!-- Fin de bloque de marca -->
 
-            <!-- Botones de Acción Superiores (Moneda, Ajustes y Carrito) -->
-            <div class="flex items-center gap-2"> <!-- Contenedor para agrupar botones de la derecha -->
-                <button id="btnToggleMoneda" onclick="alternarMoneda()" class="px-2.5 py-1.5 text-xs font-bold rounded-lg border border-paleta-azulMarino/20 text-paleta-azulMarino hover:bg-paleta-crema transition flex items-center gap-1 shadow-sm" title="Cambiar visualización de moneda"> <!-- Botón selector de moneda -->
-                    <span id="badgeMoneda" class="bg-paleta-azulMarino text-white px-1.5 py-0.5 rounded text-[10px]">USD $</span> <!-- Etiqueta indicadora de divisa activa -->
-                    <span class="hidden sm:inline">Moneda</span> <!-- Texto adicional en pantallas medianas -->
-                </button> <!-- Cierre del botón de moneda -->
+            <div class="flex items-center gap-2"> <!-- Acciones de cabecera -->
+                <button id="btnToggleMoneda" onclick="alternarMoneda()" class="px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-200 text-[#0049A5] hover:bg-slate-50 transition flex items-center gap-1 shadow-sm"> <!-- Alternar $ o Bs -->
+                    <span id="badgeMoneda" class="bg-[#0049A5] text-white px-1.5 py-0.5 rounded text-[10px]">USD $</span> <!-- Etiqueta divisa -->
+                    <span class="hidden sm:inline">Moneda</span> <!-- Texto secundario -->
+                </button> <!-- Fin de botón de moneda -->
 
-                <button onclick="abrirModalAjustes()" class="p-2 rounded-lg text-slate-500 hover:text-paleta-fucsia hover:bg-paleta-crema transition" title="Ajustes de WhatsApp y Tasa"> <!-- Botón engranaje de configuración rápida -->
-                    <i data-lucide="settings" class="w-5 h-5"></i> <!-- Icono de tuerca/ajustes -->
-                </button> <!-- Cierre del botón de ajustes -->
+                <button onclick="abrirModalAjustes()" class="p-2 rounded-lg text-slate-400 hover:text-[#EB3687] hover:bg-slate-50 transition" title="Configurar WhatsApp y Tasa"> <!-- Botón de ajustes -->
+                    <i data-lucide="settings" class="w-5 h-5"></i> <!-- Icono de engranaje -->
+                </button> <!-- Fin de botón ajustes -->
 
-                <button onclick="abrirCarrito()" class="relative p-2.5 bg-paleta-fucsia hover:bg-paleta-fucsiaOscuro text-white rounded-xl shadow-md shadow-paleta-fucsia/30 transition transform active:scale-95 flex items-center gap-2"> <!-- Botón principal del carrito de compras -->
+                <button onclick="abrirCarrito()" class="relative p-2.5 bg-[#EB3687] hover:bg-[#C82470] text-white rounded-xl shadow-md transition transform active:scale-95 flex items-center gap-2"> <!-- Botón para ver el carrito -->
                     <i data-lucide="shopping-bag" class="w-5 h-5"></i> <!-- Icono de bolsa de compra -->
-                    <span id="contadorCarritoCabecera" class="absolute -top-1 -right-1 bg-paleta-azulMarino text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span> <!-- Badge con la cantidad de artículos -->
-                    <span class="hidden md:inline text-xs font-semibold pr-1">Ver Pedido</span> <!-- Etiqueta visible en escritorio -->
-                </button> <!-- Cierre del botón de carrito -->
-            </div> <!-- Cierre de botones de acción -->
-        </div> <!-- Cierre del contenedor max-w-6xl -->
-    </header> <!-- Cierre de la cabecera -->
+                    <span id="contadorCarritoCabecera" class="absolute -top-1 -right-1 bg-[#0049A5] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">0</span> <!-- Badge con la cantidad de productos -->
+                    <span class="hidden md:inline text-xs font-semibold pr-1">Ver Pedido</span> <!-- Etiqueta de texto para PC -->
+                </button> <!-- Fin de botón carrito -->
+            </div> <!-- Fin de acciones -->
+        </div> <!-- Fin del contenedor max-w-6xl -->
+    </header> <!-- Cierre del header -->
 
     <!-- ========================================================
-         2. BANNER PROMOCIONAL / BIENVENIDA
+         2. BUSCADOR Y CATEGORÍAS
          ======================================================== -->
-    <section id="seccionBanner" class="max-w-6xl mx-auto px-4 mt-4 w-full"> <!-- Sección contenedora del banner promocional -->
-        <div id="bannerContenedor" class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-paleta-azulMarino to-paleta-azulVibrante text-white p-6 md:p-8 shadow-lg min-h-[140px] flex flex-col justify-center"> <!-- Tarjeta con degradado azul -->
-            <div id="bannerImgOverlay" class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay"></div> <!-- Capa de imagen superpuesta para el banner -->
-            <div class="relative z-10 max-w-xl"> <!-- Bloque de texto con índice z superior -->
-                <span class="inline-block px-3 py-1 bg-paleta-fucsia text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2 shadow-sm"> <!-- Etiqueta destacada fucsia -->
-                    Menú Digital &bullet; Envíos Directos <!-- Texto de la etiqueta -->
-                </span> <!-- Cierre de etiqueta destacada -->
-                <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Pide en línea y recibe en minutos</h2> <!-- Título motivacional de bienvenida -->
-                <p class="text-sm text-slate-100 mt-1 opacity-90">Selecciona tus productos favoritos, personaliza tu orden y envíala directamente a nuestro chat de WhatsApp.</p> <!-- Instrucción clara de compra -->
-            </div> <!-- Cierre del bloque de texto -->
-        </div> <!-- Cierre de bannerContenedor -->
-    </section> <!-- Cierre de seccionBanner -->
+    <section class="max-w-6xl mx-auto px-4 mt-6 w-full"> <!-- Sección de filtrado y navegación rápida -->
+        <div class="relative w-full max-w-md mx-auto mb-5"> <!-- Caja para centrar el buscador -->
+            <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i> <!-- Icono lupa -->
+            <input type="text" id="inputBuscar" oninput="filtrarProductos()" placeholder="Buscar producto..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#EB3687] text-sm"> <!-- Input de búsqueda reactiva -->
+        </div> <!-- Fin de caja buscador -->
+
+        <div id="contenedorCategorias" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start md:justify-center"> <!-- Listado horizontal de categorías -->
+            <!-- Botones generados automáticamente por JavaScript -->
+        </div> <!-- Fin de contenedorCategorias -->
+    </section> <!-- Fin de sección buscador y categorías -->
 
     <!-- ========================================================
-         3. BARRA DE BÚSQUEDA Y CATEGORÍAS
+         3. CATÁLOGO DE PRODUCTOS (GRID RESPONSIVE)
          ======================================================== -->
-    <section class="max-w-6xl mx-auto px-4 mt-6 w-full"> <!-- Sección para filtros y buscador -->
-        <div class="relative w-full max-w-md mx-auto mb-5"> <!-- Caja de ancho máximo centrada para el buscador -->
-            <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i> <!-- Icono de lupa dentro del input -->
-            <input type="text" id="inputBuscar" oninput="filtrarProductos()" placeholder="Buscar producto o ingrediente..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white/90 shadow-sm focus:outline-none focus:ring-2 focus:ring-paleta-fucsia focus:border-transparent text-sm transition"> <!-- Campo de texto que filtra en tiempo real -->
-        </div> <!-- Cierre del contenedor de búsqueda -->
+    <main class="max-w-6xl mx-auto px-4 mt-6 mb-24 flex-grow w-full"> <!-- Contenedor principal del catálogo -->
+        <div id="gridProductos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> <!-- Cuadrícula de 1, 2 o 3 columnas -->
+            <!-- Tarjetas de productos inyectadas mediante JavaScript -->
+        </div> <!-- Fin de gridProductos -->
 
-        <div id="contenedorCategorias" class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start md:justify-center"> <!-- Barra horizontal con scroll para botones de categorías -->
-            <!-- Botones dinámicos de categorías inyectados por JavaScript -->
-        </div> <!-- Cierre de contenedorCategorias -->
-    </section> <!-- Cierre de sección de búsqueda y categorías -->
-
-    <!-- ========================================================
-         4. CATÁLOGO DE PRODUCTOS (GRID)
-         ======================================================== -->
-    <main class="max-w-6xl mx-auto px-4 mt-6 mb-24 flex-grow w-full"> <!-- Área principal del catálogo de productos -->
-        <div id="gridProductos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> <!-- Cuadrícula de 1, 2 o 3 columnas responsive -->
-            <!-- Las tarjetas de cada plato o producto son inyectadas aquí dinámicamente con JavaScript -->
-        </div> <!-- Cierre de gridProductos -->
-
-        <div id="sinResultados" class="hidden text-center py-16"> <!-- Contenedor de aviso que se muestra si no hay coincidencias -->
-            <i data-lucide="package-search" class="w-12 h-12 mx-auto text-slate-400 mb-3"></i> <!-- Icono de paquete no encontrado -->
-            <h3 class="text-base font-bold text-slate-700">No encontramos productos coincidentes</h3> <!-- Mensaje de error de búsqueda -->
-            <p class="text-xs text-slate-500 mt-1">Prueba con otra búsqueda o selecciona otra categoría.</p> <!-- Sugerencia al usuario -->
-        </div> <!-- Cierre de sinResultados -->
-    </main> <!-- Cierre de main -->
+        <div id="sinResultados" class="hidden text-center py-16"> <!-- Mensaje si no hay coincidencias -->
+            <i data-lucide="package-search" class="w-12 h-12 mx-auto text-slate-400 mb-3"></i> <!-- Icono de advertencia -->
+            <h3 class="text-base font-bold text-slate-700">No encontramos productos coincidentes</h3> <!-- Texto principal de aviso -->
+            <p class="text-xs text-slate-500 mt-1">Intenta con otra palabra clave o selecciona otra categoría.</p> <!-- Indicación para el usuario -->
+        </div> <!-- Fin de sinResultados -->
+    </main> <!-- Fin de main -->
 
     <!-- ========================================================
-         5. BARRA FLOTANTE MÓVIL
+         4. BARRA MÓVIL INFERIOR DE PEDIDO RÁPIDO
          ======================================================== -->
     <div id="barraFlotanteMovil" class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 z-30 flex items-center justify-between md:hidden shadow-[0_-4px_15px_rgba(0,0,0,0.08)]"> <!-- Barra inferior fija para smartphones -->
-        <div> <!-- Columna de monto acumulado -->
-            <span class="text-[11px] text-slate-500 uppercase font-semibold block">Total acumulado:</span> <!-- Etiqueta pequeña de total -->
-            <span id="totalBarraMovil" class="text-lg font-black text-paleta-fucsia">$0.00</span> <!-- Monto en dólares visible en el móvil -->
-        </div> <!-- Cierre de columna de total -->
-        <button onclick="abrirCarrito()" class="px-5 py-2.5 bg-paleta-fucsia hover:bg-paleta-fucsiaOscuro text-white text-sm font-bold rounded-xl shadow-md shadow-paleta-fucsia/30 flex items-center gap-2 transition active:scale-95"> <!-- Botón para abrir el carrito desde móvil -->
+        <div> <!-- Columna con el importe acumulado -->
+            <span class="text-[11px] text-slate-500 uppercase font-semibold block">Total acumulado:</span> <!-- Etiqueta pequeña -->
+            <span id="totalBarraMovil" class="text-lg font-black text-[#EB3687]">$0.00</span> <!-- Monto en dólares -->
+        </div> <!-- Fin de columna -->
+        <button onclick="abrirCarrito()" class="px-5 py-2.5 bg-[#EB3687] hover:bg-[#C82470] text-white text-sm font-bold rounded-xl shadow-md flex items-center gap-2 active:scale-95 transition"> <!-- Botón de compra móvil -->
             <i data-lucide="shopping-cart" class="w-4 h-4"></i> <!-- Icono de carrito -->
-            <span>Ver Orden (<span id="cantidadBarraMovil">0</span>)</span> <!-- Cantidad de artículos seleccionados -->
-        </button> <!-- Cierre de botón móvil -->
-    </div> <!-- Cierre de barraFlotanteMovil -->
+            <span>Ver Orden (<span id="cantidadBarraMovil">0</span>)</span> <!-- Contador numérico -->
+        </button> <!-- Fin de botón móvil -->
+    </div> <!-- Fin de barraFlotanteMovil -->
 
     <!-- ========================================================
-         6. MODAL CARRITO DE COMPRAS / FINALIZAR PEDIDO
+         5. VENTANA MODAL DEL CARRITO / FORMULARIO DE ENVÍO
          ======================================================== -->
-    <div id="modalCarrito" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end"> <!-- Fondo oscuro modal que cubre la pantalla -->
-        <div id="panelCarrito" class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transicion-panel transform translate-x-full"> <!-- Panel blanco lateral deslizante -->
+    <div id="modalCarrito" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end"> <!-- Telón de fondo oscuro -->
+        <div id="panelCarrito" class="w-full max-w-md bg-white h-full shadow-2xl flex flex-col transition-transform duration-300 transform translate-x-full"> <!-- Panel deslizante lateral -->
             
-            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-paleta-crema"> <!-- Encabezado del carrito con color crema -->
-                <div class="flex items-center gap-2"> <!-- Agrupador de icono y título -->
-                    <div class="w-8 h-8 rounded-lg bg-paleta-fucsia/10 flex items-center justify-center text-paleta-fucsia"> <!-- Fondo redondeado para icono -->
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-[#FFF9EF]"> <!-- Encabezado de la comanda -->
+                <div class="flex items-center gap-2"> <!-- Icono y título de la orden -->
+                    <div class="w-8 h-8 rounded-lg bg-[#EB3687]/10 flex items-center justify-center text-[#EB3687]"> <!-- Recuadro del icono -->
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i> <!-- Icono de bolsa -->
-                    </div> <!-- Cierre de fondo redondeado -->
-                    <div> <!-- Bloque de títulos -->
-                        <h3 class="font-extrabold text-paleta-azulMarino">Tu Orden</h3> <!-- Título Tu Orden -->
-                        <p class="text-[11px] text-slate-500">Revisa tus productos antes de enviar</p> <!-- Subtítulo de confirmación -->
-                    </div> <!-- Cierre de bloque de títulos -->
-                </div> <!-- Cierre de agrupador -->
-                <button onclick="cerrarCarrito()" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-white transition"> <!-- Botón de cerrar cruz (X) -->
+                    </div> <!-- Fin de recuadro -->
+                    <div> <!-- Textos del encabezado -->
+                        <h3 class="font-extrabold text-[#0049A5]">Tu Orden</h3> <!-- Título de la comanda -->
+                        <p class="text-[11px] text-slate-500">Revisa tus productos antes de enviar</p> <!-- Subtítulo explicativo -->
+                    </div> <!-- Fin de textos -->
+                </div> <!-- Fin de icono y título -->
+                <button onclick="cerrarCarrito()" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg transition"> <!-- Botón cerrar modal con la X -->
                     <i data-lucide="x" class="w-5 h-5"></i> <!-- Icono X -->
-                </button> <!-- Cierre de botón cerrar -->
-            </div> <!-- Cierre de encabezado del carrito -->
+                </button> <!-- Fin de botón cerrar -->
+            </div> <!-- Fin de encabezado -->
 
-            <div id="itemsCarrito" class="flex-grow overflow-y-auto p-5 space-y-3"> <!-- Área con scroll para la lista de productos agregados -->
-                <!-- Elementos del pedido inyectados dinámicamente -->
-            </div> <!-- Cierre de itemsCarrito -->
+            <div id="itemsCarrito" class="flex-grow overflow-y-auto p-5 space-y-3"> <!-- Contenedor con barra de desplazamiento para los platos agregados -->
+                <!-- Elementos del pedido generados por JavaScript -->
+            </div> <!-- Fin de itemsCarrito -->
 
-            <div class="border-t border-slate-200 bg-slate-50 p-5 space-y-4"> <!-- Sección inferior con datos de envío y pago -->
-                <div class="space-y-2 text-xs"> <!-- Formulario de información del cliente -->
-                    <div> <!-- Campo Nombre -->
-                        <label class="font-semibold text-slate-600 block mb-1">Nombre completo *</label> <!-- Etiqueta obligatoria -->
-                        <input type="text" id="pedidoNombre" placeholder="Ej. Juan Pérez" class="w-full px-3 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-paleta-fucsia focus:outline-none"> <!-- Campo de entrada del nombre -->
-                    </div> <!-- Cierre de campo Nombre -->
-                    <div class="grid grid-cols-2 gap-2"> <!-- Dos columnas para tipo de entrega y método de pago -->
-                        <div> <!-- Selección Entrega -->
-                            <label class="font-semibold text-slate-600 block mb-1">Tipo de entrega</label> <!-- Etiqueta entrega -->
-                            <select id="pedidoTipoEntrega" class="w-full px-2.5 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-paleta-fucsia focus:outline-none"> <!-- Menú desplegable de entrega -->
-                                <option value="Delivery">Delivery / A domicilio</option> <!-- Opción Delivery -->
-                                <option value="Retiro en Local">Retiro en Local</option> <!-- Opción retiro en tienda -->
-                                <option value="Consumo en Mesa">Consumo en Mesa</option> <!-- Opción consumo en local -->
-                            </select> <!-- Cierre de select entrega -->
-                        </div> <!-- Cierre columna entrega -->
-                        <div> <!-- Selección Pago -->
-                            <label class="font-semibold text-slate-600 block mb-1">Método de pago</label> <!-- Etiqueta método de pago -->
-                            <select id="pedidoMetodoPago" class="w-full px-2.5 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-paleta-fucsia focus:outline-none"> <!-- Menú desplegable métodos de pago -->
-                                <option value="Pago Móvil / Transferencia">Pago Móvil / Transf.</option> <!-- Opción de pago móvil -->
-                                <option value="Efectivo USD">Efectivo USD ($)</option> <!-- Opción efectivo divisa -->
+            <div class="border-t border-slate-200 bg-slate-50 p-5 space-y-4"> <!-- Sección del formulario de entrega y totales -->
+                <div class="space-y-2 text-xs"> <!-- Formulario del cliente -->
+                    <div> <!-- Casilla de nombre -->
+                        <label class="font-semibold text-slate-600 block mb-1">Nombre completo *</label> <!-- Etiqueta del nombre -->
+                        <input type="text" id="pedidoNombre" placeholder="Ej. Juan Pérez" class="w-full px-3 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-[#EB3687] outline-none"> <!-- Entrada de nombre -->
+                    </div> <!-- Fin casilla nombre -->
+                    <div class="grid grid-cols-2 gap-2"> <!-- Fila con modalidad y forma de pago -->
+                        <div> <!-- Modalidad de entrega -->
+                            <label class="font-semibold text-slate-600 block mb-1">Tipo de entrega</label> <!-- Etiqueta -->
+                            <select id="pedidoTipoEntrega" class="w-full px-2.5 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-[#EB3687] outline-none"> <!-- Selector modalidad -->
+                                <option value="Delivery">Delivery / A domicilio</option> <!-- Opción a domicilio -->
+                                <option value="Retiro en Local">Retiro en Local</option> <!-- Opción buscar en tienda -->
+                                <option value="Consumo en Mesa">Consumo en Mesa</option> <!-- Opción para clientes en mesa -->
+                            </select> <!-- Fin de selector -->
+                        </div> <!-- Fin modalidad -->
+                        <div> <!-- Método de pago -->
+                            <label class="font-semibold text-slate-600 block mb-1">Método de pago</label> <!-- Etiqueta pago -->
+                            <select id="pedidoMetodoPago" class="w-full px-2.5 py-2 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-[#EB3687] outline-none"> <!-- Selector métodos de pago -->
+                                <option value="Pago Móvil / Transferencia">Pago Móvil / Transf.</option> <!-- Opción pago móvil local -->
+                                <option value="Efectivo USD">Efectivo USD ($)</option> <!-- Opción dólares efectivo -->
                                 <option value="Zelle">Zelle</option> <!-- Opción Zelle -->
-                                <option value="Punto de Venta">Punto de Venta</option> <!-- Opción tarjeta/punto -->
-                            </select> <!-- Cierre de select pago -->
-                        </div> <!-- Cierre columna pago -->
-                    </div> <!-- Cierre de grid de dos columnas -->
-                    <div> <!-- Campo Dirección y Notas -->
-                        <label class="font-semibold text-slate-600 block mb-1">Dirección / Notas o detalles especiales</label> <!-- Etiqueta notas -->
-                        <textarea id="pedidoDireccion" rows="2" placeholder="Dirección exacta, punto de referencia o sin cebolla..." class="w-full px-3 py-1.5 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-paleta-fucsia focus:outline-none resize-none"></textarea> <!-- Campo de texto de notas -->
-                    </div> <!-- Cierre de campo dirección y notas -->
-                </div> <!-- Cierre de formulario del cliente -->
+                                <option value="Punto de Venta">Punto de Venta</option> <!-- Opción tarjeta/tarjetero -->
+                            </select> <!-- Fin selector de pago -->
+                        </div> <!-- Fin método de pago -->
+                    </div> <!-- Fin fila -->
+                    <div> <!-- Notas o detalles adicionales -->
+                        <label class="font-semibold text-slate-600 block mb-1">Dirección / Notas especiales</label> <!-- Etiqueta dirección -->
+                        <textarea id="pedidoDireccion" rows="2" placeholder="Dirección exacta, punto de referencia o notas..." class="w-full px-3 py-1.5 bg-white rounded-lg border border-slate-200 focus:ring-1 focus:ring-[#EB3687] outline-none resize-none"></textarea> <!-- Campo de texto para dirección -->
+                    </div> <!-- Fin notas -->
+                </div> <!-- Fin de formulario -->
 
-                <div class="border-t border-slate-200 pt-3 space-y-1"> <!-- Resumen de montos y totales -->
-                    <div class="flex justify-between items-center text-sm font-semibold text-slate-600"> <!-- Fila total USD -->
-                        <span>Total (USD):</span> <!-- Etiqueta Total USD -->
-                        <span id="txtTotalCarritoUSD" class="text-slate-800 font-bold">$0.00</span> <!-- Monto en dólares calculado -->
-                    </div> <!-- Cierre de fila USD -->
-                    <div class="flex justify-between items-center text-xs text-slate-500"> <!-- Fila total en moneda nacional -->
-                        <span>Total estimado en Bs:</span> <!-- Etiqueta estimado en Bs -->
-                        <span id="txtTotalCarritoBS" class="font-medium">Bs 0.00</span> <!-- Monto en bolívares calculado -->
-                    </div> <!-- Cierre de fila Bs -->
-                </div> <!-- Cierre de resumen de montos -->
+                <div class="border-t border-slate-200 pt-3 space-y-1"> <!-- Cálculo de totales -->
+                    <div class="flex justify-between items-center text-sm font-semibold text-slate-600"> <!-- Total en USD -->
+                        <span>Total (USD):</span> <!-- Etiqueta USD -->
+                        <span id="txtTotalCarritoUSD" class="text-slate-800 font-bold">$0.00</span> <!-- Monto en USD -->
+                    </div> <!-- Fin fila USD -->
+                    <div class="flex justify-between items-center text-xs text-slate-500"> <!-- Total en Bs -->
+                        <span>Total referencial en Bs:</span> <!-- Etiqueta Bs -->
+                        <span id="txtTotalCarritoBS" class="font-medium">Bs 0.00</span> <!-- Monto calculado en moneda local -->
+                    </div> <!-- Fin fila Bs -->
+                </div> <!-- Fin cálculo -->
 
-                <button onclick="enviarPedidoWhatsApp()" class="w-full py-3.5 bg-paleta-verdeOliva hover:opacity-95 text-white font-extrabold rounded-xl shadow-lg shadow-paleta-verdeOliva/30 flex items-center justify-center gap-2 transition transform active:scale-95"> <!-- Botón final para enviar pedido a WhatsApp -->
-                    <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i> <!-- Icono de WhatsApp -->
-                    <span>Confirmar y Pedir por WhatsApp</span> <!-- Texto de llamada a la acción -->
-                </button> <!-- Cierre de botón WhatsApp -->
-            </div> <!-- Cierre de sección inferior -->
-        </div> <!-- Cierre de panelCarrito -->
-    </div> <!-- Cierre de modalCarrito -->
+                <button onclick="enviarPedidoWhatsApp()" class="w-full py-3.5 bg-[#799916] hover:bg-[#688512] text-white font-extrabold rounded-xl shadow-lg flex items-center justify-center gap-2 transition active:scale-95"> <!-- Botón final para mandar comanda a WhatsApp -->
+                    <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i> <!-- Icono WhatsApp -->
+                    <span>Confirmar y Pedir por WhatsApp</span> <!-- Texto de acción -->
+                </button> <!-- Fin de botón de WhatsApp -->
+            </div> <!-- Fin de sección de formulario -->
+        </div> <!-- Fin de panelCarrito -->
+    </div> <!-- Fin de modalCarrito -->
 
     <!-- ========================================================
-         7. MODAL DE AJUSTES RÁPIDOS
+         6. MODAL DE AJUSTES RÁPIDOS (⚙️)
          ======================================================== -->
-    <div id="modalAjustes" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4"> <!-- Modal flotante para configurar número y tasa -->
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-4"> <!-- Ventana blanca de ajustes -->
-            <div class="flex justify-between items-center border-b pb-3"> <!-- Cabecera de la ventana de ajustes -->
-                <h3 class="font-bold text-paleta-azulMarino flex items-center gap-2"> <!-- Título con icono -->
-                    <i data-lucide="settings" class="w-5 h-5 text-paleta-fucsia"></i> <!-- Icono de ajustes -->
-                    Ajustes del Sistema <!-- Texto de título -->
-                </h3> <!-- Cierre de título -->
-                <button onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-slate-600"> <!-- Botón X de cerrar ventana -->
+    <div id="modalAjustes" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4"> <!-- Modal emergente de configuración rápida -->
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-4"> <!-- Caja blanca del modal -->
+            <div class="flex justify-between items-center border-b pb-3"> <!-- Cabecera del modal de ajustes -->
+                <h3 class="font-bold text-[#0049A5] flex items-center gap-2"> <!-- Título con icono -->
+                    <i data-lucide="settings" class="w-5 h-5 text-[#EB3687]"></i> <!-- Icono de configuración -->
+                    Ajustes de Tienda <!-- Título de la ventana -->
+                </h3> <!-- Fin título -->
+                <button onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-slate-600"> <!-- Botón X de cerrar -->
                     <i data-lucide="x" class="w-5 h-5"></i> <!-- Icono X -->
-                </button> <!-- Cierre de botón X -->
-            </div> <!-- Cierre de cabecera de ajustes -->
+                </button> <!-- Fin botón cerrar -->
+            </div> <!-- Fin cabecera ajustes -->
 
-            <div class="space-y-3 text-xs"> <!-- Campos editables de configuración rápida -->
+            <div class="space-y-3 text-xs"> <!-- Contenedor de campos de edición -->
                 <div> <!-- Campo WhatsApp -->
-                    <label class="font-semibold text-slate-600 block mb-1">WhatsApp receptor (con código país):</label> <!-- Etiqueta -->
-                    <input type="text" id="configInputWhatsapp" class="w-full p-2 border rounded-lg focus:ring-1 focus:ring-paleta-fucsia outline-none"> <!-- Entrada de número -->
-                    <span class="text-[10px] text-slate-400">Ejemplo: 584121234567 (sin signo +)</span> <!-- Indicación de formato -->
-                </div> <!-- Cierre campo WhatsApp -->
-                <div> <!-- Campo Tasa de Cambio -->
-                    <label class="font-semibold text-slate-600 block mb-1">Tasa de cambio Bs por 1 USD:</label> <!-- Etiqueta -->
-                    <input type="number" step="0.01" id="configInputTasa" class="w-full p-2 border rounded-lg focus:ring-1 focus:ring-paleta-fucsia outline-none"> <!-- Entrada numérica de la tasa -->
-                </div> <!-- Cierre campo Tasa -->
-            </div> <!-- Cierre campos editables -->
+                    <label class="font-semibold text-slate-600 block mb-1">WhatsApp receptor (con código país):</label> <!-- Etiqueta WhatsApp -->
+                    <input type="text" id="configInputWhatsapp" class="w-full p-2 border rounded-lg focus:ring-1 focus:ring-[#EB3687] outline-none"> <!-- Entrada numérica -->
+                    <span class="text-[10px] text-slate-400">Ejemplo: 584121234567 (sin signo +)</span> <!-- Ayuda explicativa -->
+                </div> <!-- Fin campo WhatsApp -->
+                <div> <!-- Campo Tasa -->
+                    <label class="font-semibold text-slate-600 block mb-1">Tasa de cambio Bs por 1 USD:</label> <!-- Etiqueta Tasa -->
+                    <input type="number" step="0.01" id="configInputTasa" class="w-full p-2 border rounded-lg focus:ring-1 focus:ring-[#EB3687] outline-none"> <!-- Entrada de valor de la tasa -->
+                </div> <!-- Fin campo Tasa -->
+            </div> <!-- Fin campos -->
 
-            <div class="flex justify-end gap-2 pt-2 border-t"> <!-- Botones de cancelar y guardar -->
+            <div class="flex justify-end gap-2 pt-2 border-t"> <!-- Botones de acción en ajustes -->
                 <button onclick="cerrarModalAjustes()" class="px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Cancelar</button> <!-- Botón cancelar -->
-                <button onclick="guardarAjustes()" class="px-4 py-2 text-xs font-bold bg-paleta-fucsia text-white rounded-lg hover:bg-paleta-fucsiaOscuro transition shadow-sm">Guardar Cambios</button> <!-- Botón guardar -->
-            </div> <!-- Cierre botones -->
-        </div> <!-- Cierre de ventana de ajustes -->
-    </div> <!-- Cierre de modalAjustes -->
+                <button onclick="guardarAjustes()" class="px-4 py-2 text-xs font-bold bg-[#EB3687] text-white rounded-lg hover:bg-[#C82470] transition shadow-sm">Guardar Cambios</button> <!-- Botón guardar -->
+            </div> <!-- Fin botones acción -->
+        </div> <!-- Fin caja blanca ajustes -->
+    </div> <!-- Fin modalAjustes -->
 
     <!-- =========================================================================================
-         8. LÓGICA JAVASCRIPT: CONFIGURACIÓN, PRECARGA DE IMÁGENES Y PROCESAMIENTO DE PEDIDOS
+         7. LÓGICA JAVASCRIPT: CATÁLOGO, PRECARGA DE IMÁGENES Y ENVÍO POR WHATSAPP
          ========================================================================================= -->
-    <script> <!-- Apertura del script principal con toda la interactividad del sitio -->
+    <script> <!-- Apertura del código JavaScript ejecutable -->
         /* ========================================================
-           8.1 CONFIGURACIÓN CENTRAL DEL COMERCIO
+           7.1 DATOS GENERALES DEL NEGOCIO
            ======================================================== */
-        const CONFIG_NEGOCIO = { <!-- Objeto con los parámetros principales del negocio -->
-            nombre: "Mi Negocio / Menú Online", <!-- Nombre comercial del restaurante o tienda -->
-            whatsapp: "584121234567",       <!-- Número de WhatsApp donde recibirás los pedidos (con código de país sin +) -->
+        const CONFIG_NEGOCIO = { <!-- Parámetros de configuración del restaurante o tienda -->
+            nombre: "Mi Negocio / Menú Online", <!-- Nombre visible de la tienda -->
+            whatsapp: "584121234567",       <!-- Número telefónico receptor para WhatsApp (con código de país sin +) -->
             tasaCambioBs: 36.50,            <!-- Tasa de conversión de USD a Bolívares -->
-            imagenFondo: "",                <!-- Ruta a la imagen de fondo de pantalla completa (ej. "imagenes/fondo.jpg") -->
-            logo: "",                       <!-- Ruta al archivo de logo (ej. "imagenes/logo.png") -->
-            banner: ""                      <!-- Ruta al banner publicitario superior (ej. "imagenes/banner.jpg") -->
+            logo: ""                        <!-- Ruta al logo (ej. "imagenes/logo.png"). Si se deja vacío muestra icono -->
         }; <!-- Fin de CONFIG_NEGOCIO -->
 
         /* ========================================================
-           8.2 CATEGORÍAS DEL MENÚ
+           7.2 CATEGORÍAS DEL CATÁLOGO
            ======================================================== */
-        const CATEGORIAS = [ <!-- Lista de categorías para organizar el catálogo de productos -->
-            { id: "todos", nombre: "Todos", icono: "grid" }, <!-- Categoría general para mostrar todo el catálogo -->
+        const CATEGORIAS = [ <!-- Categorías disponibles para filtrar platos y productos -->
+            { id: "todos", nombre: "Todos", icono: "grid" }, <!-- Categoría global para visualizar todo el inventario -->
             { id: "hamburguesas", nombre: "Hamburguesas", icono: "beef" }, <!-- Categoría Hamburguesas -->
             { id: "pizzas", nombre: "Pizzas", icono: "pizza" }, <!-- Categoría Pizzas -->
             { id: "bebidas", nombre: "Bebidas", icono: "glass-water" }, <!-- Categoría Bebidas -->
             { id: "postres", nombre: "Postres", icono: "cake" } <!-- Categoría Postres -->
-        ]; <!-- Fin del listado de categorías -->
+        ]; <!-- Fin de CATEGORIAS -->
 
         /* ========================================================
-           8.3 CATÁLOGO DE PRODUCTOS (CON SOPORTE DE DOBLE IMAGEN)
+           7.3 CATÁLOGO DE PRODUCTOS (CADA UNO TIENE 2 IMÁGENES)
+           - image: Foto 1 (se ve primero por defecto de manera estándar).
+           - hoverImage: Foto 2 (aparece automáticamente al colocar el puntero sobre el producto).
            ======================================================== */
-        const PRODUCTOS_CATALOGO = [ <!-- Array con la lista completa de artículos para la venta -->
+        const PRODUCTOS_CATALOGO = [ <!-- Array de productos disponibles para la compra -->
             { <!-- Producto 1 -->
-                id: 1, <!-- Identificador único del producto -->
-                name: "Hamburguesa Clásica Especial", <!-- Nombre del artículo -->
-                category: "hamburguesas", <!-- Categoría a la que pertenece -->
-                price: 8.50, <!-- Precio en dólares americanos -->
+                id: 1, <!-- Identificador numérico único -->
+                name: "Hamburguesa Clásica Especial", <!-- Nombre comercial del producto -->
+                category: "hamburguesas", <!-- Categoría asignada -->
+                price: 8.50, <!-- Precio en USD -->
                 description: "Carne 150g, queso cheddar fundido, lechuga fresca, rodajas de tomate y salsa de la casa.", <!-- Descripción de ingredientes -->
-                image: "imagenes/prueba1.jpg", <!-- Foto principal mostrada por defecto -->
-                hoverImage: "imagenes/prueba2.jpg" <!-- Foto secundaria mostrada al pasar el cursor -->
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Se visualiza primero -->
+                hoverImage: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Se visualiza al colocar el puntero -->
             }, <!-- Fin Producto 1 -->
             { <!-- Producto 2 -->
-                id: 2, <!-- Identificador único -->
-                name: "Hamburguesa Doble Bacon & Queso", <!-- Nombre del artículo -->
+                id: 2, <!-- Identificador numérico único -->
+                name: "Hamburguesa Doble Bacon & Queso", <!-- Nombre del producto -->
                 category: "hamburguesas", <!-- Categoría -->
                 price: 11.00, <!-- Precio en USD -->
-                description: "Doble carne jugosa, tocineta crujiente ahumada, extra cheddar y salsa BBQ artesanal.", <!-- Ingredientes -->
-                image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80", <!-- Imagen principal -->
-                hoverImage: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&auto=format&fit=crop&q=80" <!-- Imagen hover -->
+                description: "Doble carne jugosa, tocineta crujiente ahumada, extra cheddar y salsa BBQ artesanal.", <!-- Descripción -->
+                image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             }, <!-- Fin Producto 2 -->
             { <!-- Producto 3 -->
-                id: 3, <!-- Identificador único -->
+                id: 3, <!-- Identificador numérico único -->
                 name: "Pizza Pepperoni Suprema", <!-- Nombre -->
                 category: "pizzas", <!-- Categoría -->
                 price: 13.50, <!-- Precio en USD -->
                 description: "Masa artesanal a la piedra, salsa de tomate natural, abundante mozzarella y rodajas de pepperoni.", <!-- Descripción -->
-                image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&auto=format&fit=crop&q=80", <!-- Foto 1 -->
-                hoverImage: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600&auto=format&fit=crop&q=80" <!-- Foto 2 al pasar el cursor -->
+                image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             }, <!-- Fin Producto 3 -->
             { <!-- Producto 4 -->
-                id: 4, <!-- Identificador único -->
+                id: 4, <!-- Identificador numérico único -->
                 name: "Pizza Margarita Tradicional", <!-- Nombre -->
                 category: "pizzas", <!-- Categoría -->
                 price: 10.00, <!-- Precio en USD -->
                 description: "Queso mozzarella fior di latte, albahaca fresca de huerto y toque de aceite de oliva virgen extra.", <!-- Descripción -->
-                image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop&q=80", <!-- Foto 1 -->
-                hoverImage: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&auto=format&fit=crop&q=80" <!-- Foto 2 -->
+                image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             }, <!-- Fin Producto 4 -->
             { <!-- Producto 5 -->
-                id: 5, <!-- Identificador único -->
+                id: 5, <!-- Identificador numérico único -->
                 name: "Bebida Refrescante 1.5L", <!-- Nombre -->
                 category: "bebidas", <!-- Categoría -->
                 price: 2.50, <!-- Precio en USD -->
                 description: "Refresco bien frío, presentaciones variadas a consultar.", <!-- Descripción -->
-                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&auto=format&fit=crop&q=80", <!-- Foto 1 -->
-                hoverImage: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80" <!-- Foto 2 -->
+                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             }, <!-- Fin Producto 5 -->
             { <!-- Producto 6 -->
-                id: 6, <!-- Identificador único -->
+                id: 6, <!-- Identificador numérico único -->
                 name: "Malteada de Fresa & Vainilla", <!-- Nombre -->
                 category: "bebidas", <!-- Categoría -->
                 price: 4.50, <!-- Precio en USD -->
                 description: "Batido cremoso elaborado con helado artesanal, crema batida y sirope de fresa.", <!-- Descripción -->
-                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format&fit=crop&q=80", <!-- Foto 1 -->
-                hoverImage: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=600&auto=format&fit=crop&q=80" <!-- Foto 2 -->
+                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             }, <!-- Fin Producto 6 -->
             { <!-- Producto 7 -->
-                id: 7, <!-- Identificador único -->
+                id: 7, <!-- Identificador numérico único -->
                 name: "Brownie Artesanal con Helado", <!-- Nombre -->
                 category: "postres", <!-- Categoría -->
                 price: 5.00, <!-- Precio en USD -->
                 description: "Bizcocho tibio de chocolate fundido, acompañado de bola de helado de mantecado y nueces.", <!-- Descripción -->
-                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80", <!-- Foto 1 -->
-                hoverImage: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&auto=format&fit=crop&q=80" <!-- Foto 2 -->
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80", <!-- Foto 1: Normal -->
+                hoverImage: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&auto=format&fit=crop&q=80" <!-- Foto 2: Al colocar puntero -->
             } <!-- Fin Producto 7 -->
-        ]; <!-- Fin de la lista de productos -->
+        ]; <!-- Fin del listado PRODUCTOS_CATALOGO -->
 
         /* ========================================================
-           8.4 VARIABLES DE ESTADO GLOBAL
+           7.4 VARIABLES DE ESTADO Y CONTROL
            ======================================================== */
-        let carrito = []; <!-- Array en memoria que almacena los artículos seleccionados por el cliente -->
-        let categoriaActiva = "todos"; <!-- Almacena el ID de la categoría que se está filtrando actualmente -->
-        let busquedaTexto = ""; <!-- Almacena el término escrito en la barra de búsqueda -->
-        let mostrarEnBs = false; <!-- Bandera booleana para alternar entre mostrar dólares ($) o bolívares (Bs) -->
+        let carrito = []; <!-- Arreglo en memoria para almacenar los ítems añadidos al pedido -->
+        let categoriaActiva = "todos"; <!-- Controla cuál categoría se encuentra seleccionada -->
+        let busquedaTexto = ""; <!-- Almacena el término escrito en el buscador -->
+        let mostrarEnBs = false; <!-- Bandera booleana para alternar entre USD y Bs -->
 
         /* ========================================================
-           8.5 PRECARGA AUTOMÁTICA DE IMÁGENES SECUNDARIAS
+           7.5 PRECARGA DE IMÁGENES SECUNDARIAS
+           Descarga en segundo plano la segunda foto (hoverImage) de cada ítem
+           para que el cambio de imagen ocurra al instante al colocar el puntero.
            ======================================================== */
-        function precargarImagenesHover() { <!-- Función que descarga las imágenes hover en segundo plano -->
-            PRODUCTOS_CATALOGO.forEach(prod => { <!-- Recorre cada uno de los productos registrados en el catálogo -->
-                if (prod.hoverImage && prod.hoverImage.trim() !== "") { <!-- Comprueba que exista una segunda foto especificada -->
-                    const precarga = new Image(); <!-- Crea una instancia virtual de imagen en la memoria del navegador -->
-                    precarga.src = prod.hoverImage; <!-- Asigna la ruta para forzar su descarga inmediata a la memoria caché -->
-                } <!-- Fin de la condición de comprobación -->
-            }); <!-- Fin del ciclo forEach -->
-        } <!-- Fin de la función precargarImagenesHover -->
+        function precargarImagenesSecundarias() { <!-- Función que ejecuta la descarga anticipada en memoria -->
+            PRODUCTOS_CATALOGO.forEach(prod => { <!-- Recorre cada uno de los productos registrados -->
+                if (prod.hoverImage && prod.hoverImage.trim() !== "") { <!-- Comprueba que tenga asignada una segunda foto -->
+                    const img = new Image(); <!-- Crea un objeto de imagen invisible en la memoria del navegador -->
+                    img.src = prod.hoverImage; <!-- Inicia la descarga inmediata hacia la memoria caché -->
+                } <!-- Fin de verificación -->
+            }); <!-- Fin de bucle forEach -->
+        } <!-- Fin de precargarImagenesSecundarias -->
 
         /* ========================================================
-           8.6 INICIALIZACIÓN DEL SISTEMA AL CARGAR LA PÁGINA
+           7.6 INICIALIZACIÓN AL ABRIR LA PÁGINA
            ======================================================== */
-        document.addEventListener('DOMContentLoaded', () => { <!-- Escucha cuando todo el documento HTML ha sido leído -->
-            const wsGuardado = localStorage.getItem('cfg_whatsapp'); <!-- Lee de la memoria local si hay un WhatsApp guardado -->
-            const tasaGuardada = localStorage.getItem('cfg_tasa'); <!-- Lee de la memoria local si hay una tasa guardada -->
-            if (wsGuardado) CONFIG_NEGOCIO.whatsapp = wsGuardado; <!-- Aplica el WhatsApp guardado si existe -->
-            if (tasaGuardada) CONFIG_NEGOCIO.tasaCambioBs = parseFloat(tasaGuardada); <!-- Aplica la tasa guardada si existe -->
+        document.addEventListener('DOMContentLoaded', () => { <!-- Dispara la lógica cuando el HTML está cargado -->
+            const wsGuardado = localStorage.getItem('cfg_whatsapp'); <!-- Revisa si se configuró un WhatsApp en el navegador -->
+            const tasaGuardada = localStorage.getItem('cfg_tasa'); <!-- Revisa si se guardó una tasa personalizada -->
+            if (wsGuardado) CONFIG_NEGOCIO.whatsapp = wsGuardado; <!-- Aplica el WhatsApp almacenado -->
+            if (tasaGuardada) CONFIG_NEGOCIO.tasaCambioBs = parseFloat(tasaGuardada); <!-- Aplica la tasa almacenada -->
 
-            aplicarImagenFondo(); <!-- Aplica la imagen de fondo personalizada si fue configurada -->
-
-            document.getElementById('txtNombreNegocio').textContent = CONFIG_NEGOCIO.nombre; <!-- Escribe el nombre en la cabecera -->
-            configurarLogoYBanner(); <!-- Dibuja el logo y el banner publicitario -->
-
-            renderizarCategorias(); <!-- Genera los botones de las categorías en pantalla -->
-            renderizarProductos(); <!-- Genera las tarjetas con los productos en la tienda -->
-
-            precargarImagenesHover(); <!-- Inicia la descarga rápida de fotos secundarias -->
-
-            if (window.lucide) lucide.createIcons(); <!-- Inicializa todos los iconos de la librería Lucide -->
-        }); <!-- Fin del listener DOMContentLoaded -->
-
-        function configurarLogoYBanner() { <!-- Función encargada de renderizar logo y banner -->
-            if (CONFIG_NEGOCIO.logo && CONFIG_NEGOCIO.logo.trim() !== "") { <!-- Comprueba si se suministró un archivo de logo -->
-                const contenedor = document.getElementById('contenedorLogo'); <!-- Obtiene el elemento HTML del logo -->
-                contenedor.innerHTML = `<img src="${CONFIG_NEGOCIO.logo}" alt="Logo" class="w-full h-full object-cover">`; <!-- Inserta la etiqueta img -->
+            document.getElementById('txtNombreNegocio').textContent = CONFIG_NEGOCIO.nombre; <!-- Muestra el nombre del negocio en cabecera -->
+            
+            if (CONFIG_NEGOCIO.logo && CONFIG_NEGOCIO.logo.trim() !== "") { <!-- Si existe logo definido -->
+                document.getElementById('contenedorLogo').innerHTML = `<img src="${CONFIG_NEGOCIO.logo}" alt="Logo" class="w-full h-full object-cover">`; <!-- Coloca la imagen de logo -->
             } <!-- Fin de validación del logo -->
-            if (CONFIG_NEGOCIO.banner && CONFIG_NEGOCIO.banner.trim() !== "") { <!-- Comprueba si se suministró imagen de banner -->
-                const bannerOverlay = document.getElementById('bannerImgOverlay'); <!-- Obtiene la capa del banner -->
-                bannerOverlay.style.backgroundImage = `url('${CONFIG_NEGOCIO.banner}')`; <!-- Asigna la imagen como fondo -->
-                bannerOverlay.classList.remove('opacity-30'); <!-- Remueve la opacidad baja por defecto -->
-                bannerOverlay.classList.add('opacity-50'); <!-- Aplica opacidad moderada para realzar el texto -->
-            } <!-- Fin de validación del banner -->
-        } <!-- Fin de configurarLogoYBanner -->
 
-        function aplicarImagenFondo() { <!-- Función que aplica la imagen de fondo si está definida -->
-            if (CONFIG_NEGOCIO.imagenFondo && CONFIG_NEGOCIO.imagenFondo.trim() !== "") { <!-- Valida que la variable no esté vacía -->
-                document.body.style.backgroundImage = `url('${CONFIG_NEGOCIO.imagenFondo}')`; <!-- Asigna la ruta de la foto al fondo -->
-                document.body.classList.add('bg-custom-image'); <!-- Aplica las reglas CSS de pantalla completa fija -->
-            } <!-- Fin de validación de fondo -->
-        } <!-- Fin de aplicarImagenFondo -->
+            renderizarCategorias(); <!-- Dibuja los botones de categoría -->
+            renderizarProductos(); <!-- Dibuja el catálogo con el sistema de cambio de imagen estándar -->
+            precargarImagenesSecundarias(); <!-- Descarga de inmediato las fotos secundarias -->
+
+            if (window.lucide) lucide.createIcons(); <!-- Genera los iconos de Lucide -->
+        }); <!-- Fin del listener de carga inicial -->
 
         /* ========================================================
-           8.7 RENDERIZADO DINÁMICO DE CATEGORÍAS
+           7.7 RENDERIZADO DE BOTONES DE CATEGORÍAS
            ======================================================== */
-        function renderizarCategorias() { <!-- Función que construye visualmente los botones de filtros -->
-            const contenedor = document.getElementById('contenedorCategorias'); <!-- Selecciona el div contenedor -->
-            contenedor.innerHTML = CATEGORIAS.map(cat => { <!-- Itera sobre cada categoría y genera su HTML -->
-                const activa = cat.id === categoriaActiva; <!-- Evalúa si esta categoría es la actualmente seleccionada -->
-                return ` <!-- Retorna la plantilla del botón -->
+        function renderizarCategorias() { <!-- Construye el menú de botones de filtrado -->
+            const contenedor = document.getElementById('contenedorCategorias'); <!-- Selecciona el contenedor de categorías -->
+            contenedor.innerHTML = CATEGORIAS.map(cat => { <!-- Genera un botón para cada categoría -->
+                const activa = cat.id === categoriaActiva; <!-- Evalúa si esta categoría es la activa -->
+                return ` <!-- Plantilla HTML del botón -->
                     <button onclick="seleccionarCategoria('${cat.id}')" 
                             class="px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all shadow-sm
                             ${activa 
-                                ? 'bg-paleta-fucsia text-white shadow-md shadow-paleta-fucsia/30 scale-105' 
-                                : 'bg-white/90 text-paleta-azulMarino border border-paleta-arena hover:bg-paleta-crema'}">
-                        <i data-lucide="${cat.icono}" class="w-4 h-4"></i> <!-- Icono representativo de la categoría -->
+                                ? 'bg-[#EB3687] text-white shadow-md shadow-[#EB3687]/30 scale-105' 
+                                : 'bg-white text-[#0049A5] border border-slate-200 hover:bg-slate-50'}">
+                        <i data-lucide="${cat.icono}" class="w-4 h-4"></i> <!-- Icono correspondiente -->
                         <span>${cat.nombre}</span> <!-- Nombre de la categoría -->
                     </button>
-                `; <!-- Cierre del string HTML -->
-            }).join(''); <!-- Une todos los fragmentos de texto en una sola cadena -->
-            if (window.lucide) lucide.createIcons(); <!-- Vuelve a cargar los iconos generados -->
+                `; <!-- Fin de plantilla -->
+            }).join(''); <!-- Une los botones en una sola cadena -->
+            if (window.lucide) lucide.createIcons(); <!-- Refresca los iconos -->
         } <!-- Fin de renderizarCategorias -->
 
-        function seleccionarCategoria(idCat) { <!-- Función para cambiar la categoría visualizada -->
-            categoriaActiva = idCat; <!-- Guarda la nueva categoría activa -->
-            renderizarCategorias(); <!-- Vuelve a pintar los botones para actualizar el botón resaltado -->
-            renderizarProductos(); <!-- Filtra y muestra únicamente los productos pertinentes -->
+        function seleccionarCategoria(idCat) { <!-- Filtra por la categoría clickeada -->
+            categoriaActiva = idCat; <!-- Guarda la categoría seleccionada -->
+            renderizarCategorias(); <!-- Actualiza el aspecto de los botones -->
+            renderizarProductos(); <!-- Muestra los productos de dicha categoría -->
         } <!-- Fin de seleccionarCategoria -->
 
-        function filtrarProductos() { <!-- Función que se dispara con cada tecla pulsada en el buscador -->
-            busquedaTexto = document.getElementById('inputBuscar').value.toLowerCase().trim(); <!-- Normaliza el texto a minúsculas -->
-            renderizarProductos(); <!-- Vuelve a filtrar y pintar el catálogo de productos -->
+        function filtrarProductos() { <!-- Filtra productos mientras se escribe en la búsqueda -->
+            busquedaTexto = document.getElementById('inputBuscar').value.toLowerCase().trim(); <!-- Obtiene el texto en minúsculas -->
+            renderizarProductos(); <!-- Vuelve a filtrar y dibujar el catálogo -->
         } <!-- Fin de filtrarProductos -->
 
         /* ========================================================
-           8.8 RENDERIZADO DEL CATÁLOGO DE PRODUCTOS (CON EFECTO HOVER)
+           7.8 RENDERIZADO DEL CATÁLOGO (CAMBIO DE IMAGEN Y TAMAÑO ESTÁNDAR)
            ======================================================== */
-        function renderizarProductos() { <!-- Función que dibuja las tarjetas de los productos en pantalla -->
-            const grid = document.getElementById('gridProductos'); <!-- Selecciona el grid contenedor -->
-            const sinResultados = document.getElementById('sinResultados'); <!-- Selecciona el mensaje de sin resultados -->
+        function renderizarProductos() { <!-- Genera las tarjetas con el tamaño estándar y cambio de foto -->
+            const grid = document.getElementById('gridProductos'); <!-- Selecciona la cuadrícula -->
+            const sinResultados = document.getElementById('sinResultados'); <!-- Selecciona el aviso de sin resultados -->
 
-            const filtrados = PRODUCTOS_CATALOGO.filter(item => { <!-- Aplica el filtro de categoría y texto -->
-                const coincideCat = (categoriaActiva === 'todos') || (item.category === categoriaActiva); <!-- Coincidencia de categoría -->
-                const coincideTexto = item.name.toLowerCase().includes(busquedaTexto) || <!-- Coincidencia en el nombre -->
-                                      item.description.toLowerCase().includes(busquedaTexto); <!-- Coincidencia en la descripción -->
+            const filtrados = PRODUCTOS_CATALOGO.filter(item => { <!-- Aplica los criterios de filtro activo -->
+                const coincideCat = (categoriaActiva === 'todos') || (item.category === categoriaActiva); <!-- Comprueba categoría -->
+                const coincideTexto = item.name.toLowerCase().includes(busquedaTexto) || <!-- Comprueba nombre -->
+                                      item.description.toLowerCase().includes(busquedaTexto); <!-- Comprueba descripción -->
                 return coincideCat && coincideTexto; <!-- Retorna verdadero si cumple ambas condiciones -->
             }); <!-- Fin de filter -->
 
-            if (filtrados.length === 0) { <!-- Si no hubo productos que coincidieran -->
-                grid.innerHTML = ""; <!-- Limpia la cuadrícula -->
-                sinResultados.classList.remove('hidden'); <!-- Muestra el aviso informativo -->
-                return; <!-- Finaliza la ejecución de la función -->
-            } <!-- Fin de validación sin resultados -->
+            if (filtrados.length === 0) { <!-- Si ningún producto coincide con la búsqueda -->
+                grid.innerHTML = ""; <!-- Vacía el catálogo -->
+                sinResultados.classList.remove('hidden'); <!-- Muestra el mensaje informativo -->
+                return; <!-- Sale de la función -->
+            } <!-- Fin de validación -->
 
-            sinResultados.classList.add('hidden'); <!-- Asegura que el aviso de error esté oculto -->
+            sinResultados.classList.add('hidden'); <!-- Oculta el mensaje si hay resultados -->
 
-            grid.innerHTML = filtrados.map(prod => { <!-- Transforma cada objeto de producto en código HTML -->
-                const precioUSD = prod.price.toFixed(2); <!-- Formatea el precio en USD a dos decimales -->
-                const precioBS = (prod.price * CONFIG_NEGOCIO.tasaCambioBs).toFixed(2); <!-- Calcula y formatea en moneda nacional -->
-                const tieneHover = Boolean(prod.hoverImage && prod.hoverImage.trim() !== ""); <!-- Verifica si tiene segunda foto -->
+            grid.innerHTML = filtrados.map(prod => { <!-- Recorre cada producto para crear su tarjeta -->
+                const precioUSD = prod.price.toFixed(2); <!-- Formatea precio a dos decimales -->
+                const precioBS = (prod.price * CONFIG_NEGOCIO.tasaCambioBs).toFixed(2); <!-- Calcula el precio en Bs -->
+                const tieneSegundaFoto = Boolean(prod.hoverImage && prod.hoverImage.trim() !== ""); <!-- Verifica si tiene segunda foto -->
 
-                return ` <!-- Retorna la tarjeta del producto -->
-                    <article class="tarjeta-cristal tarjeta-producto ${tieneHover ? '' : 'sin-hover'} rounded-2xl overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                return ` <!-- Retorna la estructura HTML de la tarjeta -->
+                    <article class="tarjeta-item ${tieneSegundaFoto ? '' : 'foto-unica'} bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                         
-                        <!-- Contenedor con las 2 imágenes superpuestas para la animación al pasar el cursor -->
-                        <div class="contenedor-imagen-hover">
-                            <!-- Foto 1: Visible por defecto -->
+                        <!-- Contenedor con tamaño 100% estándar (altura fija para que todas sean parejas) -->
+                        <div class="contenedor-foto-estandar">
+                            <!-- Foto 1 (Visible por defecto) -->
                             <img src="${prod.image}" 
                                  alt="${prod.name}" 
-                                 loading="lazy" 
-                                 class="img-base">
+                                 class="foto-producto img-vista-normal">
                             
-                            <!-- Foto 2: Se hace visible instantáneamente al pasar el cursor -->
-                            ${tieneHover ? `
+                            <!-- Foto 2 (Se muestra ÚNICAMENTE al colocar el puntero encima; nunca se ven al mismo tiempo) -->
+                            ${tieneSegundaFoto ? `
                                 <img src="${prod.hoverImage}" 
-                                     alt="${prod.name} detalle" 
-                                     loading="lazy" 
-                                     class="img-hover">
+                                     alt="${prod.name} vista secundaria" 
+                                     class="foto-producto img-vista-hover">
                             ` : ''}
 
-                            <!-- Insignia flotante con el precio principal -->
-                            <div class="absolute bottom-2.5 right-2.5 z-30 bg-paleta-azulMarino/95 text-white px-2.5 py-1 rounded-lg text-xs font-black shadow-md backdrop-blur-sm">
+                            <!-- Insignia del precio en la esquina inferior de la foto -->
+                            <div class="absolute bottom-2.5 right-2.5 bg-[#0049A5]/90 text-white px-2.5 py-1 rounded-lg text-xs font-black shadow-md backdrop-blur-sm pointer-events-none">
                                 ${mostrarEnBs ? `Bs ${precioBS}` : `$${precioUSD}`}
                             </div>
                         </div>
 
-                        <!-- Detalles informativos del producto y botón de compra -->
+                        <!-- Detalles del producto y botón de compra -->
                         <div class="p-4 flex flex-col flex-grow justify-between gap-3">
                             <div>
-                                <h3 class="font-extrabold text-paleta-azulMarino text-base leading-snug group-hover:text-paleta-fucsia transition-colors">
+                                <h3 class="font-extrabold text-[#0049A5] text-base leading-snug group-hover:text-[#EB3687] transition-colors">
                                     ${prod.name}
                                 </h3>
                                 <p class="text-xs text-slate-600 line-clamp-2 mt-1 leading-relaxed">
@@ -592,87 +497,87 @@
                             <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
                                 <div>
                                     <span class="text-[10px] text-slate-400 uppercase font-bold block">Precio:</span>
-                                    <span class="text-sm font-black text-paleta-fucsia">
+                                    <span class="text-sm font-black text-[#EB3687]">
                                         $${precioUSD} <span class="text-[11px] font-medium text-slate-500">/ Bs ${precioBS}</span>
                                     </span>
                                 </div>
 
                                 <button onclick="agregarAlCarrito(${prod.id})" 
-                                        class="px-3.5 py-2 bg-paleta-fucsia hover:bg-paleta-fucsiaOscuro text-white text-xs font-bold rounded-xl shadow-md shadow-paleta-fucsia/20 flex items-center gap-1.5 transition transform active:scale-95">
+                                        class="px-3.5 py-2 bg-[#EB3687] hover:bg-[#C82470] text-white text-xs font-bold rounded-xl shadow-md flex items-center gap-1.5 transition active:scale-95">
                                     <i data-lucide="plus" class="w-4 h-4"></i>
                                     <span>Agregar</span>
                                 </button>
                             </div>
                         </div>
                     </article>
-                `; <!-- Fin del template de la tarjeta -->
-            }).join(''); <!-- Une todas las tarjetas en un string único -->
+                `; <!-- Fin de plantilla de tarjeta -->
+            }).join(''); <!-- Une todas las tarjetas generadas -->
 
-            if (window.lucide) lucide.createIcons(); <!-- Refresca los iconos creados -->
+            if (window.lucide) lucide.createIcons(); <!-- Refresca los iconos generados -->
         } <!-- Fin de renderizarProductos -->
 
         /* ========================================================
-           8.9 GESTIÓN DEL CARRITO DE COMPRAS
+           7.9 GESTIÓN DEL CARRITO DE COMPRAS
            ======================================================== */
-        function agregarAlCarrito(idProducto) { <!-- Agrega un producto a la lista del pedido -->
-            const prod = PRODUCTOS_CATALOGO.find(p => p.id === idProducto); <!-- Busca el producto en el catálogo por su id -->
-            if (!prod) return; <!-- Si no existe, no hace nada -->
+        function agregarAlCarrito(idProducto) { <!-- Añade un artículo al pedido -->
+            const prod = PRODUCTOS_CATALOGO.find(p => p.id === idProducto); <!-- Busca el producto por ID -->
+            if (!prod) return; <!-- Si no existe se interrumpe -->
 
-            const itemExistente = carrito.find(item => item.id === idProducto); <!-- Revisa si el artículo ya estaba en el carrito -->
-            if (itemExistente) { <!-- Si ya estaba agregado previamente -->
-                itemExistente.cantidad++; <!-- Incrementa su contador en una unidad -->
+            const itemExistente = carrito.find(item => item.id === idProducto); <!-- Comprueba si ya estaba en el carrito -->
+            if (itemExistente) { <!-- Si ya estaba agregado -->
+                itemExistente.cantidad++; <!-- Incrementa en 1 la cantidad -->
             } else { <!-- Si es la primera vez que se agrega -->
-                carrito.push({ <!-- Inserta un nuevo objeto dentro del carrito -->
+                carrito.push({ <!-- Inserta el nuevo ítem -->
                     id: prod.id, <!-- ID del producto -->
-                    name: prod.name, <!-- Nombre del producto -->
-                    price: prod.price, <!-- Precio unitario en USD -->
-                    image: prod.image, <!-- Foto miniatura -->
+                    name: prod.name, <!-- Nombre -->
+                    price: prod.price, <!-- Precio en USD -->
+                    image: prod.image, <!-- Foto principal -->
                     cantidad: 1 <!-- Cantidad inicial -->
-                }); <!-- Cierre del objeto a insertar -->
+                }); <!-- Fin de objeto -->
             } <!-- Fin de validación -->
 
-            actualizarCarritoUI(); <!-- Actualiza todos los elementos gráficos y totales del carrito -->
+            actualizarCarritoUI(); <!-- Refresca la interfaz de usuario -->
         } <!-- Fin de agregarAlCarrito -->
 
-        function cambiarCantidad(idProducto, delta) { <!-- Modifica la cantidad de un artículo (+1 o -1) -->
-            const item = carrito.find(i => i.id === idProducto); <!-- Encuentra el artículo en el carrito -->
-            if (!item) return; <!-- Si no existe, detiene la ejecución -->
+        function cambiarCantidad(idProducto, delta) { <!-- Suma o resta cantidad en el carrito -->
+            const item = carrito.find(i => i.id === idProducto); <!-- Encuentra el ítem por ID -->
+            if (!item) return; <!-- Si no existe se interrumpe -->
 
-            item.cantidad += delta; <!-- Suma o resta la cantidad indicada -->
+            item.cantidad += delta; <!-- Aplica el incremento o decremento -->
             if (item.cantidad <= 0) { <!-- Si la cantidad llega a cero -->
-                carrito = carrito.filter(i => i.id !== idProducto); <!-- Elimina el producto por completo de la lista -->
-            } <!-- Fin de validación de cantidad cero -->
-            actualizarCarritoUI(); <!-- Refresca la interfaz de usuario con los nuevos totales -->
+                carrito = carrito.filter(i => i.id !== idProducto); <!-- Remueve el ítem del pedido -->
+            } <!-- Fin de validación cero -->
+            actualizarCarritoUI(); <!-- Refresca la interfaz del carrito -->
         } <!-- Fin de cambiarCantidad -->
 
-        function actualizarCarritoUI() { <!-- Recalcula subtotales y actualiza textos en pantalla -->
-            const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0); <!-- Calcula la cantidad total de artículos -->
-            const totalUSD = carrito.reduce((acc, item) => acc + (item.price * item.cantidad), 0); <!-- Calcula la suma total en USD -->
-            const totalBS = totalUSD * CONFIG_NEGOCIO.tasaCambioBs; <!-- Multiplica el total en USD por la tasa de cambio -->
+        function actualizarCarritoUI() { <!-- Recalcula los totales acumulados -->
+            const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0); <!-- Suma total de unidades pedidas -->
+            const totalUSD = carrito.reduce((acc, item) => acc + (item.price * item.cantidad), 0); <!-- Suma total en dólares -->
+            const totalBS = totalUSD * CONFIG_NEGOCIO.tasaCambioBs; <!-- Suma equivalente en bolívares -->
 
-            document.getElementById('contadorCarritoCabecera').textContent = totalItems; <!-- Actualiza el contador de la cabecera -->
-            document.getElementById('cantidadBarraMovil').textContent = totalItems; <!-- Actualiza el contador de la barra móvil -->
-            document.getElementById('totalBarraMovil').textContent = `$${totalUSD.toFixed(2)}`; <!-- Actualiza el total de la barra móvil -->
+            document.getElementById('contadorCarritoCabecera').textContent = totalItems; <!-- Actualiza badge de la cabecera -->
+            document.getElementById('cantidadBarraMovil').textContent = totalItems; <!-- Actualiza contador de la barra móvil -->
+            document.getElementById('totalBarraMovil').textContent = `$${totalUSD.toFixed(2)}`; <!-- Actualiza monto en barra móvil -->
 
-            document.getElementById('txtTotalCarritoUSD').textContent = `$${totalUSD.toFixed(2)}`; <!-- Actualiza el total USD en el modal -->
-            document.getElementById('txtTotalCarritoBS').textContent = `Bs ${totalBS.toFixed(2)}`; <!-- Actualiza el total Bs en el modal -->
+            document.getElementById('txtTotalCarritoUSD').textContent = `$${totalUSD.toFixed(2)}`; <!-- Actualiza total USD en el modal -->
+            document.getElementById('txtTotalCarritoBS').textContent = `Bs ${totalBS.toFixed(2)}`; <!-- Actualiza total Bs en el modal -->
 
-            const contenedorItems = document.getElementById('itemsCarrito'); <!-- Obtiene el contenedor de lista de artículos -->
-            if (carrito.length === 0) { <!-- Si el carrito está completamente vacío -->
+            const contenedorItems = document.getElementById('itemsCarrito'); <!-- Obtiene contenedor de lista del carrito -->
+            if (carrito.length === 0) { <!-- Si no hay ítems en la lista -->
                 contenedorItems.innerHTML = `
                     <div class="text-center py-12 text-slate-400">
                         <i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
                         <p class="text-sm font-semibold">Tu orden está vacía</p>
-                        <p class="text-xs mt-0.5">Agrega algunos productos deliciosos para comenzar.</p>
+                        <p class="text-xs mt-0.5">Agrega algunos productos del catálogo para comenzar.</p>
                     </div>
-                `; <!-- Muestra aviso de carrito vacío -->
-            } else { <!-- Si contiene al menos un producto -->
+                `; <!-- Aviso de carrito vacío -->
+            } else { <!-- Si hay ítems en la lista -->
                 contenedorItems.innerHTML = carrito.map(item => `
                     <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
                         <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover flex-shrink-0">
                         <div class="flex-grow min-w-0">
                             <h4 class="text-xs font-bold text-slate-800 truncate">${item.name}</h4>
-                            <span class="text-xs font-black text-paleta-fucsia">$${(item.price * item.cantidad).toFixed(2)}</span>
+                            <span class="text-xs font-black text-[#EB3687]">$${(item.price * item.cantidad).toFixed(2)}</span>
                             <span class="text-[10px] text-slate-400 block">($${item.price.toFixed(2)} c/u)</span>
                         </div>
                         <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg p-1">
@@ -681,118 +586,118 @@
                             <button onclick="cambiarCantidad(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-600 hover:bg-slate-200 rounded text-xs font-bold">+</button>
                         </div>
                     </div>
-                `).join(''); <!-- Inyecta cada ítem con sus botones para sumar o restar -->
-            } <!-- Fin de comprobación de tamaño del carrito -->
+                `).join(''); <!-- Inyecta los ítems con sus botones -->
+            } <!-- Fin de verificación de elementos -->
 
-            if (window.lucide) lucide.createIcons(); <!-- Refresca los iconos creados -->
+            if (window.lucide) lucide.createIcons(); <!-- Refresca iconos de la comanda -->
         } <!-- Fin de actualizarCarritoUI -->
 
-        function abrirCarrito() { <!-- Despliega la ventana lateral del carrito -->
-            const modal = document.getElementById('modalCarrito'); <!-- Obtiene el div del modal -->
-            const panel = document.getElementById('panelCarrito'); <!-- Obtiene el panel blanco interior -->
-            modal.classList.remove('hidden'); <!-- Hace visible el modal -->
-            setTimeout(() => { <!-- Espera 10ms para permitir la transición visual de entrada -->
-                panel.classList.remove('translate-x-full'); <!-- Desliza el panel hacia adentro desde la derecha -->
-            }, 10); <!-- Retardo en milisegundos -->
+        function abrirCarrito() { <!-- Despliega el panel modal del carrito -->
+            const modal = document.getElementById('modalCarrito'); <!-- Div modal de fondo -->
+            const panel = document.getElementById('panelCarrito'); <!-- Panel deslizante -->
+            modal.classList.remove('hidden'); <!-- Muestra el fondo -->
+            setTimeout(() => { <!-- Espera 10ms para activar animación fluida -->
+                panel.classList.remove('translate-x-full'); <!-- Desliza el panel a la vista -->
+            }, 10); <!-- Tiempo en milisegundos -->
         } <!-- Fin de abrirCarrito -->
 
-        function cerrarCarrito() { <!-- Oculta y retira la ventana lateral del carrito -->
-            const modal = document.getElementById('modalCarrito'); <!-- Obtiene el contenedor del modal -->
-            const panel = document.getElementById('panelCarrito'); <!-- Obtiene el panel interior -->
-            panel.classList.add('translate-x-full'); <!-- Desliza el panel de vuelta hacia la derecha -->
-            setTimeout(() => { <!-- Espera a que termine la animación de salida (300ms) -->
-                modal.classList.add('hidden'); <!-- Oculta el fondo oscuro -->
-            }, 300); <!-- Tiempo en milisegundos correspondiente a la transición CSS -->
+        function cerrarCarrito() { <!-- Cierra y oculta el modal del carrito -->
+            const modal = document.getElementById('modalCarrito'); <!-- Div modal -->
+            const panel = document.getElementById('panelCarrito'); <!-- Panel lateral -->
+            panel.classList.add('translate-x-full'); <!-- Desliza el panel hacia afuera -->
+            setTimeout(() => { <!-- Espera 300ms a que concluya la animación CSS -->
+                modal.classList.add('hidden'); <!-- Oculta el fondo -->
+            }, 300); <!-- Tiempo de espera en milisegundos -->
         } <!-- Fin de cerrarCarrito -->
 
-        function alternarMoneda() { <!-- Cambia entre mostrar precios en dólares o bolívares en el catálogo -->
-            mostrarEnBs = !mostrarEnBs; <!-- Invierte el estado booleano de la moneda activa -->
-            document.getElementById('badgeMoneda').textContent = mostrarEnBs ? 'Bs' : 'USD $'; <!-- Actualiza el botón de divisa -->
-            renderizarProductos(); <!-- Vuelve a dibujar los productos con la divisa elegida -->
+        function alternarMoneda() { <!-- Alterna entre mostrar USD o Bolívares en catálogo -->
+            mostrarEnBs = !mostrarEnBs; <!-- Invierte la bandera booleana -->
+            document.getElementById('badgeMoneda').textContent = mostrarEnBs ? 'Bs' : 'USD $'; <!-- Actualiza texto del botón -->
+            renderizarProductos(); <!-- Redibuja los productos con la divisa correspondiente -->
         } <!-- Fin de alternarMoneda -->
 
         /* ========================================================
-           8.10 CONSTRUCCIÓN Y ENVÍO DEL PEDIDO A WHATSAPP
+           7.10 CONSTRUCCIÓN Y TRANSMISIÓN DEL PEDIDO A WHATSAPP
            ======================================================== */
-        function enviarPedidoWhatsApp() { <!-- Función que estructura el mensaje de pedido y abre WhatsApp -->
-            if (carrito.length === 0) { <!-- Valida que el carrito tenga artículos antes de continuar -->
-                alert("Tu orden está vacía. Por favor añade productos."); <!-- Alerta al cliente -->
-                return; <!-- Detiene la ejecución -->
-            } <!-- Fin de validación de carrito vacío -->
+        function enviarPedidoWhatsApp() { <!-- Ensambla el mensaje y redirige al chat de WhatsApp -->
+            if (carrito.length === 0) { <!-- Valida que existan productos en el carrito -->
+                alert("Tu orden está vacía. Por favor añade productos."); <!-- Alerta -->
+                return; <!-- Detiene la acción -->
+            } <!-- Fin de validación -->
 
             const nombre = document.getElementById('pedidoNombre').value.trim(); <!-- Obtiene el nombre del cliente -->
-            const tipoEntrega = document.getElementById('pedidoTipoEntrega').value; <!-- Obtiene el tipo de entrega seleccionado -->
-            const metodoPago = document.getElementById('pedidoMetodoPago').value; <!-- Obtiene el método de pago seleccionado -->
-            const direccion = document.getElementById('pedidoDireccion').value.trim(); <!-- Obtiene la dirección y notas del pedido -->
+            const tipoEntrega = document.getElementById('pedidoTipoEntrega').value; <!-- Modalidad elegida -->
+            const metodoPago = document.getElementById('pedidoMetodoPago').value; <!-- Forma de pago elegida -->
+            const direccion = document.getElementById('pedidoDireccion').value.trim(); <!-- Dirección o notas -->
 
-            if (!nombre) { <!-- Comprueba que el campo nombre no esté en blanco -->
-                alert("Por favor ingresa tu nombre completo."); <!-- Notifica que el nombre es requerido -->
-                document.getElementById('pedidoNombre').focus(); <!-- Hace foco en la casilla de nombre -->
-                return; <!-- Detiene la ejecución del pedido -->
-            } <!-- Fin de validación del nombre -->
+            if (!nombre) { <!-- Comprueba que el nombre sea obligatorio -->
+                alert("Por favor ingresa tu nombre completo."); <!-- Alerta de campo requerido -->
+                document.getElementById('pedidoNombre').focus(); <!-- Sitúa el foco en el campo -->
+                return; <!-- Detiene la ejecución -->
+            } <!-- Fin de comprobación de nombre -->
 
             const totalUSD = carrito.reduce((acc, item) => acc + (item.price * item.cantidad), 0); <!-- Monto total en dólares -->
-            const totalBS = totalUSD * CONFIG_NEGOCIO.tasaCambioBs; <!-- Monto total en bolívares según la tasa -->
+            const totalBS = totalUSD * CONFIG_NEGOCIO.tasaCambioBs; <!-- Monto total en bolívares -->
 
-            let mensaje = `*¡HOLA! DESEO REALIZAR UN NUEVO PEDIDO*\n`; <!-- Encabezado en negrita del mensaje -->
-            mensaje += `───────────────────────\n`; <!-- Línea divisoria decorativa -->
-            mensaje += `*DATOS DEL CLIENTE:*\n`; <!-- Título de sección de datos del cliente -->
+            let mensaje = `*¡HOLA! DESEO REALIZAR UN NUEVO PEDIDO*\n`; <!-- Encabezado de la comanda -->
+            mensaje += `───────────────────────\n`; <!-- Separador -->
+            mensaje += `*DATOS DEL CLIENTE:*\n`; <!-- Sección cliente -->
             mensaje += `👤 *Nombre:* ${nombre}\n`; <!-- Nombre del comprador -->
-            mensaje += `📦 *Modalidad:* ${tipoEntrega}\n`; <!-- Si es delivery, mesa o retiro -->
-            mensaje += `💳 *Método de Pago:* ${metodoPago}\n`; <!-- Pago móvil, efectivo o Zelle -->
-            if (direccion) { <!-- Si el cliente escribió una dirección o nota especial -->
-                mensaje += `📍 *Dirección/Notas:* ${direccion}\n`; <!-- Añade los detalles al mensaje -->
-            } <!-- Fin de verificación de dirección -->
-            mensaje += `───────────────────────\n`; <!-- Línea divisoria -->
-            mensaje += `*DETALLE DEL PEDIDO:*\n`; <!-- Título del listado de artículos -->
+            mensaje += `📦 *Modalidad:* ${tipoEntrega}\n`; <!-- Modalidad -->
+            mensaje += `💳 *Método de Pago:* ${metodoPago}\n`; <!-- Pago -->
+            if (direccion) { <!-- Si incluyó dirección o notas -->
+                mensaje += `📍 *Dirección/Notas:* ${direccion}\n`; <!-- Se agrega al mensaje -->
+            } <!-- Fin comprobación dirección -->
+            mensaje += `───────────────────────\n`; <!-- Separador -->
+            mensaje += `*DETALLE DEL PEDIDO:*\n`; <!-- Sección de artículos -->
 
-            carrito.forEach(item => { <!-- Itera cada producto en la orden del cliente -->
-                const sub = (item.price * item.cantidad).toFixed(2); <!-- Calcula el subtotal por producto -->
-                mensaje += `• ${item.cantidad}x ${item.name} - $${sub}\n`; <!-- Fila con cantidad, nombre y subtotal -->
-            }); <!-- Fin del bucle del pedido -->
+            carrito.forEach(item => { <!-- Itera sobre los productos del carrito -->
+                const sub = (item.price * item.cantidad).toFixed(2); <!-- Subtotal del ítem -->
+                mensaje += `• ${item.cantidad}x ${item.name} - $${sub}\n`; <!-- Fila del producto -->
+            }); <!-- Fin de iteración -->
 
-            mensaje += `───────────────────────\n`; <!-- Línea divisoria -->
-            mensaje += `💰 *TOTAL A PAGAR: $${totalUSD.toFixed(2)}*\n`; <!-- Monto total en dólares en negrita -->
-            mensaje += `🇻🇪 *Total referencial en Bs: ${totalBS.toFixed(2)} Bs*\n`; <!-- Monto total en bolívares en negrita -->
-            mensaje += `(Tasa ref: ${CONFIG_NEGOCIO.tasaCambioBs.toFixed(2)} Bs/$)\n`; <!-- Indicador de tasa aplicada -->
-            mensaje += `───────────────────────\n`; <!-- Línea divisoria final -->
-            mensaje += `_Enviado desde el Menú Digital_`; <!-- Firma del sistema -->
+            mensaje += `───────────────────────\n`; <!-- Separador -->
+            mensaje += `💰 *TOTAL A PAGAR: $${totalUSD.toFixed(2)}*\n`; <!-- Total en USD -->
+            mensaje += `🇻🇪 *Total referencial en Bs: ${totalBS.toFixed(2)} Bs*\n`; <!-- Total en Bs -->
+            mensaje += `(Tasa ref: ${CONFIG_NEGOCIO.tasaCambioBs.toFixed(2)} Bs/$)\n`; <!-- Referencia de tasa -->
+            mensaje += `───────────────────────\n`; <!-- Separador final -->
+            mensaje += `_Enviado desde el Menú Digital_`; <!-- Firma -->
 
-            const urlWhatsapp = `https://wa.me/${CONFIG_NEGOCIO.whatsapp}?text=${encodeURIComponent(mensaje)}`; <!-- Crea el enlace con texto codificado para URL -->
-            window.open(urlWhatsapp, '_blank'); <!-- Abre una nueva pestaña que redirige al chat de WhatsApp del negocio -->
+            const urlWhatsapp = `https://wa.me/${CONFIG_NEGOCIO.whatsapp}?text=${encodeURIComponent(mensaje)}`; <!-- Arma la URL oficial de la API de WhatsApp -->
+            window.open(urlWhatsapp, '_blank'); <!-- Abre la conversación directamente en la aplicación de WhatsApp -->
         } <!-- Fin de enviarPedidoWhatsApp -->
 
         /* ========================================================
-           8.11 VENTANA MODAL DE AJUSTES RÁPIDOS (⚙️)
+           7.11 MODAL DE AJUSTES RÁPIDOS
            ======================================================== */
         function abrirModalAjustes() { <!-- Despliega la ventana para editar número de WhatsApp y tasa -->
-            document.getElementById('configInputWhatsapp').value = CONFIG_NEGOCIO.whatsapp; <!-- Rellena el campo con el WhatsApp actual -->
-            document.getElementById('configInputTasa').value = CONFIG_NEGOCIO.tasaCambioBs; <!-- Rellena el campo con la tasa actual -->
-            document.getElementById('modalAjustes').classList.remove('hidden'); <!-- Muestra la ventana modal -->
+            document.getElementById('configInputWhatsapp').value = CONFIG_NEGOCIO.whatsapp; <!-- Asigna WhatsApp actual al input -->
+            document.getElementById('configInputTasa').value = CONFIG_NEGOCIO.tasaCambioBs; <!-- Asigna tasa actual al input -->
+            document.getElementById('modalAjustes').classList.remove('hidden'); <!-- Muestra el modal -->
         } <!-- Fin de abrirModalAjustes -->
 
-        function cerrarModalAjustes() { <!-- Oculta la ventana de ajustes -->
-            document.getElementById('modalAjustes').classList.add('hidden'); <!-- Agrega la clase hidden para ocultar -->
+        function cerrarModalAjustes() { <!-- Oculta la ventana modal de ajustes -->
+            document.getElementById('modalAjustes').classList.add('hidden'); <!-- Aplica la clase hidden -->
         } <!-- Fin de cerrarModalAjustes -->
 
-        function guardarAjustes() { <!-- Guarda los ajustes en memoria local y actualiza los precios -->
-            const nuevoWs = document.getElementById('configInputWhatsapp').value.trim(); <!-- Lee el nuevo número escrito -->
-            const nuevaTasa = parseFloat(document.getElementById('configInputTasa').value); <!-- Lee la nueva tasa escrita -->
+        function guardarAjustes() { <!-- Almacena los ajustes en memoria local y refresca la pantalla -->
+            const nuevoWs = document.getElementById('configInputWhatsapp').value.trim(); <!-- Lee el nuevo número -->
+            const nuevaTasa = parseFloat(document.getElementById('configInputTasa').value); <!-- Lee la nueva tasa -->
 
-            if (nuevoWs) { <!-- Si el número no está vacío -->
-                CONFIG_NEGOCIO.whatsapp = nuevoWs; <!-- Actualiza la variable en tiempo de ejecución -->
-                localStorage.setItem('cfg_whatsapp', nuevoWs); <!-- Guarda en la memoria permanente del navegador -->
-            } <!-- Fin de validación del nuevo WhatsApp -->
-            if (!isNaN(nuevaTasa) && nuevaTasa > 0) { <!-- Si la tasa es un número válido mayor a 0 -->
-                CONFIG_NEGOCIO.tasaCambioBs = nuevaTasa; <!-- Actualiza la tasa en tiempo de ejecución -->
-                localStorage.setItem('cfg_tasa', nuevaTasa.toString()); <!-- Guarda en la memoria permanente del navegador -->
-            } <!-- Fin de validación de la nueva tasa -->
+            if (nuevoWs) { <!-- Si el número es válido -->
+                CONFIG_NEGOCIO.whatsapp = nuevoWs; <!-- Actualiza la variable en caliente -->
+                localStorage.setItem('cfg_whatsapp', nuevoWs); <!-- Guarda en la memoria persistente del navegador -->
+            } <!-- Fin validación número -->
+            if (!isNaN(nuevaTasa) && nuevaTasa > 0) { <!-- Si la tasa es un número positivo -->
+                CONFIG_NEGOCIO.tasaCambioBs = nuevaTasa; <!-- Actualiza la tasa en caliente -->
+                localStorage.setItem('cfg_tasa', nuevaTasa.toString()); <!-- Guarda en la memoria persistente del navegador -->
+            } <!-- Fin validación tasa -->
 
-            renderizarProductos(); <!-- Vuelve a pintar el catálogo con la nueva tasa de cambio -->
-            actualizarCarritoUI(); <!-- Recalcula los montos acumulados en el carrito -->
-            cerrarModalAjustes(); <!-- Cierra la ventana emergente -->
-            alert("Ajustes guardados correctamente."); <!-- Muestra confirmación al administrador -->
+            renderizarProductos(); <!-- Actualiza el catálogo -->
+            actualizarCarritoUI(); <!-- Actualiza totales -->
+            cerrarModalAjustes(); <!-- Cierra el modal de ajustes -->
+            alert("Ajustes guardados correctamente."); <!-- Notificación de guardado exitoso -->
         } <!-- Fin de guardarAjustes -->
     </script> <!-- Cierre del script principal -->
-</body> <!-- Cierre del cuerpo de la página -->
-</html> <!-- Cierre del documento HTML -->
+</body> <!-- Cierre del cuerpo del documento HTML -->
+</html> <!-- Cierre definitivo del archivo HTML -->
