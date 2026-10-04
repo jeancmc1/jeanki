@@ -110,15 +110,18 @@
             </div>
             
             <!-- Selector para cambiar moneda ($ o Bs) -->
-            <div class="flex gap-2 bg-gray-800/80 p-1.5 rounded-xl border border-gray-700">
-                <button onclick="setCurrency('USD')" id="btn-currency-usd" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm">
-                    Dólares ($)
+           <!-- Selector para cambiar moneda (USD, EUR o Bs BCV) -->
+            <div class="flex gap-1.5 bg-gray-800/80 p-1.5 rounded-xl border border-gray-700">
+                <button onclick="setCurrency('USD')" id="btn-currency-usd" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm">
+                    USD ($)
                 </button>
-                <button onclick="setCurrency('LOCAL')" id="btn-currency-local" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all">
-                    Bolívares (Bs)
+                <button onclick="setCurrency('EUR')" id="btn-currency-eur" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all">
+                    EUR (€)
+                </button>
+                <button onclick="setCurrency('LOCAL')" id="btn-currency-local" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all">
+                    Bs (BCV)
                 </button>
             </div>
-        </div>
     </section>
 
     <!-- ========================================================================= -->
@@ -270,7 +273,10 @@
     <script>
         // A. CONFIGURACIÓN DEL NEGOCIO (Teléfono y Tasa de cambio)
         let whatsappNumber = localStorage.getItem('app_whatsapp_number') || '584120000000'; // Pon tu número aquí
-        let exchangeRate = parseFloat(localStorage.getItem('app_exchange_rate')) || 36.5;   // Tasa por defecto
+        // Configuración de tasas dinámicas (se actualizan solas vía API)
+        let rateUSD = parseFloat(localStorage.getItem('app_rate_usd')) || 36.5;
+        let rateEUR = parseFloat(localStorage.getItem('app_rate_eur')) || 40.0;
+        let exchangeRate = rateEUR; // Tasa activa por defecto
         let selectedCurrency = 'USD'; // 'USD' o 'LOCAL'
         let currentCategory = 'Todos';
         let cart = JSON.parse(localStorage.getItem('app_cart_items')) || [];
@@ -326,10 +332,45 @@
             }
         ];
 
+        // Consulta automática a la API de tasas oficiales del BCV en Venezuela
+        async function fetchBcvRates() {
+            try {
+                // Consulta tasa oficial EUR BCV
+                const resEur = await fetch('https://ve.dolarapi.com/v1/monedas/eur');
+                if (resEur.ok) {
+                    const dataEur = await resEur.json();
+                    if (dataEur.promedio) {
+                        rateEUR = dataEur.promedio;
+                        localStorage.setItem('app_rate_eur', rateEUR);
+                    }
+                }
+
+                // Consulta tasa oficial USD BCV
+                const resUsd = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+                if (resUsd.ok) {
+                    const dataUsd = await resUsd.json();
+                    if (dataUsd.promedio) {
+                        rateUSD = dataUsd.promedio;
+                        localStorage.setItem('app_rate_usd', rateUSD);
+                    }
+                }
+
+                exchangeRate = (selectedCurrency === 'EUR') ? rateEUR : rateUSD;
+                renderProducts(getFilteredProducts());
+                updateCartUI();
+                console.log(`Tasas BCV actualizadas: EUR = Bs. ${rateEUR} | USD = Bs. ${rateUSD}`);
+            } catch (err) {
+                console.warn("API BCV no disponible temporalmente, usando valores locales guardados:", err);
+            }
+        }
+    
         // D. FUNCIONALIDAD DE PRECIOS Y MONEDAS
-        function formatPrice(amountUSD) {
+    function formatPrice(amountUSD) {
             if (selectedCurrency === 'USD') {
                 return `$${amountUSD.toFixed(2)}`;
+            } else if (selectedCurrency === 'EUR') {
+                const eurVal = amountUSD * (rateUSD / rateEUR);
+                return `€${eurVal.toFixed(2)}`;
             } else {
                 const localVal = amountUSD * exchangeRate;
                 return `Bs ${localVal.toFixed(2)}`;
@@ -360,19 +401,20 @@
         function setCurrency(curr) {
             selectedCurrency = curr;
             const btnUsd = document.getElementById('btn-currency-usd');
+            const btnEur = document.getElementById('btn-currency-eur');
             const btnLocal = document.getElementById('btn-currency-local');
 
-            if (curr === 'USD') {
-                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
-                btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
-            } else {
-                btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
-                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
-            }
+            const activo = "px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
+            const inactivo = "px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
 
+            btnUsd.className = (curr === 'USD') ? activo : inactivo;
+            btnEur.className = (curr === 'EUR') ? activo : inactivo;
+            btnLocal.className = (curr === 'LOCAL') ? activo : inactivo;
+
+            exchangeRate = (curr === 'EUR') ? rateEUR : rateUSD;
             renderProducts(getFilteredProducts());
             updateCartUI();
-        }
+        }}
 
         // F. FILTRAR Y RENDERIZAR PRODUCTOS
         function getFilteredProducts() {
@@ -581,6 +623,7 @@
             renderCategories();
             renderProducts(products);
             updateCartUI();
+            fetchBcvRates(); // <-- Ejecuta la sincronización automática con el BCV
         };
     </script>
 </body>
