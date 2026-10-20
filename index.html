@@ -1,588 +1,1022 @@
 <!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5 para navegadores web modernos -->
 <html lang="es">
+<!-- Inicio de la etiqueta raíz con idioma configurado en español -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Interactivo & Pedidos WhatsApp</title>
+  <!-- Codificación de caracteres estándar UTF-8 para admitir acentos, eñes y caracteres especiales -->
+  <meta charset="UTF-8" />
+  <!-- Vista adaptable para garantizar que la página se vea perfecta en celulares y computadoras -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Título dinámico que se muestra en la pestaña superior del navegador web -->
+  <title id="page-title">Mi Negocio & Catálogo Digital</title>
 
-    <!-- ========================================================================= -->
-    <!-- 1. LIBRERÍAS EXTERNAS (TAILWIND CSS & FONTAWESOME Y GOOGLE FONTS)        -->
-    <!-- ========================================================================= -->
-    <!-- Tailwind CSS: Framework de diseño para estilos rápidos -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Tipografía Inter para un aspecto moderno -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome: Iconos vectoriales para botones e interfaz -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ========================================================================= -->
-    <!-- 2. CONFIGURACIÓN DE COLORES DE TU MARCA                                  -->
-    <!-- Cambia los códigos hexadecimales (#22c55e, etc.) por los colores de tu negocio -->
-    <!-- ========================================================================= -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',   // Color de fondo suave para badges/botones secundarios
-                            100: '#dcfce7',  // Color hover secundario
-                            500: '#22c55e',  // COLOR PRINCIPAL (Verde por defecto - Cambia este código HEX para tu marca)
-                            600: '#16a34a',  // COLOR PRINCIPAL MÁS OSCURO (para botones al hacer hover)
-                            700: '#15803d',  // COLOR PRINCIPAL DE TEXTO DESTACADO
-                            25: '#25D366',   // Color oficial de WhatsApp
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  <!-- Preconexión a los servidores de fuentes de Google para acelerar la carga de la tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Preconexión segura crossorigin para recursos externos -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Hoja de estilos de la fuente moderna 'Poppins' con grosores del 300 al 700 -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- ========================================================================= -->
-    <!-- 3. ESTILOS PERSONALIZADOS ADICIONALES                                    -->
-    <!-- ========================================================================= -->
-    <style>
-        /* Oculta la barra de desplazamiento visual manteniendo el scroll horizontal */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Animación de pulso para cuando agregas un producto al carrito */
-        .badge-pulse { animation: pulse 0.4s ease-in-out; }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.25); }
-            100% { transform: scale(1); }
-        }
-    </style>
+  <!-- Inicio de la sección de estilos visuales CSS embebidos -->
+  <style>
+    /* Variables globales en :root para modificar colores y bordes dinámicamente desde JavaScript */
+    :root {
+      --bg-color: #f8fafc; /* Color de fondo general de la página web */
+      --card-bg: #ffffff; /* Color de fondo de las tarjetas de productos y ventanas modales */
+      --primary-color: #e11d48; /* Color primario para botones destacados y precios */
+      --secondary-color: #be123c; /* Color secundario para estados hover o activos */
+      --accent-color: #0f172a; /* Color oscuro utilizado en la barra superior */
+      --text-color: #1e293b; /* Color principal de los textos y títulos */
+      --text-muted: #64748b; /* Color gris atenuado para descripciones secundarias */
+      --border-color: #e2e8f0; /* Color tenue para líneas divisorias y bordes */
+      --radius: 14px; /* Radio de redondeo para las esquinas de tarjetas y botones */
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03); /* Sombra suave */
+    }
+
+    /* Regla universal para normalizar márgenes, rellenos y modelo de caja */
+    * {
+      box-sizing: border-box; /* Incluye bordes y rellenos en el cálculo del tamaño del elemento */
+      margin: 0; /* Elimina márgenes exteriores por defecto */
+      padding: 0; /* Elimina rellenos interiores por defecto */
+      font-family: 'Poppins', sans-serif; /* Asigna la fuente Poppins globalmente */
+    }
+
+    /* Estilos del cuerpo principal de la página */
+    body {
+      background-color: var(--bg-color); /* Aplica el color de fondo dinámico */
+      color: var(--text-color); /* Aplica el color de texto dinámico */
+      min-height: 100vh; /* Asegura altura mínima equivalente a la pantalla completa */
+      display: flex; /* Disposición flexible */
+      flex-direction: column; /* Organiza los elementos en sentido vertical */
+    }
+
+    /* Barra superior informativa para tasa del BCV y medios de pago */
+    .rate-bar {
+      background: var(--accent-color); /* Fondo oscuro configurado */
+      color: #ffffff; /* Letras blancas para contraste óptimo */
+      font-size: 0.85rem; /* Tamaño de letra compacto y legible */
+      padding: 8px 15px; /* Relleno superior e inferior */
+      display: flex; /* Disposición en fila horizontal */
+      justify-content: space-between; /* Un elemento a la izquierda y otro a la derecha */
+      align-items: center; /* Alinea los elementos verticalmente al centro */
+      flex-wrap: wrap; /* Pasa a la siguiente línea en pantallas muy estrechas */
+      gap: 10px; /* Separación mínima entre elementos */
+    }
+
+    /* Insignia resaltada para mostrar la tasa del día */
+    .rate-bar .badge {
+      background: rgba(255, 255, 255, 0.2); /* Fondo blanco traslúcido */
+      padding: 3px 8px; /* Relleno interior */
+      border-radius: 6px; /* Bordes ligeramente curvados */
+      font-weight: 600; /* Texto en negrita */
+    }
+
+    /* Contenedor del encabezado con imagen de banner JPG */
+    .banner-container {
+      position: relative; /* Base de posicionamiento para la capa superpuesta */
+      height: 240px; /* Altura en píxeles del banner superior */
+      background-color: #cbd5e1; /* Fondo grisáceo provisional mientras carga la imagen */
+      background-size: cover; /* Escala la imagen cubriendo todo el ancho sin deformarse */
+      background-position: center; /* Centra la imagen de fondo */
+      display: flex; /* Disposición flexible */
+      align-items: flex-end; /* Alinea los textos y logo en la base inferior */
+      padding: 20px; /* Relleno perimetral */
+    }
+
+    /* Capa oscura con degradado superpuesta para asegurar legibilidad del texto */
+    .banner-overlay {
+      position: absolute; /* Superposición absoluta sobre el contenedor */
+      inset: 0; /* Cubre los cuatro bordes (top, right, bottom, left en 0) */
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 20%, transparent 80%); /* Gradiente de oscuro a transparente */
+    }
+
+    /* Contenedor de la información del negocio (Logo, Nombre y Slogan) */
+    .header-content {
+      position: relative; /* Se coloca por encima de la capa overlay */
+      z-index: 2; /* Nivel de capa superior para recibir clics y destacar */
+      display: flex; /* Disposición horizontal */
+      align-items: center; /* Centrado vertical entre logo y textos */
+      gap: 18px; /* Separación entre el logo y los textos */
+      width: 100%; /* Ocupa el ancho disponible */
+      max-width: 1100px; /* Ancho máximo estándar centrado */
+      margin: 0 auto; /* Centrado horizontal automático */
+    }
+
+    /* Imagen circular del logotipo de tu negocio o producto */
+    .logo-img {
+      width: 95px; /* Ancho del logo */
+      height: 95px; /* Altura del logo */
+      border-radius: 50%; /* Transforma la imagen en círculo */
+      border: 4px solid #ffffff; /* Marco blanco alrededor para destacar */
+      object-fit: cover; /* Evita que la foto se distorsione al recortarse */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25); /* Sombra para dar volumen y relieve */
+      background: #ffffff; /* Fondo blanco para logotipos con transparencia */
+    }
+
+    /* Nombre del negocio o producto en el encabezado */
+    .business-info h1 {
+      color: #ffffff; /* Letras blancas para contrastar con el fondo */
+      font-size: 1.8rem; /* Tamaño de fuente grande */
+      font-weight: 700; /* Negrita */
+      line-height: 1.2; /* Altura de línea */
+    }
+
+    /* Slogan o descripción corta del negocio */
+    .business-info p {
+      color: #e2e8f0; /* Color gris suave */
+      font-size: 0.95rem; /* Tamaño de texto mediano */
+    }
+
+    /* Barra de navegación para el botón del carrito */
+    .nav-actions {
+      max-width: 1100px; /* Ancho alineado con el contenido */
+      margin: 15px auto; /* Centrado con margen vertical */
+      padding: 0 20px; /* Relleno lateral */
+      display: flex; /* Disposición horizontal */
+      justify-content: flex-end; /* Alinea el botón del carrito a la derecha */
+      align-items: center; /* Centrado vertical */
+      width: 100%; /* Ancho completo */
+    }
+
+    /* Estilo base para todos los botones de la página */
+    .btn {
+      padding: 9px 18px; /* Espaciado interior ergonómico */
+      border-radius: 9px; /* Esquinas redondeadas */
+      font-size: 0.9rem; /* Tamaño de texto */
+      font-weight: 600; /* Grosor seminegrita */
+      border: none; /* Sin borde predeterminado */
+      cursor: pointer; /* Cambia el cursor a mano para indicar clic */
+      display: inline-flex; /* Disposición en línea flexible */
+      align-items: center; /* Centrado vertical de íconos y texto */
+      gap: 6px; /* Separación entre ícono y texto */
+      transition: all 0.2s ease; /* Transición fluida para efectos visuales */
+    }
+
+    /* Botón de acción primaria */
+    .btn-primary {
+      background: var(--primary-color); /* Color primario configurado */
+      color: #ffffff; /* Texto blanco */
+    }
+
+    /* Efecto al pasar el cursor sobre el botón primario */
+    .btn-primary:hover {
+      opacity: 0.92; /* Ligera opacidad al pasar el ratón */
+    }
+
+    /* Botón para abrir el carrito de compras */
+    .btn-cart {
+      background: #10b981; /* Verde esmeralda */
+      color: #ffffff; /* Texto blanco */
+      position: relative; /* Posición relativa para anclar la insignia de conteo */
+    }
+
+    /* Efecto al pasar el cursor sobre el botón del carrito */
+    .btn-cart:hover {
+      background: #059669; /* Verde oscuro al pasar el cursor */
+    }
+
+    /* Contador numérico de productos en el carrito */
+    .badge-count {
+      background: #ef4444; /* Rojo brillante */
+      color: #ffffff; /* Texto blanco */
+      font-size: 0.75rem; /* Letra pequeña */
+      border-radius: 50%; /* Círculo completo */
+      padding: 2px 7px; /* Relleno interior */
+      margin-left: 5px; /* Separación del texto */
+    }
+
+    /* Contenedor central del contenido y catálogo */
+    .container {
+      max-width: 1100px; /* Ancho máximo estándar */
+      margin: 0 auto 50px auto; /* Centrado automático y separación inferior */
+      padding: 0 20px; /* Relleno a los lados */
+      width: 100%; /* Ancho completo */
+      flex-grow: 1; /* Ocupa el espacio vertical restante */
+    }
+
+    /* Barra horizontal desplazable para categorías */
+    .category-filter {
+      display: flex; /* Disposición en fila */
+      gap: 8px; /* Espacio entre botones */
+      overflow-x: auto; /* Permite scroll horizontal fluido en móviles */
+      padding: 10px 0 20px 0; /* Relleno superior e inferior */
+    }
+
+    /* Botón individual de categoría */
+    .cat-btn {
+      background: var(--card-bg); /* Fondo de la tarjeta */
+      border: 1px solid var(--border-color); /* Borde suave */
+      padding: 7px 16px; /* Relleno */
+      border-radius: 20px; /* Forma de píldora redondeada */
+      font-size: 0.85rem; /* Tamaño de letra */
+      font-weight: 500; /* Grosor medio */
+      color: var(--text-color); /* Color de texto del tema */
+      cursor: pointer; /* Cursor interactivo */
+      white-space: nowrap; /* Evita que el nombre de la categoría se divida en dos líneas */
+      transition: all 0.2s ease; /* Transición fluida */
+    }
+
+    /* Botón de la categoría activa actualmente seleccionada */
+    .cat-btn.active {
+      background: var(--primary-color); /* Fondo del color primario */
+      color: #ffffff; /* Texto blanco */
+      border-color: var(--primary-color); /* Borde a juego */
+    }
+
+    /* Cuadrícula responsiva de tarjetas de productos */
+    .product-grid {
+      display: grid; /* Grid CSS */
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Columnas automáticas según el ancho de pantalla */
+      gap: 22px; /* Separación entre tarjetas */
+    }
+
+    /* Tarjeta individual de producto */
+    .product-card {
+      background: var(--card-bg); /* Fondo dinámico */
+      border-radius: var(--radius); /* Curvatura en esquinas */
+      box-shadow: var(--shadow); /* Sombra sutil */
+      border: 1px solid var(--border-color); /* Borde tenue */
+      overflow: hidden; /* Recorta imágenes que sobrepasen el contenedor */
+      display: flex; /* Disposición flexible */
+      flex-direction: column; /* Apila imagen, texto y botón verticalmente */
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animación al interactuar */
+    }
+
+    /* Efecto al pasar el cursor sobre la tarjeta */
+    .product-card:hover {
+      transform: translateY(-4px); /* Eleva la tarjeta 4 píxeles */
+      box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); /* Intensifica la sombra */
+    }
+
+    /* Fotografía JPG del producto */
+    .product-img {
+      width: 100%; /* Ocupa el ancho completo */
+      height: 190px; /* Altura estándar */
+      object-fit: cover; /* Centra y recorta proporcionalmente sin deformar la foto */
+      background: #e2e8f0; /* Fondo gris claro mientras carga */
+    }
+
+    /* Cuerpo interno de la tarjeta */
+    .product-body {
+      padding: 15px; /* Relleno perimetral */
+      display: flex; /* Flexbox */
+      flex-direction: column; /* Dirección en columna */
+      flex-grow: 1; /* Permite que el botón inferior se alinee abajo parejo */
+    }
+
+    /* Nombre del producto */
+    .product-title {
+      font-size: 1.05rem; /* Tamaño de fuente */
+      font-weight: 600; /* Negrita */
+      margin-bottom: 6px; /* Separación */
+    }
+
+    /* Descripción detallada o especificaciones del producto */
+    .product-desc {
+      font-size: 0.85rem; /* Tamaño adecuado para lectura */
+      color: var(--text-muted); /* Color suave */
+      margin-bottom: 12px; /* Margen inferior */
+      flex-grow: 1; /* Ocupa el espacio disponible para que los botones queden nivelados */
+      line-height: 1.4; /* Interlineado */
+    }
+
+    /* Contenedor de precios */
+    .product-pricing {
+      margin-bottom: 12px; /* Margen inferior */
+    }
+
+    /* Precio principal en moneda de referencia ($ o €) */
+    .price-ref {
+      font-size: 1.25rem; /* Tamaño grande */
+      font-weight: 700; /* Negrita */
+      color: var(--primary-color); /* Color primario */
+    }
+
+    /* Precio convertido a Bolívares con tasa BCV */
+    .price-bcv {
+      font-size: 0.85rem; /* Tamaño compacto */
+      color: var(--text-muted); /* Color atenuado */
+      font-weight: 500; /* Grosor medio */
+    }
+
+    /* Fondo oscuro traslúcido para la ventana modal del carrito */
+    .modal-overlay {
+      position: fixed; /* Posición fija en la pantalla */
+      inset: 0; /* Cubre los cuatro lados */
+      background: rgba(0, 0, 0, 0.65); /* Color negro al 65% de opacidad */
+      display: none; /* Oculto por defecto */
+      align-items: center; /* Centrado vertical */
+      justify-content: center; /* Centrado horizontal */
+      z-index: 1000; /* Capa sobre todos los demás elementos */
+      padding: 15px; /* Espacio para bordes en pantallas pequeñas */
+    }
+
+    /* Estado activo que despliega la ventana modal */
+    .modal-overlay.active {
+      display: flex; /* Pasa a ser visible como flexbox */
+    }
+
+    /* Caja contenedora del contenido del modal */
+    .modal {
+      background: #ffffff; /* Fondo blanco */
+      border-radius: var(--radius); /* Curvatura */
+      width: 100%; /* Ancho completo */
+      max-width: 600px; /* Ancho máximo para mantener ergonomía */
+      max-height: 90vh; /* Altura máxima del 90% de la ventana */
+      overflow-y: auto; /* Habilita scroll vertical si el contenido sobrepasa la pantalla */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25); /* Sombra pronunciada */
+      display: flex; /* Flexbox */
+      flex-direction: column; /* Apila encabezado y cuerpo */
+    }
+
+    /* Encabezado del modal */
+    .modal-header {
+      padding: 18px 22px; /* Relleno */
+      border-bottom: 1px solid var(--border-color); /* Línea divisoria */
+      display: flex; /* Disposición en fila */
+      justify-content: space-between; /* Separa título a la izquierda y botón de cierre a la derecha */
+      align-items: center; /* Centrado vertical */
+    }
+
+    /* Título del modal */
+    .modal-header h3 {
+      font-size: 1.25rem; /* Tamaño de fuente */
+      font-weight: 600; /* Negrita */
+    }
+
+    /* Botón para cerrar modal (X) */
+    .modal-close {
+      background: none; /* Sin fondo */
+      border: none; /* Sin borde */
+      font-size: 1.6rem; /* Tamaño grande */
+      cursor: pointer; /* Cursor de mano */
+      color: var(--text-muted); /* Color gris */
+      line-height: 1; /* Altura de línea ajustada */
+    }
+
+    /* Cuerpo del modal */
+    .modal-body {
+      padding: 22px; /* Relleno interno */
+      display: flex; /* Flexbox */
+      flex-direction: column; /* Apilado en vertical */
+      gap: 16px; /* Separación entre bloques */
+    }
+
+    /* Grupos de formulario (Etiqueta + Campo) */
+    .form-group {
+      display: flex; /* Flexbox */
+      flex-direction: column; /* Etiqueta arriba y campo abajo */
+      gap: 6px; /* Separación */
+    }
+
+    /* Etiquetas de texto del formulario */
+    .form-group label {
+      font-size: 0.85rem; /* Tamaño */
+      font-weight: 600; /* Negrita */
+      color: var(--text-color); /* Color de texto del tema */
+    }
+
+    /* Campos de texto, selects y áreas de texto */
+    .form-control {
+      padding: 9px 12px; /* Relleno interno */
+      border: 1px solid var(--border-color); /* Borde estándar */
+      border-radius: 8px; /* Esquinas curvadas */
+      font-size: 0.9rem; /* Tamaño */
+      outline: none; /* Quita el marco azul predeterminado del navegador */
+      background: #ffffff; /* Fondo blanco */
+    }
+
+    /* Resaltado cuando el usuario hace clic en el campo */
+    .form-control:focus {
+      border-color: var(--primary-color); /* Cambia el color del borde al primario */
+    }
+
+    /* Fila de formulario de dos columnas */
+    .form-row {
+      display: grid; /* Grid */
+      grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+      gap: 15px; /* Separación entre columnas */
+    }
+
+    /* Lista desplazable de artículos del carrito */
+    .cart-items {
+      display: flex; /* Flexbox */
+      flex-direction: column; /* En columna */
+      gap: 12px; /* Separación entre ítems */
+      max-height: 250px; /* Altura máxima con scroll */
+      overflow-y: auto; /* Scroll vertical */
+    }
+
+    /* Fila individual de cada artículo en el carrito */
+    .cart-item {
+      display: flex; /* Flexbox horizontal */
+      align-items: center; /* Centrado vertical */
+      justify-content: space-between; /* Información a la izquierda, botones de cantidad a la derecha */
+      padding: 10px; /* Relleno */
+      background: #f8fafc; /* Fondo gris claro */
+      border-radius: 8px; /* Bordes curvados */
+      border: 1px solid var(--border-color); /* Borde tenue */
+    }
+
+    /* Nombre del ítem en el carrito */
+    .cart-item-title {
+      font-weight: 600; /* Negrita */
+      font-size: 0.9rem; /* Tamaño */
+    }
+
+    /* Detalle de cantidad y precios en el carrito */
+    .cart-item-sub {
+      font-size: 0.78rem; /* Letra pequeña */
+      color: var(--text-muted); /* Color suave */
+    }
+
+    /* Controles de incremento y reducción de cantidades */
+    .cart-qty-controls {
+      display: flex; /* Disposición en fila */
+      align-items: center; /* Centrado */
+      gap: 8px; /* Espacio entre botones */
+    }
+
+    /* Botones pequeños de suma y resta */
+    .btn-qty {
+      background: #e2e8f0; /* Fondo gris */
+      border: none; /* Sin borde */
+      width: 28px; /* Ancho */
+      height: 28px; /* Alto */
+      border-radius: 6px; /* Curvatura */
+      font-weight: bold; /* Negrita */
+      cursor: pointer; /* Cursor de mano */
+    }
+
+    /* Cuadro de resumen final de totales */
+    .cart-summary {
+      background: #f1f5f9; /* Fondo suave */
+      padding: 15px; /* Relleno interior */
+      border-radius: 10px; /* Bordes curvados */
+      display: flex; /* Flexbox */
+      flex-direction: column; /* Apilado vertical */
+      gap: 6px; /* Separación entre líneas */
+    }
+
+    /* Líneas individuales del resumen */
+    .cart-summary-line {
+      display: flex; /* Disposición en fila */
+      justify-content: space-between; /* Título a la izquierda, total numérico a la derecha */
+      font-size: 0.95rem; /* Tamaño */
+    }
+
+    /* Línea resaltada del total en Bolívares con tasa BCV */
+    .cart-summary-line.total {
+      font-size: 1.15rem; /* Tamaño mayor */
+      font-weight: 700; /* Negrita */
+      color: var(--primary-color); /* Color de acento primario */
+      border-top: 1px solid #cbd5e1; /* Línea divisoria superior */
+      padding-top: 8px; /* Separación respecto a la línea anterior */
+      margin-top: 5px; /* Margen superior */
+    }
+
+    /* Botón flotante del carrito pensado para teléfonos celulares */
+    .float-cart {
+      position: fixed; /* Posición fija en pantalla */
+      bottom: 20px; /* Separado del borde inferior */
+      right: 20px; /* Separado del borde derecho */
+      background: #10b981; /* Verde esmeralda */
+      color: #ffffff; /* Texto blanco */
+      padding: 14px 20px; /* Relleno generoso para pulsar con el dedo */
+      border-radius: 50px; /* Forma de pastilla */
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4); /* Sombra verde */
+      display: none; /* Oculto por defecto en computadoras */
+      align-items: center; /* Centrado */
+      gap: 10px; /* Separación */
+      font-weight: 700; /* Negrita */
+      z-index: 900; /* Por encima de las tarjetas */
+      cursor: pointer; /* Mano al pasar por encima */
+    }
+
+    /* Media query para pantallas con un ancho máximo de 600px (móviles) */
+    @media (max-width: 600px) {
+      .float-cart { display: flex; } /* Muestra el botón flotante en móviles */
+      .banner-container { height: 200px; } /* Ajusta la altura del banner */
+      .logo-img { width: 75px; height: 75px; } /* Reduce ligeramente el logo */
+      .business-info h1 { font-size: 1.4rem; } /* Reduce el tamaño del título */
+      .form-row { grid-template-columns: 1fr; } /* Pasa formularios de dos columnas a una sola columna */
+    }
+  </style>
+  <!-- Fin de los estilos CSS -->
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col pb-24 md:pb-8">
 
-    <!-- ========================================================================= -->
-    <!-- 4. ENCABEZADO Y LOGO DE LA PÁGINA (HEADER)                                -->
-    <!-- ========================================================================= -->
-    <header class="sticky top-0 z-30 bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            
-            <!-- CONTENEDOR DEL LOGO Y NOMBRE -->
-            <div class="flex items-center space-x-3">
-                <!-- Imagen del Logo: Puedes poner una ruta local "imagenes/logo.png" o una URL web -->
-                <img id="app-logo" src="prueba1.jpg" 
-                     alt="Logo Negocio" 
-                     class="w-11 h-11 rounded-xl object-cover border border-gray-100 shadow-sm">
-                <div>
-                    <!-- Nombre y Eslogan de tu Local -->
-                    <h1 id="app-title" class="text-lg font-bold leading-tight text-gray-900">COOKIES 360</h1>
-                    <p id="app-subtitle" class="text-xs text-gray-500">Menú digital & Pedidos online</p>
-                </div>
-            </div>
-
-            <!-- BOTONES SUPERIORES (Ajustes y Carrito) -->
-            <div class="flex items-center space-x-2">
-                <!-- Botón de Configuración (Permite cambiar WhatsApp y Tasa desde el menú) -->
-                <button onclick="toggleConfigModal()" class="p-2 text-gray-500 hover:text-brand-600 rounded-lg hover:bg-gray-100 transition-colors" title="Configurar Negocio">
-                    <i class="fa-solid fa-gear text-lg"></i>
-                </button>
-                <!-- Botón de Ver Carrito -->
-                <button onclick="toggleCart()" class="relative bg-brand-50 text-brand-700 hover:bg-brand-100 font-medium py-2 px-4 rounded-xl flex items-center space-x-2 transition-all">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="hidden sm:inline">Carrito</span>
-                    <!-- Contador con la cantidad de productos agregados -->
-                    <span id="cart-count-badge" class="bg-brand-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- ========================================================================= -->
-    <!-- 5. BANNER BIENVENIDA Y CAMBIO DE MONEDA                                   -->
-    <!-- ========================================================================= -->
-    <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-6 px-4">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <span class="inline-block px-3 py-1 bg-brand-500/20 text-brand-25 text-xs font-semibold rounded-full mb-2 border border-brand-500/30">
-                    <i class="fa-solid fa-clock mr-1"></i> Abierto hoy 12:00 - 22:00
-                </span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Realiza tu pedido fácil y rápido</h2>
-                <p class="text-gray-300 text-sm mt-1">Elige tus productos y envíalos directo a nuestro WhatsApp.</p>
-            </div>
-            
-            <!-- Selector para cambiar moneda ($ o Bs) -->
-            <div class="flex gap-2 bg-gray-800/80 p-1.5 rounded-xl border border-gray-700">
-                <button onclick="setCurrency('USD')" id="btn-currency-usd" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm">
-                    Dólares ($)
-                </button>
-                <button onclick="setCurrency('LOCAL')" id="btn-currency-local" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all">
-                    Bolívares (Bs)
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- 6. CUERPO PRINCIPAL (Buscador, Categorías y Galería de Productos)         -->
-    <!-- ========================================================================= -->
-    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            
-            <!-- Campo de Búsqueda -->
-            <div class="relative flex-grow max-w-md">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="search-input" oninput="filterProducts()" placeholder="Buscar platillos, ingredientes..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition-all text-sm shadow-sm">
-            </div>
-
-            <!-- Menú de Botones por Categoría (Generado con JavaScript) -->
-            <div class="flex space-x-2 overflow-x-auto no-scrollbar py-1" id="category-tabs">
-                <!-- Se llena automáticamente con JS -->
-            </div>
-        </div>
-
-        <!-- REJILLA DE PRODUCTOS (Generada dinámicamente con JS) -->
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Los productos se construyen automáticamente -->
-        </div>
-
-        <!-- Mensaje si la búsqueda no encuentra coincidencias -->
-        <div id="empty-state" class="hidden text-center py-12">
-            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400">
-                <i class="fa-solid fa-utensils text-2xl"></i>
-            </div>
-            <h3 class="text-base font-semibold text-gray-700">No encontramos ningún producto</h3>
-            <p class="text-sm text-gray-500 mt-1">Intenta buscando otra palabra o categoría.</p>
-        </div>
-    </main>
-
-    <!-- ========================================================================= -->
-    <!-- 7. PANEL LATERAL DEL CARRITO DE COMPRAS (DRAWER)                          -->
-    <!-- ========================================================================= -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden transition-all duration-300">
-        <!-- Fondo Oscuro de Cierre -->
-        <div onclick="toggleCart()" class="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"></div>
-
-        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
-                
-                <!-- Cabecera del Carrito -->
-                <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-                    <div class="flex items-center space-x-2">
-                        <i class="fa-solid fa-bag-shopping text-brand-600 text-xl"></i>
-                        <h2 class="text-lg font-bold text-gray-800">Tu Pedido</h2>
-                    </div>
-                    <button onclick="toggleCart()" class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
-                </div>
-
-                <!-- Lista de Productos Agregados -->
-                <div class="flex-1 overflow-y-auto p-4 space-y-4" id="cart-items-container">
-                    <!-- Dinámico con JS -->
-                </div>
-
-                <!-- Formulario del Cliente y Botón de Envío -->
-                <div class="border-t border-gray-200 p-4 bg-gray-50 space-y-4">
-                    <div id="checkout-form-container" class="space-y-3">
-                        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Datos de Entrega</h3>
-                        <div>
-                            <input type="text" id="cust-name" placeholder="Tu Nombre y Apellido *" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500">
-                        </div>
-                        <div>
-                            <input type="text" id="cust-address" placeholder="Dirección exacta o referencia *" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="cust-payment" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 bg-white">
-                                <option value="Efectivo USD">Efectivo ($)</option>
-                                <option value="Pago Móvil">Pago Móvil (Bs)</option>
-                                <option value="Zelle">Zelle</option>
-                                <option value="Punto de Venta">Punto de Venta</option>
-                            </select>
-                            <input type="text" id="cust-notes" placeholder="Notas (Ej: Sin salsa...)" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500">
-                        </div>
-                    </div>
-
-                    <!-- Resumen de Totales -->
-                    <div class="pt-2 border-t border-gray-200 space-y-1 text-sm">
-                        <div class="flex justify-between text-base font-bold text-gray-900 pt-1">
-                            <span>Total Estimado:</span>
-                            <span id="cart-total" class="text-brand-600">$0.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Botón Enviar Pedido a WhatsApp -->
-                    <button onclick="sendOrderWhatsApp()" class="w-full bg-brand-25 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center space-x-2 transition-all duration-200 transform active:scale-95">
-                        <i class="fa-brands fa-whatsapp text-2xl"></i>
-                        <span>Enviar Pedido por WhatsApp</span>
-                    </button>
-                </div>
-
-            </div>
-        </div>
+<body>
+  <!-- ========================================================================= -->
+  <!-- BARRA SUPERIOR INFORMATIVA: TASA BCV Y METODOS DE PAGO DISPONIBLES       -->
+  <!-- ========================================================================= -->
+  <div class="rate-bar">
+    <div>
+      <!-- Indicador con la bandera de Venezuela y el valor actual de la tasa del BCV -->
+      <span>🇻🇪 <strong>Tasa Oficial BCV:</strong> 1 <span id="rate-ref-label">USD</span> = <span id="display-bcv-rate" class="badge">Bs. --</span></span>
     </div>
+    <div>
+      <!-- Medios de pago soportados según requerimiento -->
+      <span>Medios de Pago: <strong>Efectivo $, Pago Móvil, Punto de Venta</strong></span>
+    </div>
+  </div>
 
-    <!-- ========================================================================= -->
-    <!-- 8. BARRA INFERIOR FIJA PARA TELÉFONOS MÓVILES                             -->
-    <!-- ========================================================================= -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 shadow-lg z-20 md:hidden flex justify-between items-center">
-        <div>
-            <span class="text-xs text-gray-500 block">Total del Pedido</span>
-            <span id="mobile-bar-total" class="font-bold text-gray-900 text-lg">$0.00</span>
+  <!-- ========================================================================= -->
+  <!-- ENCABEZADO CON BANNER E IDENTIDAD DEL LOCAL (FOTOS JPG)                  -->
+  <!-- ========================================================================= -->
+  <header class="banner-container" id="banner-bg">
+    <!-- Capa oscura superpuesta para asegurar legibilidad -->
+    <div class="banner-overlay"></div>
+    <!-- Contenedor con el logo y el nombre del negocio -->
+    <div class="header-content">
+      <!-- Imagen JPG del logo (se configura abajo en MI_CONFIGURACION.logo) -->
+      <img id="logo-display" src="img/logo.jpg" alt="Logo Negocio" class="logo-img" onerror="this.src='https://via.placeholder.com/150?text=Logo'" />
+      <div class="business-info">
+        <!-- Nombre del local configurable en JavaScript -->
+        <h1 id="business-name-display">Cookies 360</h1>
+        <!-- Slogan o descripción corta configurable -->
+        <p id="business-slogan-display">El mejor sabor en cada bocado</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- BARRA DE ACCIONES: BOTON DE VER CARRITO                                   -->
+  <!-- ========================================================================= -->
+  <div class="nav-actions">
+    <div>
+      <!-- Botón para ver el carrito con conteo de productos agregados -->
+      <button class="btn btn-cart" onclick="openCartModal()">
+        🛒 Carrito <span id="cart-badge" class="badge-count">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- CONTENEDOR PRINCIPAL DEL MENU Y PRODUCTOS                                 -->
+  <!-- ========================================================================= -->
+  <main class="container">
+    <!-- Contenedor donde JavaScript inserta las categorías -->
+    <div class="category-filter" id="categories-bar"></div>
+    <!-- Cuadrícula donde JavaScript genera las tarjetas de cada producto -->
+    <div class="product-grid" id="product-grid"></div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- BOTON FLOTANTE PARA TELEFONOS CELULARES                                   -->
+  <!-- ========================================================================= -->
+  <div class="float-cart" onclick="openCartModal()">
+    🛒 Ver Pedido (<span id="cart-float-count">0</span>)
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: VENTANA DEL CARRITO Y ENVIO DEL PEDIDO A WHATSAPP                  -->
+  <!-- ========================================================================= -->
+  <div class="modal-overlay" id="cart-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <!-- Título de la modal del carrito -->
+        <h3>🛒 Tu Pedido</h3>
+        <!-- Botón con la X para cerrar la modal -->
+        <button class="modal-close" onclick="closeCartModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenedor dinámico donde se listan los productos en el carrito -->
+        <div class="cart-items" id="cart-items-container"></div>
+
+        <!-- Resumen de subtotales y totales calculados -->
+        <div class="cart-summary">
+          <div class="cart-summary-line">
+            <span>Total en Referencia:</span>
+            <!-- Monto calculado en la moneda de referencia ($ o EUR) -->
+            <span id="summary-total-ref">$0.00</span>
+          </div>
+          <div class="cart-summary-line total">
+            <span>Total en Bolívares (Tasa BCV):</span>
+            <!-- Monto total calculado en Bolívares usando la tasa del BCV -->
+            <span id="summary-total-bs">Bs. 0,00</span>
+          </div>
         </div>
-        <button onclick="toggleCart()" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-5 rounded-xl flex items-center space-x-2 shadow-md">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Ver Pedido</span>
-            <span id="mobile-cart-badge" class="bg-white text-brand-700 text-xs font-bold px-2 py-0.5 rounded-full ml-1">0</span>
+
+        <!-- Formulario para recolectar datos de despacho y entrega -->
+        <h4 style="font-size: 1rem; font-weight: 600; margin-top:5px;">Datos de Despacho y Pago</h4>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre del Cliente *</label>
+            <!-- Entrada para el nombre del cliente -->
+            <input type="text" id="order-customer-name" class="form-control" placeholder="Ej. Carlos Mendoza" />
+          </div>
+          <div class="form-group">
+            <label>Modalidad de Entrega</label>
+            <!-- Selector para Delivery o Retiro en local -->
+            <select id="order-delivery-type" class="form-control">
+              <option value="Delivery">Delivery / Domicilio</option>
+              <option value="Pick-up / Retiro">Retiro en el local</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Dirección / Punto de Referencia</label>
+          <!-- Entrada para la dirección detallada -->
+          <input type="text" id="order-customer-address" class="form-control" placeholder="Ej. Av. Principal, Urb. Los Chaguaramos" />
+        </div>
+
+        <div class="form-group">
+          <label>Forma de Pago *</label>
+          <!-- Selector con los 3 métodos de pago solicitados -->
+          <select id="order-payment-method" class="form-control">
+            <option value="Pago Móvil">📲 Pago Móvil (Tasa BCV)</option>
+            <option value="Punto de Venta">💳 Punto de Venta (Tasa BCV)</option>
+            <option value="Efectivo en Dólares ($)">💵 Efectivo en Dólares ($)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Observaciones (Opcional)</label>
+          <!-- Campo para instrucciones específicas o información de billetes para cambio -->
+          <input type="text" id="order-notes" class="form-control" placeholder="Ej. Empaque para regalo, billete de $20 para vuelto" />
+        </div>
+
+        <!-- Botón que genera el texto y abre WhatsApp con el pedido listo -->
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1rem; padding: 12px; background: #25D366;" onclick="sendOrderToWhatsApp()">
+          📲 Enviar Pedido por WhatsApp
         </button>
+      </div>
     </div>
+  </div>
 
-    <!-- ========================================================================= -->
-    <!-- 9. MODAL DE AJUSTES (Ajustar WhatsApp y Tasa de Cambio)                   -->
-    <!-- ========================================================================= -->
-    <div id="config-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-        <div onclick="toggleConfigModal()" class="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"></div>
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 relative z-10 space-y-4">
-                <div class="flex justify-between items-center border-b pb-3">
-                    <h3 class="font-bold text-gray-800 flex items-center gap-2">
-                        <i class="fa-solid fa-gear text-brand-600"></i> Ajustes de Negocio
-                    </h3>
-                    <button onclick="toggleConfigModal()" class="text-gray-400 hover:text-gray-600">
-                        <i class="fa-solid fa-xmark text-lg"></i>
-                    </button>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Número de WhatsApp (con código de país):</label>
-                    <input type="text" id="config-phone-input" placeholder="ej: 584121234567" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">Tasa de Cambio en Bolívares (Bs por $1):</label>
-                    <input type="number" id="config-rate-input" placeholder="ej: 36.5" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
-                </div>
-                <button onclick="saveConfig()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 rounded-lg text-sm transition-all">
-                    Guardar Cambios
-                </button>
+  <!-- ========================================================================= -->
+  <!-- SCRIPT DE JAVASCRIPT: CONFIGURACION Y LOGICA COMPLETA DE TU TIENDA        -->
+  <!-- ========================================================================= -->
+  <script>
+    // =========================================================================
+    // SECCION 1: CONFIGURACION GENERAL DE TU TIENDA (EDITA AQUI TUS DATOS)
+    // Cambia los valores entre comillas según tus necesidades
+    // =========================================================================
+    const MI_CONFIGURACION = {
+      // Nombre que aparecerá en el encabezado y en el título de la pestaña
+      nombreNegocio: "Cookies 360",
+      
+      // Frase, lema o slogan que acompaña al nombre
+      slogan: "El mejor sabor en cada bocado",
+      
+      // Símbolo de moneda que prefieras usar ("$" para dólares o "€" para euros)
+      simboloMoneda: "$",
+      
+      // Ruta de tu logotipo en formato JPG (guarda tu archivo dentro de la carpeta img/)
+      logoJPG: "img/logo.jpg",
+      
+      // Ruta de tu banner superior en formato JPG (guarda tu archivo dentro de la carpeta img/)
+      bannerJPG: "img/banner.jpg",
+      
+      // Tasa oficial del Banco Central de Venezuela (BCV) en Bolívares por cada 1 dólar/euro
+      tasaBCV: 45.00,
+      
+      // Tu número de WhatsApp receptor con código de país SIN signos '+' ni espacios (ej: 584121234567)
+      telefonoWhatsApp: "584120000000",
+      
+      // Datos bancarios que se incluirán en el mensaje si el cliente elige pagar con Pago Móvil
+      datosPagoMovil: "Banco: Banesco | Teléfono: 0412-0000000 | C.I: V-12345678",
+      
+      // Paleta de colores de la página (puedes cambiar los códigos HEX)
+      colores: {
+        fondoPagina: "#f8fafc", // Color de fondo de toda la pantalla
+        colorBotonesYPrecios: "#e11d48", // Color llamativo de botones y precios destacados
+        fondoTarjetas: "#ffffff", // Color de fondo de las tarjetas de los productos
+        colorTexto: "#1e293b" // Color oscuro para los textos y títulos
+      }
+    };
+
+    // =========================================================================
+    // SECCION 2: CATALOGO DE PRODUCTOS (EDITA, AGREGA O QUITA PRODUCTOS AQUI)
+    // Para agregar un producto nuevo: copia un bloque {...}, pégalo y cámbiale los datos
+    // =========================================================================
+    const MIS_PRODUCTOS = [
+      {
+        id: "p1", // Identificador único (debe ser distinto para cada producto: p1, p2, p3...)
+        name: "Galleta Choco Chips Clásica", // Nombre de tu producto
+        category: "Clásicas", // Categoría a la que pertenece (sirve para los filtros)
+        priceRef: 2.50, // Precio numérico en la moneda de referencia ($ o €)
+        desc: "Galleta artesanal horneada con abundante chocolate semidulce y trozos crocantes.", // Descripción o ingredientes
+        image: "img/producto1.jpg" // Ruta de la foto JPG dentro de la carpeta img/
+      },
+      {
+        id: "p2",
+        name: "Galleta Red Velvet Rellena",
+        category: "Especiales",
+        priceRef: 3.50,
+        desc: "Suave masa roja sabor terciopelo rellena de cremoso queso crema y chispas blancas.",
+        image: "img/producto2.jpg"
+      },
+      {
+        id: "p3",
+        name: "Caja Surtida 360 (6 Unidades)",
+        category: "Combos",
+        priceRef: 15.00,
+        desc: "Selección especial con 6 de nuestras galletas más vendidas en caja de regalo.",
+        image: "img/producto3.jpg"
+      }
+    ];
+
+    // =========================================================================
+    // SECCION 3: PLANTILLA DEL MENSAJE DE WHATSAPP (EDITA EL TEXTO DEL MENSAJE)
+    // Aquí puedes cambiar cómo quieres que te llegue el pedido a tu WhatsApp
+    // Usa \n para dar saltos de línea y asteriscos *texto* para poner negritas
+    // =========================================================================
+    function construirMensajeWhatsApp(datosPedido) {
+      // Encabezado del mensaje
+      let texto = `🍪 *NUEVO PEDIDO - ${MI_CONFIGURACION.nombreNegocio.toUpperCase()}*\n`;
+      texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+      
+      // Datos del cliente
+      texto += `👤 *Cliente:* ${datosPedido.nombreCliente}\n`;
+      texto += `📍 *Entrega:* ${datosPedido.tipoEntrega}\n`;
+      
+      // Si el cliente puso dirección, se añade
+      if (datosPedido.direccion) {
+        texto += `🏠 *Dirección:* ${datosPedido.direccion}\n`;
+      }
+      
+      // Forma de pago seleccionada
+      texto += `💳 *Método de Pago:* ${datosPedido.formaPago}\n`;
+      
+      // Observaciones o notas adicionales si las escribió
+      if (datosPedido.notas) {
+        texto += `📝 *Notas:* ${datosPedido.notas}\n`;
+      }
+      
+      texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+      texto += `🛒 *DETALLE DEL PEDIDO:*\n`;
+
+      // Lista de cada producto que pidió el cliente
+      datosPedido.items.forEach(item => {
+        texto += `• ${item.qty}x ${item.name} (${MI_CONFIGURACION.simboloMoneda}${item.subtotalRef.toFixed(2)} / Bs. ${item.subtotalBs})\n`;
+      });
+
+      texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+      // Totales calculados en moneda de referencia y en Bolívares
+      texto += `💵 *TOTAL (${MI_CONFIGURACION.simboloMoneda}):* ${MI_CONFIGURACION.simboloMoneda}${datosPedido.totalRef.toFixed(2)}\n`;
+      texto += `🇻🇪 *TOTAL EN BS (Tasa ${MI_CONFIGURACION.tasaBCV.toFixed(2)}):* Bs. ${datosPedido.totalBs}\n`;
+
+      // Si el cliente eligió Pago Móvil, se anexan automáticamente los datos bancarios
+      if (datosPedido.formaPago === "Pago Móvil" && MI_CONFIGURACION.datosPagoMovil) {
+        texto += `\n📲 *Datos para realizar tu Pago Móvil:*\n${MI_CONFIGURACION.datosPagoMovil}\n`;
+      }
+
+      // Mensaje de despedida o agradecimiento al final
+      texto += `\n¡Muchas gracias por tu pedido! Estaremos confirmando en breve. ✨`;
+
+      return texto;
+    }
+
+    // =========================================================================
+    // SECCION 4: LOGICA DEL CARRITO Y RENDERIZADO VISUAL
+    // (Esta sección no necesitas modificarla, se encarga de que todo funcione)
+    // =========================================================================
+
+    // Arreglo en memoria para almacenar los artículos agregados al carrito
+    let carrito = [];
+    // Categoría activa actualmente seleccionada en los filtros
+    let categoriaSeleccionada = "Todas";
+
+    // Aplica las configuraciones de colores, nombres, banner y logotipo a la página
+    function aplicarConfiguracionVisual() {
+      // Inyecta los colores definidos en las variables CSS globales de :root
+      document.documentElement.style.setProperty("--bg-color", MI_CONFIGURACION.colores.fondoPagina);
+      document.documentElement.style.setProperty("--card-bg", MI_CONFIGURACION.colores.fondoTarjetas);
+      document.documentElement.style.setProperty("--primary-color", MI_CONFIGURACION.colores.colorBotonesYPrecios);
+      document.documentElement.style.setProperty("--text-color", MI_CONFIGURACION.colores.colorTexto);
+
+      // Actualiza los textos del título de pestaña, nombre del negocio y slogan
+      document.getElementById("page-title").textContent = MI_CONFIGURACION.nombreNegocio;
+      document.getElementById("business-name-display").textContent = MI_CONFIGURACION.nombreNegocio;
+      document.getElementById("business-slogan-display").textContent = MI_CONFIGURACION.slogan;
+
+      // Asigna la foto JPG del logo
+      document.getElementById("logo-display").src = MI_CONFIGURACION.logoJPG;
+
+      // Asigna la foto JPG del banner superior
+      document.getElementById("banner-bg").style.backgroundImage = `url('${MI_CONFIGURACION.bannerJPG}')`;
+
+      // Actualiza la tasa del BCV en la barra superior
+      document.getElementById("rate-ref-label").textContent = MI_CONFIGURACION.simboloMoneda;
+      document.getElementById("display-bcv-rate").textContent = `Bs. ${Number(MI_CONFIGURACION.tasaBCV).toFixed(2)}`;
+    }
+
+    // Extrae y dibuja los botones de categorías disponibles
+    function renderizarCategorias() {
+      // Crea un conjunto sin duplicados que incluye 'Todas' y las categorías de los productos
+      const categorias = ["Todas", ...new Set(MIS_PRODUCTOS.map(p => p.category || "General"))];
+      const contenedor = document.getElementById("categories-bar");
+      // Genera el HTML de los botones de cada categoría
+      contenedor.innerHTML = categorias.map(cat => `
+        <button class="cat-btn ${cat === categoriaSeleccionada ? 'active' : ''}" onclick="filtrarPorCategoria('${cat}')">
+          ${cat}
+        </button>
+      `).join("");
+    }
+
+    // Filtra los productos según la categoría pulsada
+    function filtrarPorCategoria(categoria) {
+      categoriaSeleccionada = categoria; // Guarda la categoría elegida
+      renderizarCategorias(); // Redibuja los botones para marcar el activo
+      renderizarProductos(); // Filtra y dibuja los productos correspondientes
+    }
+
+    // Dibuja en pantalla las tarjetas de los productos del catálogo
+    function renderizarProductos() {
+      const cuadricula = document.getElementById("product-grid");
+      // Filtra según la categoría seleccionada
+      const productosFiltrados = categoriaSeleccionada === "Todas"
+        ? MIS_PRODUCTOS
+        : MIS_PRODUCTOS.filter(p => p.category === categoriaSeleccionada);
+
+      // Si no hay productos en dicha categoría
+      if (productosFiltrados.length === 0) {
+        cuadricula.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:40px;">No hay productos en esta categoría.</p>`;
+        return;
+      }
+
+      // Genera las tarjetas mostrando precio de referencia y su cálculo en Bolívares
+      cuadricula.innerHTML = productosFiltrados.map(p => {
+        // Multiplica el precio por la tasa del BCV
+        const precioBs = (p.priceRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
+        return `
+          <div class="product-card">
+            <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.src='https://via.placeholder.com/300x190?text=Foto+JPG'" />
+            <div class="product-body">
+              <h3 class="product-title">${p.name}</h3>
+              <p class="product-desc">${p.desc || ''}</p>
+              <div class="product-pricing">
+                <div class="price-ref">${MI_CONFIGURACION.simboloMoneda} ${Number(p.priceRef).toFixed(2)}</div>
+                <div class="price-bcv">Equivalente BCV: Bs. ${precioBs}</div>
+              </div>
+              <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="agregarAlCarrito('${p.id}')">
+                ➕ Agregar al Carrito
+              </button>
             </div>
-        </div>
-    </div>
+          </div>
+        `;
+      }).join("");
+    }
 
-    <!-- ========================================================================= -->
-    <!-- 10. LÓGICA EN JAVASCRIPT (Configuración de Productos e Interactividad)     -->
-    <!-- ========================================================================= -->
-    <script>
-        // A. CONFIGURACIÓN DEL NEGOCIO (Teléfono y Tasa de cambio)
-        let whatsappNumber = localStorage.getItem('app_whatsapp_number') || '584120000000'; // Pon tu número aquí
-        let exchangeRate = parseFloat(localStorage.getItem('app_exchange_rate')) || 36.5;   // Tasa por defecto
-        let selectedCurrency = 'USD'; // 'USD' o 'LOCAL'
-        let currentCategory = 'Todos';
-        let cart = JSON.parse(localStorage.getItem('app_cart_items')) || [];
+    // Agrega un producto al carrito de compras
+    function agregarAlCarrito(productoId) {
+      const itemExistente = carrito.find(item => item.id === productoId);
+      if (itemExistente) {
+        itemExistente.qty += 1; // Suma 1 a la cantidad existente
+      } else {
+        const producto = MIS_PRODUCTOS.find(p => p.id === productoId);
+        if (producto) carrito.push({ ...producto, qty: 1 }); // Agrega con cantidad inicial de 1
+      }
+      actualizarContadorCarrito(); // Actualiza contadores visuales
+    }
 
-        // B. CATEGORÍAS DEL MENÚ
-        // Puedes agregar o quitar categorías según tus necesidades
-        const categories = ['Todos', 'Hamburguesas', 'Pizzas', 'Bebidas', 'Postres'];
+    // Modifica la cantidad de un producto dentro del carrito (+1 o -1)
+    function cambiarCantidadCarrito(productoId, delta) {
+      const item = carrito.find(i => i.id === productoId);
+      if (!item) return;
+      item.qty += delta; // Suma o resta
+      if (item.qty <= 0) {
+        // Si la cantidad llega a 0, se retira del carrito
+        carrito = carrito.filter(i => i.id !== productoId);
+      }
+      actualizarContadorCarrito(); // Actualiza contadores
+      renderizarModalCarrito(); // Redibuja la ventana del carrito
+    }
 
-        // C. BASE DE DATOS DE TUS PRODUCTOS
-        // Para subir tus propias imágenes:
-        // Opción 1: Usa carpetas guardando la foto en GitHub, ej: "imagenes/hamburguesa.jpg"
-        // Opción 2: Pega el enlace de la imagen alojada en internet
-        const products = [
-            {
-                id: 1,
-                name: "Hamburguesa Doble Queso",
-                category: "Hamburguesas",
-                priceUSD: 8.50,
-                description: "Doble carne 100% de res, queso cheddar fundido, tocineta crujiente y salsa especial de la casa.",
-                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                id: 2,
-                name: "Hamburguesa Crispy Chicken",
-                category: "Hamburguesas",
-                priceUSD: 7.00,
-                description: "Pechuga de pollo empanizada super crujiente, lechuga fresca, pepinillos y mayonesa de ajo.",
-                image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                id: 3,
-                name: "Pizza Pepperoni Suprema",
-                category: "Pizzas",
-                priceUSD: 12.00,
-                description: "Masa artesanal, salsa napolitana, extra queso mozzarella y abundante pepperoni de primera.",
-                image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                id: 4,
-                name: "Coca-Cola Original 1.5L",
-                category: "Bebidas",
-                priceUSD: 2.50,
-                description: "Bebida refrescante bien fría para acompañar tu comida.",
-                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                id: 5,
-                name: "Milkshake de Oreo",
-                category: "Postres",
-                priceUSD: 4.50,
-                description: "Batido cremoso de helado de chocolate, trozos de galleta Oreo y crema batida.",
-                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80"
-            }
-        ];
+    // Actualiza los badges numéricos del carrito
+    function actualizarContadorCarrito() {
+      const totalUnidades = carrito.reduce((acum, curr) => acum + curr.qty, 0);
+      document.getElementById("cart-badge").textContent = totalUnidades;
+      document.getElementById("cart-float-count").textContent = totalUnidades;
+    }
 
-        // D. FUNCIONALIDAD DE PRECIOS Y MONEDAS
-        function formatPrice(amountUSD) {
-            if (selectedCurrency === 'USD') {
-                return `$${amountUSD.toFixed(2)}`;
-            } else {
-                const localVal = amountUSD * exchangeRate;
-                return `Bs ${localVal.toFixed(2)}`;
-            }
-        }
+    // Abre la ventana modal del carrito
+    function openCartModal() {
+      renderizarModalCarrito(); // Dibuja productos agregados
+      document.getElementById("cart-modal").classList.add("active"); // Muestra la ventana
+    }
 
-        // E. MOSTRAR CATEGORÍAS
-        function renderCategories() {
-            const container = document.getElementById('category-tabs');
-            container.innerHTML = categories.map(cat => `
-                <button onclick="setCategory('${cat}')" 
-                    class="px-4 py-2 text-xs md:text-sm font-medium rounded-xl whitespace-nowrap transition-all ${
-                        currentCategory === cat 
-                        ? 'bg-brand-600 text-white shadow-md' 
-                        : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                    }">
-                    ${cat}
-                </button>
-            `).join('');
-        }
+    // Cierra la ventana modal del carrito
+    function closeCartModal() {
+      document.getElementById("cart-modal").classList.remove("active"); // Oculta la ventana
+    }
 
-        function setCategory(cat) {
-            currentCategory = cat;
-            renderCategories();
-            filterProducts();
-        }
+    // Dibuja el listado de productos y los totales en el modal del carrito
+    function renderizarModalCarrito() {
+      const contenedor = document.getElementById("cart-items-container");
 
-        function setCurrency(curr) {
-            selectedCurrency = curr;
-            const btnUsd = document.getElementById('btn-currency-usd');
-            const btnLocal = document.getElementById('btn-currency-local');
+      // Si el carrito está vacío
+      if (carrito.length === 0) {
+        contenedor.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">Tu carrito está vacío.</p>`;
+        document.getElementById("summary-total-ref").textContent = `${MI_CONFIGURACION.simboloMoneda}0.00`;
+        document.getElementById("summary-total-bs").textContent = "Bs. 0,00";
+        return;
+      }
 
-            if (curr === 'USD') {
-                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
-                btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
-            } else {
-                btnLocal.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition-all shadow-sm";
-                btnUsd.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-300 hover:bg-gray-700 transition-all";
-            }
+      let totalRef = 0; // Acumulador del costo de referencia
 
-            renderProducts(getFilteredProducts());
-            updateCartUI();
-        }
+      // Dibuja cada producto con sus botones para sumar o restar
+      contenedor.innerHTML = carrito.map(item => {
+        const subtotalRef = item.priceRef * item.qty;
+        totalRef += subtotalRef;
+        const subtotalBs = (subtotalRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
+        return `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-sub">${item.qty} x ${MI_CONFIGURACION.simboloMoneda}${item.priceRef.toFixed(2)} = ${MI_CONFIGURACION.simboloMoneda}${subtotalRef.toFixed(2)} (Bs. ${subtotalBs})</div>
+            </div>
+            <div class="cart-qty-controls">
+              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', -1)">-</button>
+              <span style="font-weight:600;">${item.qty}</span>
+              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', 1)">+</button>
+            </div>
+          </div>
+        `;
+      }).join("");
 
-        // F. FILTRAR Y RENDERIZAR PRODUCTOS
-        function getFilteredProducts() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            return products.filter(p => {
-                const matchesCat = (currentCategory === 'Todos') || (p.category === currentCategory);
-                const matchesQuery = p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
-                return matchesCat && matchesQuery;
-            });
-        }
+      // Cálculo del monto total en Bolívares
+      const totalBs = (totalRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
+      // Muestra los totales en pantalla
+      document.getElementById("summary-total-ref").textContent = `${MI_CONFIGURACION.simboloMoneda}${totalRef.toFixed(2)}`;
+      document.getElementById("summary-total-bs").textContent = `Bs. ${totalBs}`;
+    }
 
-        function filterProducts() {
-            renderProducts(getFilteredProducts());
-        }
+    // Enviar el pedido estructurado hacia el WhatsApp del negocio
+    function sendOrderToWhatsApp() {
+      // Valida que existan productos en el carrito
+      if (carrito.length === 0) {
+        alert("El carrito está vacío. Agrega productos antes de enviar tu pedido.");
+        return;
+      }
 
-        function renderProducts(items) {
-            const grid = document.getElementById('product-grid');
-            const empty = document.getElementById('empty-state');
+      // Valida que el cliente coloque su nombre
+      const nombreCliente = document.getElementById("order-customer-name").value.trim();
+      if (!nombreCliente) {
+        alert("Por favor escribe tu nombre para el pedido.");
+        return;
+      }
 
-            if (items.length === 0) {
-                grid.innerHTML = '';
-                empty.classList.remove('hidden');
-                return;
-            }
+      // Recolección de los datos de despacho y pago
+      const tipoEntrega = document.getElementById("order-delivery-type").value;
+      const direccion = document.getElementById("order-customer-address").value.trim();
+      const formaPago = document.getElementById("order-payment-method").value;
+      const notas = document.getElementById("order-notes").value.trim();
 
-            empty.classList.add('hidden');
-            grid.innerHTML = items.map(p => `
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col justify-between">
-                    <div>
-                        <div class="relative h-48 overflow-hidden bg-gray-100">
-                            <!-- Si la imagen falla al cargar, muestra una por defecto -->
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/500x300/e2e8f0/64748b?text=Imagen+Producto'">
-                            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-gray-800 shadow-sm">
-                                ${formatPrice(p.priceUSD)}
-                            </span>
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-bold text-gray-900 text-base mb-1">${p.name}</h3>
-                            <p class="text-gray-500 text-xs leading-relaxed line-clamp-2">${p.description}</p>
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0">
-                        <button onclick="addToCart(${p.id})" class="w-full bg-brand-50 hover:bg-brand-500 text-brand-700 hover:text-white font-semibold py-2.5 rounded-xl transition-colors duration-200 flex items-center justify-center space-x-2 text-sm">
-                            <i class="fa-solid fa-plus text-xs"></i>
-                            <span>Agregar al Carrito</span>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // G. GESTIÓN DEL CARRITO DE COMPRAS
-        function addToCart(productId) {
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                const prod = products.find(p => p.id === productId);
-                cart.push({ ...prod, quantity: 1 });
-            }
-            saveCart();
-            updateCartUI();
-            
-            const badge = document.getElementById('cart-count-badge');
-            badge.classList.add('badge-pulse');
-            setTimeout(() => badge.classList.remove('badge-pulse'), 400);
-        }
-
-        function updateQuantity(productId, delta) {
-            const item = cart.find(i => i.id === productId);
-            if (!item) return;
-
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cart = cart.filter(i => i.id !== productId);
-            }
-            saveCart();
-            updateCartUI();
-        }
-
-        function removeFromCart(productId) {
-            cart = cart.filter(i => i.id !== productId);
-            saveCart();
-            updateCartUI();
-        }
-
-        function saveCart() {
-            localStorage.setItem('app_cart_items', JSON.stringify(cart));
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items-container');
-            const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
-            const totalUSD = cart.reduce((sum, i) => sum + (i.priceUSD * i.quantity), 0);
-
-            document.getElementById('cart-count-badge').textContent = totalCount;
-            document.getElementById('mobile-cart-badge').textContent = totalCount;
-            document.getElementById('cart-total').textContent = formatPrice(totalUSD);
-            document.getElementById('mobile-bar-total').textContent = formatPrice(totalUSD);
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12">
-                        <i class="fa-solid fa-basket-shopping text-4xl text-gray-300 mb-2"></i>
-                        <p class="text-gray-500 text-sm font-medium">Tu carrito está vacío</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = cart.map(item => `
-                <div class="flex items-center space-x-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                    <img src="${item.image}" class="w-16 h-16 rounded-lg object-cover" onerror="this.src='https://placehold.co/100x100/e2e8f0/64748b?text=Foto'">
-                    <div class="flex-1">
-                        <h4 class="text-sm font-bold text-gray-800 line-clamp-1">${item.name}</h4>
-                        <span class="text-xs text-brand-600 font-semibold">${formatPrice(item.priceUSD)}</span>
-                        <div class="flex items-center space-x-2 mt-1">
-                            <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold flex items-center justify-center text-xs">-</button>
-                            <span class="text-xs font-semibold text-gray-700">${item.quantity}</span>
-                            <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold flex items-center justify-center text-xs">+</button>
-                        </div>
-                    </div>
-                    <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 p-1">
-                        <i class="fa-solid fa-trash-can text-sm"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-drawer').classList.toggle('hidden');
-        }
-
-        function toggleConfigModal() {
-            document.getElementById('config-phone-input').value = whatsappNumber;
-            document.getElementById('config-rate-input').value = exchangeRate;
-            document.getElementById('config-modal').classList.toggle('hidden');
-        }
-
-        function saveConfig() {
-            const phoneVal = document.getElementById('config-phone-input').value.trim();
-            const rateVal = parseFloat(document.getElementById('config-rate-input').value);
-
-            if (phoneVal) {
-                whatsappNumber = phoneVal;
-                localStorage.setItem('app_whatsapp_number', phoneVal);
-            }
-            if (!isNaN(rateVal) && rateVal > 0) {
-                exchangeRate = rateVal;
-                localStorage.setItem('app_exchange_rate', rateVal);
-            }
-
-            toggleConfigModal();
-            renderProducts(getFilteredProducts());
-            updateCartUI();
-        }
-
-        // H. GENERAR MENSAJE PARA WHATSAPP
-        function sendOrderWhatsApp() {
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío. Agrega productos antes de realizar el pedido.');
-                return;
-            }
-
-            const name = document.getElementById('cust-name').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-            const payment = document.getElementById('cust-payment').value;
-            const notes = document.getElementById('cust-notes').value.trim();
-
-            if (!name || !address) {
-                alert('Por favor ingresa tu Nombre y Dirección de entrega.');
-                return;
-            }
-
-            let itemsSummary = '';
-            let totalUSD = 0;
-
-            cart.forEach(item => {
-                const subtotalItemUSD = item.priceUSD * item.quantity;
-                totalUSD += subtotalItemUSD;
-                itemsSummary += `• ${item.quantity}x ${item.name} - ${formatPrice(subtotalItemUSD)}\n`;
-            });
-
-            const totalFormatted = formatPrice(totalUSD);
-            const totalLocalFormatted = `Bs ${(totalUSD * exchangeRate).toFixed(2)}`;
-
-            let message = `*NUEVO PEDIDO DE COMPRA* 🛒\n\n`;
-            message += `*Cliente:* ${name}\n`;
-            message += `*Dirección:* ${address}\n`;
-            message += `*Método de Pago:* ${payment}\n`;
-            if (notes) message += `*Notas:* ${notes}\n`;
-            message += `\n-------------------------------\n`;
-            message += `*DETALLE DEL PEDIDO:*\n${itemsSummary}`;
-            message += `-------------------------------\n`;
-            message += `*TOTAL:* ${totalFormatted}`;
-            if (selectedCurrency === 'USD') {
-                message += ` (${totalLocalFormatted})`;
-            }
-
-            const encodedUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(encodedUrl, '_blank');
-        }
-
-        // INICIALIZACIÓN
-        window.onload = function() {
-            renderCategories();
-            renderProducts(products);
-            updateCartUI();
+      // Prepara los detalles de cada producto para la plantilla
+      let totalRef = 0;
+      const itemsProcesados = carrito.map(item => {
+        const subtotal = item.priceRef * item.qty;
+        totalRef += subtotal;
+        const subtotalBs = (subtotal * MI_CONFIGURACION.tasaBCV).toFixed(2);
+        return {
+          name: item.name,
+          qty: item.qty,
+          subtotalRef: subtotal,
+          subtotalBs: subtotalBs
         };
-    </script>
+      });
+
+      const totalBs = (totalRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
+
+      // Objeto con todos los datos del pedido
+      const datosPedido = {
+        nombreCliente,
+        tipoEntrega,
+        direccion,
+        formaPago,
+        notas,
+        items: itemsProcesados,
+        totalRef,
+        totalBs
+      };
+
+      // Construye el mensaje personalizado llamando a la función de la SECCION 3
+      const mensajeTexto = construirMensajeWhatsApp(datosPedido);
+
+      // Limpia caracteres no numéricos del número configurado
+      const telefonoLimpio = MI_CONFIGURACION.telefonoWhatsApp.replace(/\D/g, "");
+
+      // Genera el enlace de la API de WhatsApp con el mensaje codificado
+      const urlWhatsApp = `https://wa.me/${telefonoLimpio}?text=${encodeURIComponent(mensajeTexto)}`;
+
+      // Abre la conversación de WhatsApp en una pestaña nueva
+      window.open(urlWhatsApp, "_blank");
+    }
+
+    // =========================================================================
+    // SECCION 5: INICIALIZACION AUTOMATICA AL CARGAR LA PAGINA
+    // =========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      aplicarConfiguracionVisual(); // Aplica colores, logo, banner y textos
+      renderizarCategorias(); // Dibuja los botones de categorías
+      renderizarProductos(); // Dibuja el catálogo de productos
+      actualizarContadorCarrito(); // Inicializa el contador del carrito
+    });
+  </script>
 </body>
 </html>
