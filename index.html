@@ -1106,7 +1106,14 @@
     // =========================================================================
     // Consulta la API pública y segura para obtener la tasa del Euro BCV actualizada al día
     async function consultarTasaEuroBCV() {
-      // Si la opción automática está desactivada, conserva la tasa de respaldo manual
+      // 1. Intenta recuperar la última tasa exitosa guardada en la memoria local del navegador (localStorage)
+      const tasaMemoria = localStorage.getItem("cookies360_ultima_tasa_euro_bcv");
+      // Si existe una tasa guardada previamente en memoria, se adopta como nuevo respaldo dinámico
+      if (tasaMemoria && !isNaN(parseFloat(tasaMemoria))) {
+        // Reemplaza la tasa base por la última registrada en la visita anterior
+        MI_CONFIGURACION.tasaBCV = parseFloat(tasaMemoria);
+      }
+      // Si la opción automática está desactivada, conserva la tasa obtenida
       if (!MI_CONFIGURACION.usarApiAutomaticaBCV) return;
       try {
         // Realiza la petición asíncrona a la API del Euro BCV
@@ -1119,8 +1126,10 @@
           if (respuestaJSON && respuestaJSON.promedio && !isNaN(respuestaJSON.promedio)) {
             // Actualiza la variable tasaBCV en memoria con la tasa oficial del día
             MI_CONFIGURACION.tasaBCV = parseFloat(respuestaJSON.promedio);
+            // Guarda esta nueva tasa en localStorage para que sea el nuevo respaldo permanente
+            localStorage.setItem("cookies360_ultima_tasa_euro_bcv", MI_CONFIGURACION.tasaBCV.toString());
             // Imprime en la consola para comprobación técnica
-            console.log("Tasa Euro BCV actualizada automáticamente: Bs. " + MI_CONFIGURACION.tasaBCV.toFixed(2));
+            console.log("Tasa Euro BCV actualizada y guardada en memoria local: Bs. " + MI_CONFIGURACION.tasaBCV.toFixed(2));
             // Redibuja los productos para refrescar de inmediato los precios en Bolívares
             renderizarProductos();
             // Si la ventana del carrito está abierta, recalcula los totales al momento
@@ -1130,8 +1139,8 @@
           }
         }
       } catch (error) {
-        // En caso de que no haya conexión a internet, se mantiene la tasa de respaldo sin afectar la web
-        console.warn("Aviso: No se pudo conectar a la API del Euro BCV. Se mantiene la tasa de respaldo: Bs. " + MI_CONFIGURACION.tasaBCV, error);
+        // En caso de que no haya conexión a internet, se mantiene la última tasa registrada
+        console.warn("Aviso: No se pudo conectar a la API del Euro BCV. Se mantiene la última tasa registrada: Bs. " + MI_CONFIGURACION.tasaBCV, error);
       }
     }
 
