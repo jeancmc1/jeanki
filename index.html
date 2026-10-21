@@ -626,8 +626,8 @@
             <span id="summary-total-ref">$0.00</span>
           </div>
           <div class="cart-summary-line total">
-            <span>Total en Bolívares (Tasa BCV):</span>
-            <!-- Monto total calculado en Bolívares usando la tasa del BCV -->
+            <span>Total en Bolívares (Euro BCV):</span>
+            <!-- Monto total calculado en Bolívares usando la tasa del Euro BCV -->
             <span id="summary-total-bs">Bs. 0,00</span>
           </div>
         </div>
@@ -705,9 +705,15 @@
       // Ruta de tu banner superior (archivo en la carpeta img/)
       bannerJPG: "img/banner.png",
       
-      // Tasa oficial del Banco Central de Venezuela (BCV) en Bolívares por cada 1 dólar/euro
-      // ¡MODIFICA ESTE NUMERO PARA ACTUALIZAR LA TASA!
-      tasaBCV: 45.00,
+      // Tasa oficial de respaldo del Banco Central de Venezuela (Euro BCV) si no hubiera internet
+      // ¡Se actualiza automáticamente al entrar a la página gracias a la API oficial!
+      tasaBCV: 993.18,
+      
+      // Habilita o deshabilita la consulta automática a la API del BCV en tiempo real
+      usarApiAutomaticaBCV: true,
+      
+      // Enlace seguro de la API oficial para consultar la tasa del Euro BCV al día
+      urlApiEuroBCV: "https://ve.dolarapi.com/v1/euros/oficial",
       
       // Tu número de WhatsApp receptor con código de país SIN signos '+' ni espacios (ej: 584121234567)
       telefonoWhatsApp: "584120000000",
@@ -843,9 +849,9 @@
       });
 
       texto += `━━━━━━━━━━━━━━━━━━━━\n`;
-      // Totales calculados en moneda de referencia y en Bolívares
+      // Totales calculados en moneda de referencia y en Bolívares según tasa Euro BCV
       texto += `💵 *TOTAL (${MI_CONFIGURACION.simboloMoneda}):* ${MI_CONFIGURACION.simboloMoneda}${datosPedido.totalRef.toFixed(2)}\n`;
-      texto += `🇻🇪 *TOTAL EN BS (Tasa ${MI_CONFIGURACION.tasaBCV.toFixed(2)}):* Bs. ${datosPedido.totalBs}\n`;
+      texto += `💶 *TOTAL EN BS (Tasa Euro BCV ${MI_CONFIGURACION.tasaBCV.toFixed(2)}):* Bs. ${datosPedido.totalBs}\n`;
 
       // Si el cliente eligió Pago Móvil, se anexan automáticamente los datos bancarios
       if (datosPedido.formaPago === "Pago Móvil" && MI_CONFIGURACION.datosPagoMovil) {
@@ -938,7 +944,7 @@
               <p class="product-desc">${p.desc || ''}</p>
               <div class="product-pricing">
                 <div class="price-ref">${MI_CONFIGURACION.simboloMoneda} ${Number(p.priceRef).toFixed(2)}</div>
-                <div class="price-bcv">Equivalente BCV: Bs. ${precioBs}</div>
+                <div class="price-bcv">Equivalente Euro BCV: Bs. ${precioBs}</div>
               </div>
               <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="agregarAlCarrito('${p.id}')">
                 ➕ Agregar al Carrito
@@ -1096,13 +1102,48 @@
     }
 
     // =========================================================================
-    // SECCION 5: INICIALIZACION AUTOMATICA AL CARGAR LA PAGINA
+    // SECCION 5: CONSULTA AUTOMATICA DE LA TASA OFICIAL DEL EURO BCV
+    // =========================================================================
+    // Consulta la API pública y segura para obtener la tasa del Euro BCV actualizada al día
+    async function consultarTasaEuroBCV() {
+      // Si la opción automática está desactivada, conserva la tasa de respaldo manual
+      if (!MI_CONFIGURACION.usarApiAutomaticaBCV) return;
+      try {
+        // Realiza la petición asíncrona a la API del Euro BCV
+        const peticion = await fetch(MI_CONFIGURACION.urlApiEuroBCV);
+        // Verifica si la respuesta del servidor es satisfactoria (código HTTP 200)
+        if (peticion.ok) {
+          // Decodifica la respuesta en formato JSON
+          const respuestaJSON = await peticion.json();
+          // Valida que el campo 'promedio' contenga un número válido mayor a cero
+          if (respuestaJSON && respuestaJSON.promedio && !isNaN(respuestaJSON.promedio)) {
+            // Actualiza la variable tasaBCV en memoria con la tasa oficial del día
+            MI_CONFIGURACION.tasaBCV = parseFloat(respuestaJSON.promedio);
+            // Imprime en la consola para comprobación técnica
+            console.log("Tasa Euro BCV actualizada automáticamente: Bs. " + MI_CONFIGURACION.tasaBCV.toFixed(2));
+            // Redibuja los productos para refrescar de inmediato los precios en Bolívares
+            renderizarProductos();
+            // Si la ventana del carrito está abierta, recalcula los totales al momento
+            if (document.getElementById("cart-modal").classList.contains("active")) {
+              renderizarModalCarrito();
+            }
+          }
+        }
+      } catch (error) {
+        // En caso de que no haya conexión a internet, se mantiene la tasa de respaldo sin afectar la web
+        console.warn("Aviso: No se pudo conectar a la API del Euro BCV. Se mantiene la tasa de respaldo: Bs. " + MI_CONFIGURACION.tasaBCV, error);
+      }
+    }
+
+    // =========================================================================
+    // SECCION 6: INICIALIZACION AUTOMATICA AL CARGAR LA PAGINA
     // =========================================================================
     window.addEventListener("DOMContentLoaded", () => {
       aplicarConfiguracionVisual(); // Aplica colores de la paleta, logo, banner y textos
       renderizarCategorias(); // Dibuja los botones de categorías
-      renderizarProductos(); // Dibuja el catálogo de productos
+      renderizarProductos(); // Dibuja el catálogo de productos con la tasa inicial
       actualizarContadorCarrito(); // Inicializa el contador del carrito
+      consultarTasaEuroBCV(); // Consulta y sincroniza la tasa oficial del Euro BCV en tiempo real
     });
   </script>
 </body>
