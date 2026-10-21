@@ -15,23 +15,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <!-- Preconexión segura crossorigin para recursos externos -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Hoja de estilos de la fuente moderna 'Poppins' con grosores del 300 al 700 -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Hoja de estilos de la fuente moderna 'Poppins' con grosores del 300 al 800 -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Inicio de la sección de estilos visuales CSS embebidos -->
   <style>
-    /* Variables globales en :root para modificar colores y bordes dinámicamente desde JavaScript */
+    /* ========================================================================= */
+    /* PALETA OFICIAL DE COLORES EXTRAIDA DE 'PALETA DE COLORES.PDF'             */
+    /* ========================================================================= */
     :root {
-      --bg-color: #fdfbf7; /* Color de fondo general cálido estilo repostería */
-      --card-bg: #ffffff; /* Color de fondo blanco de las tarjetas de galletas y modales */
-      --primary-color: #d97706; /* Color ámbar/dorado apetitoso para botones y precios */
-      --secondary-color: #b45309; /* Tono más oscuro para efectos hover */
-      --accent-color: #1c1917; /* Color chocolate oscuro utilizado en la barra superior */
-      --text-color: #292524; /* Color principal de los textos y títulos */
-      --text-muted: #78716c; /* Color gris suave para descripciones secundarias */
-      --border-color: #e7e5e4; /* Color tenue para líneas divisorias y bordes */
-      --radius: 16px; /* Radio de redondeo suave para las esquinas de tarjetas y botones */
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04); /* Sombra elegante */
+      /* #FFF9F0: Fondo cálido crema vainilla extraído de la paleta oficial */
+      --bg-color: #FFF9F0;
+      /* #FFFFFF: Fondo blanco puro para hacer resaltar las fotos de las galletas */
+      --card-bg: #FFFFFF;
+      /* #EC3787: Rosa fucsia icónico del logo y banner de Cookies 360 */
+      --primary-color: #EC3787;
+      /* #FA6BAD: Tono rosa más claro para efectos hover al pasar el cursor */
+      --secondary-color: #FA6BAD;
+      /* #0049A6: Azul rey profundo corporativo para títulos, textos principales y botones */
+      --text-color: #0049A6;
+      /* #5173ED: Azul eléctrico de la paleta para categorías activas y acentos */
+      --accent-blue: #5173ED;
+      /* #5F89FF: Azul claro para hovers secundarios */
+      --accent-blue-light: #5F89FF;
+      /* #97B351: Verde pistacho oficial de la paleta para el botón del carrito */
+      --green-pistachio: #97B351;
+      /* #799916: Verde hoja más oscuro para el hover del carrito */
+      --green-hover: #799916;
+      /* #F6E2C2: Tono galleta / arena suave para bordes y separadores elegantes */
+      --border-color: #F6E2C2;
+      /* Azul oscuro traslúcido para textos secundarios */
+      --text-muted: #43618f;
+      /* Radio de curvatura redondeada para tarjetas y botones */
+      --radius: 16px;
+      /* Sombra suave con tinte azulado armonizado */
+      --shadow: 0 10px 25px -5px rgba(0, 73, 166, 0.08), 0 8px 10px -6px rgba(0, 73, 166, 0.04);
     }
 
     /* Regla universal para normalizar márgenes, rellenos y modelo de caja */
@@ -44,51 +62,31 @@
 
     /* Estilos del cuerpo principal de la página */
     body {
-      background-color: var(--bg-color); /* Aplica el color de fondo dinámico */
-      color: var(--text-color); /* Aplica el color de texto dinámico */
+      background-color: var(--bg-color); /* Aplica el color crema vainilla #FFF9F0 */
+      color: var(--text-color); /* Aplica el color azul corporativo #0049A6 */
       min-height: 100vh; /* Asegura altura mínima equivalente a la pantalla completa */
       display: flex; /* Disposición flexible */
       flex-direction: column; /* Organiza los elementos en sentido vertical */
     }
 
-    /* Barra superior informativa para tasa del BCV y medios de pago */
-    .rate-bar {
-      background: var(--accent-color); /* Fondo oscuro chocolate */
-      color: #ffffff; /* Letras blancas para contraste óptimo */
-      font-size: 0.85rem; /* Tamaño de letra compacto y legible */
-      padding: 9px 16px; /* Relleno superior e inferior */
-      display: flex; /* Disposición en fila horizontal */
-      justify-content: space-between; /* Un elemento a la izquierda y otro a la derecha */
-      align-items: center; /* Alinea los elementos verticalmente al centro */
-      flex-wrap: wrap; /* Pasa a la siguiente línea en pantallas muy estrechas */
-      gap: 10px; /* Separación mínima entre elementos */
-    }
-
-    /* Insignia resaltada para mostrar la tasa del día */
-    .rate-bar .badge {
-      background: rgba(255, 255, 255, 0.2); /* Fondo blanco traslúcido */
-      padding: 3px 8px; /* Relleno interior */
-      border-radius: 6px; /* Bordes ligeramente curvados */
-      font-weight: 600; /* Texto en negrita */
-    }
-
-    /* Contenedor del encabezado con imagen de banner */
+    /* Contenedor del encabezado con imagen de banner oficial */
     .banner-container {
       position: relative; /* Base de posicionamiento para la capa superpuesta */
-      height: 250px; /* Altura en píxeles del banner superior */
-      background-color: #292524; /* Fondo oscuro mientras termina de cargar la imagen */
+      height: 270px; /* Altura en píxeles del banner superior */
+      background-color: #0049A6; /* Fondo azul de respaldo mientras carga el banner */
       background-size: cover; /* Escala la imagen cubriendo todo el ancho sin deformarse */
       background-position: center; /* Centra la imagen de banner horizontal y verticalmente */
       display: flex; /* Disposición flexible */
       align-items: flex-end; /* Alinea los textos y logo en la base inferior */
-      padding: 22px; /* Relleno perimetral */
+      padding: 24px; /* Relleno perimetral */
+      box-shadow: 0 4px 20px rgba(0, 73, 166, 0.15); /* Sombra inferior del banner */
     }
 
-    /* Capa oscura con degradado superpuesta para asegurar legibilidad del texto */
+    /* Capa oscura superpuesta con gradiente azul rey para asegurar legibilidad */
     .banner-overlay {
       position: absolute; /* Superposición absoluta sobre el contenedor */
       inset: 0; /* Cubre los cuatro bordes (top, right, bottom, left en 0) */
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 15%, rgba(0,0,0,0.3) 60%, transparent 100%); /* Gradiente */
+      background: linear-gradient(to top, rgba(0, 73, 166, 0.85) 10%, rgba(0, 73, 166, 0.3) 55%, transparent 100%); /* Gradiente azul corporativo */
     }
 
     /* Contenedor de la información del negocio (Logo, Nombre y Slogan) */
@@ -97,7 +95,7 @@
       z-index: 2; /* Nivel de capa superior para recibir clics y destacar */
       display: flex; /* Disposición horizontal */
       align-items: center; /* Centrado vertical entre logo y textos */
-      gap: 18px; /* Separación entre el logo y los textos */
+      gap: 20px; /* Separación entre el logo y los textos */
       width: 100%; /* Ocupa el ancho disponible */
       max-width: 1100px; /* Ancho máximo estándar centrado */
       margin: 0 auto; /* Centrado horizontal automático */
@@ -105,35 +103,37 @@
 
     /* Imagen circular del logotipo oficial de Cookies 360 */
     .logo-img {
-      width: 100px; /* Ancho del logo */
-      height: 100px; /* Altura del logo */
+      width: 130px; /* Ancho aumentado del logo para presencia destacada */
+      height: 130px; /* Altura aumentada del logo */
       border-radius: 50%; /* Transforma la imagen en círculo */
-      border: 4px solid #ffffff; /* Marco blanco alrededor para destacar */
+      border: 4px solid #FFFFFF; /* Marco blanco brillante alrededor */
       object-fit: cover; /* Evita que la foto se distorsione al recortarse */
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra para dar volumen y relieve */
-      background: #ffffff; /* Fondo blanco */
+      box-shadow: 0 8px 24px rgba(0, 73, 166, 0.35); /* Sombra elegante con tinte azul */
+      background: #FFFFFF; /* Fondo blanco */
     }
 
     /* Nombre del negocio en el encabezado */
     .business-info h1 {
-      color: #ffffff; /* Letras blancas para contrastar con el fondo */
-      font-size: 2rem; /* Tamaño de fuente grande */
-      font-weight: 700; /* Negrita */
-      line-height: 1.2; /* Altura de línea */
-      text-shadow: 0 2px 8px rgba(0,0,0,0.4); /* Sombra sutil de texto */
+      color: #FFFFFF; /* Letras blancas para contrastar nítidamente sobre el banner */
+      font-size: 2.1rem; /* Tamaño de fuente grande */
+      font-weight: 800; /* Grosor extra negrita */
+      line-height: 1.15; /* Altura de línea ajustada */
+      text-shadow: 0 2px 10px rgba(0, 73, 166, 0.5); /* Sombra de texto */
+      letter-spacing: -0.5px; /* Espaciado tipográfico moderno */
     }
 
     /* Slogan o descripción corta del negocio */
     .business-info p {
-      color: #f5f5f4; /* Color claro suave para el subtítulo */
-      font-size: 1rem; /* Tamaño de texto mediano */
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5); /* Sombra de texto */
+      color: #FFF9F0; /* Tono crema claro para el subtítulo */
+      font-size: 1.05rem; /* Tamaño de texto mediano */
+      font-weight: 500; /* Grosor intermedio */
+      text-shadow: 0 1px 6px rgba(0, 73, 166, 0.6); /* Sombra de texto */
     }
 
     /* Barra de navegación para el botón del carrito */
     .nav-actions {
       max-width: 1100px; /* Ancho alineado con el contenido */
-      margin: 18px auto 8px auto; /* Centrado con margen vertical */
+      margin: 20px auto 10px auto; /* Centrado con margen vertical */
       padding: 0 20px; /* Relleno lateral */
       display: flex; /* Disposición horizontal */
       justify-content: flex-end; /* Alinea el botón del carrito a la derecha */
@@ -143,50 +143,57 @@
 
     /* Estilo base para todos los botones de la página */
     .btn {
-      padding: 10px 20px; /* Espaciado interior ergonómico */
-      border-radius: 10px; /* Esquinas redondeadas */
-      font-size: 0.92rem; /* Tamaño de texto */
+      padding: 10px 22px; /* Espaciado interior ergonómico */
+      border-radius: 12px; /* Esquinas redondeadas */
+      font-size: 0.95rem; /* Tamaño de texto */
       font-weight: 600; /* Grosor seminegrita */
       border: none; /* Sin borde predeterminado */
       cursor: pointer; /* Cambia el cursor a mano para indicar clic */
       display: inline-flex; /* Disposición en línea flexible */
       align-items: center; /* Centrado vertical de íconos y texto */
-      gap: 7px; /* Separación entre ícono y texto */
-      transition: all 0.2s ease; /* Transición fluida para efectos visuales */
+      gap: 8px; /* Separación entre ícono y texto */
+      transition: all 0.25s ease; /* Transición fluida para efectos visuales */
     }
 
-    /* Botón de acción primaria */
+    /* Botón de acción primaria: Rosa fucsia de la paleta #EC3787 */
     .btn-primary {
-      background: var(--primary-color); /* Color primario configurado */
-      color: #ffffff; /* Texto blanco */
+      background: var(--primary-color); /* Color fucsia Cookies 360 */
+      color: #FFFFFF; /* Texto blanco */
+      box-shadow: 0 4px 14px rgba(236, 55, 135, 0.35); /* Sombra luminosa fucsia */
     }
 
-    /* Efecto al pasar el cursor sobre el botón primario */
+    /* Efecto al pasar el cursor sobre el botón fucsia */
     .btn-primary:hover {
-      background: var(--secondary-color); /* Tono más intenso */
-      transform: translateY(-1px); /* Elevación sutil */
+      background: var(--secondary-color); /* Pasa al rosa más claro #FA6BAD */
+      transform: translateY(-2px); /* Elevación sutil */
+      box-shadow: 0 6px 18px rgba(236, 55, 135, 0.45); /* Sombra intensificada */
     }
 
-    /* Botón para abrir el carrito de compras */
+    /* Botón para abrir el carrito de compras: Verde Pistacho de la paleta #97B351 */
     .btn-cart {
-      background: #10b981; /* Verde esmeralda */
-      color: #ffffff; /* Texto blanco */
+      background: var(--green-pistachio); /* Verde pistacho oficial */
+      color: #FFFFFF; /* Texto blanco */
       position: relative; /* Posición relativa para anclar la insignia de conteo */
+      box-shadow: 0 4px 14px rgba(151, 179, 81, 0.35); /* Sombra verde */
     }
 
     /* Efecto al pasar el cursor sobre el botón del carrito */
     .btn-cart:hover {
-      background: #059669; /* Verde oscuro al pasar el cursor */
+      background: var(--green-hover); /* Pasa al verde hoja #799916 */
+      transform: translateY(-2px); /* Elevación */
+      box-shadow: 0 6px 18px rgba(121, 153, 22, 0.4); /* Sombra más fuerte */
     }
 
-    /* Contador numérico de productos en el carrito */
+    /* Contador numérico de productos en el carrito: Rosa #EC3787 */
     .badge-count {
-      background: #ef4444; /* Rojo brillante */
-      color: #ffffff; /* Texto blanco */
+      background: var(--primary-color); /* Fucsia resaltado */
+      color: #FFFFFF; /* Número en blanco */
       font-size: 0.75rem; /* Letra pequeña */
+      font-weight: 700; /* Negrita */
       border-radius: 50%; /* Círculo completo */
       padding: 2px 7px; /* Relleno interior */
-      margin-left: 5px; /* Separación del texto */
+      margin-left: 6px; /* Separación del texto */
+      border: 1.5px solid #FFFFFF; /* Borde blanco fino */
     }
 
     /* Contenedor central del contenido y catálogo */
@@ -203,121 +210,130 @@
       display: flex; /* Disposición en fila */
       gap: 10px; /* Espacio entre botones */
       overflow-x: auto; /* Permite scroll horizontal fluido en móviles */
-      padding: 10px 0 22px 0; /* Relleno superior e inferior */
+      padding: 10px 0 24px 0; /* Relleno superior e inferior */
     }
 
-    /* Botón individual de categoría */
+    /* Botón individual de categoría: Blanco con borde arena #F6E2C2 y texto azul #0049A6 */
     .cat-btn {
-      background: var(--card-bg); /* Fondo de la tarjeta */
-      border: 1px solid var(--border-color); /* Borde suave */
-      padding: 8px 18px; /* Relleno */
-      border-radius: 22px; /* Forma de píldora redondeada */
-      font-size: 0.88rem; /* Tamaño de letra */
-      font-weight: 500; /* Grosor medio */
-      color: var(--text-color); /* Color de texto del tema */
+      background: var(--card-bg); /* Fondo blanco */
+      border: 1.5px solid var(--border-color); /* Borde arena suave */
+      padding: 8px 20px; /* Relleno interior */
+      border-radius: 24px; /* Forma de píldora redondeada */
+      font-size: 0.9rem; /* Tamaño de letra */
+      font-weight: 600; /* Grosor seminegrita */
+      color: var(--text-color); /* Texto azul #0049A6 */
       cursor: pointer; /* Cursor interactivo */
-      white-space: nowrap; /* Evita que el nombre de la categoría se divida en dos líneas */
-      transition: all 0.2s ease; /* Transición fluida */
+      white-space: nowrap; /* Evita que el nombre se corte en dos líneas */
+      transition: all 0.25s ease; /* Transición fluida */
     }
 
-    /* Botón de la categoría activa actualmente seleccionada */
+    /* Efecto al pasar el cursor sobre la categoría inactiva */
+    .cat-btn:hover {
+      border-color: var(--accent-blue); /* Borde azul eléctrico */
+      color: var(--accent-blue); /* Texto azul eléctrico */
+      background: #FFFFFF; /* Fondo blanco */
+    }
+
+    /* Botón de la categoría activa: Azul Eléctrico #5173ED con texto blanco */
     .cat-btn.active {
-      background: var(--primary-color); /* Fondo del color primario */
-      color: #ffffff; /* Texto blanco */
-      border-color: var(--primary-color); /* Borde a juego */
-      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3); /* Sombra luminosa */
+      background: var(--accent-blue); /* Fondo azul eléctrico */
+      color: #FFFFFF; /* Texto blanco */
+      border-color: var(--accent-blue); /* Borde a juego */
+      box-shadow: 0 4px 14px rgba(81, 115, 237, 0.35); /* Sombra luminosa azul */
     }
 
     /* Cuadrícula responsiva de tarjetas de productos */
     .product-grid {
       display: grid; /* Grid CSS */
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Columnas automáticas responsivas */
-      gap: 24px; /* Separación entre tarjetas */
+      gap: 26px; /* Separación entre tarjetas */
     }
 
-    /* Tarjeta individual de producto */
+    /* Tarjeta individual de producto: Fondo blanco con borde arena #F6E2C2 */
     .product-card {
-      background: var(--card-bg); /* Fondo dinámico */
+      background: var(--card-bg); /* Fondo blanco */
       border-radius: var(--radius); /* Curvatura en esquinas */
-      box-shadow: var(--shadow); /* Sombra sutil */
-      border: 1px solid var(--border-color); /* Borde tenue */
-      overflow: hidden; /* Recorta imágenes que sobrepasen el contenedor */
+      box-shadow: var(--shadow); /* Sombra suave con tinte azul */
+      border: 1.5px solid var(--border-color); /* Borde arena de la paleta */
+      overflow: hidden; /* Recorta imágenes para redondear esquinas */
       display: flex; /* Disposición flexible */
       flex-direction: column; /* Apila imagen, texto y botón verticalmente */
-      transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animación al interactuar */
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; /* Transición */
     }
 
     /* Efecto al pasar el cursor sobre la tarjeta */
     .product-card:hover {
-      transform: translateY(-5px); /* Eleva la tarjeta 5 píxeles */
-      box-shadow: 0 18px 32px -6px rgba(0,0,0,0.12); /* Intensifica la sombra */
+      transform: translateY(-6px); /* Eleva la tarjeta 6 píxeles */
+      box-shadow: 0 20px 35px -8px rgba(0, 73, 166, 0.16); /* Intensifica la sombra */
+      border-color: var(--primary-color); /* El borde se ilumina en fucsia #EC3787 */
     }
 
     /* Fotografía del producto */
     .product-img {
       width: 100%; /* Ocupa el ancho completo */
-      height: 220px; /* Altura estándar generosa para lucir las galletas */
+      height: 230px; /* Altura estándar generosa para lucir las galletas */
       object-fit: cover; /* Centra y recorta proporcionalmente sin deformar la foto */
-      background: #f5f5f4; /* Fondo gris claro mientras carga */
+      background: #FFF9F0; /* Fondo crema mientras carga */
     }
 
     /* Cuerpo interno de la tarjeta */
     .product-body {
-      padding: 18px; /* Relleno perimetral */
+      padding: 20px; /* Relleno perimetral */
       display: flex; /* Flexbox */
       flex-direction: column; /* Dirección en columna */
-      flex-grow: 1; /* Permite que el botón inferior se alinee abajo parejo */
+      flex-grow: 1; /* Permite que el botón inferior se alinee parejo abajo */
     }
 
-    /* Nombre del producto */
+    /* Nombre del producto en Azul Corporativo #0049A6 */
     .product-title {
-      font-size: 1.15rem; /* Tamaño de fuente prominente */
+      font-size: 1.2rem; /* Tamaño de fuente prominente */
       font-weight: 700; /* Negrita */
-      margin-bottom: 6px; /* Separación */
-      color: var(--text-color); /* Color principal */
+      margin-bottom: 6px; /* Separación inferior */
+      color: var(--text-color); /* Azul corporativo #0049A6 */
     }
 
-    /* Descripción detallada o ingredientes del producto */
+    /* Descripción detallada de la galleta */
     .product-desc {
-      font-size: 0.88rem; /* Tamaño adecuado para lectura */
-      color: var(--text-muted); /* Color suave */
-      margin-bottom: 14px; /* Margen inferior */
-      flex-grow: 1; /* Ocupa el espacio disponible para nivelar los botones */
-      line-height: 1.45; /* Interlineado cómodo */
+      font-size: 0.9rem; /* Tamaño de lectura cómodo */
+      color: var(--text-muted); /* Color azul suave #43618f */
+      margin-bottom: 16px; /* Margen inferior */
+      flex-grow: 1; /* Ocupa el espacio disponible para nivelar botones */
+      line-height: 1.45; /* Interlineado */
     }
 
     /* Contenedor de precios */
     .product-pricing {
-      margin-bottom: 14px; /* Margen inferior */
-      padding-top: 10px; /* Relleno superior */
-      border-top: 1px dashed var(--border-color); /* Línea punteada decorativa */
+      margin-bottom: 16px; /* Margen inferior */
+      padding-top: 12px; /* Relleno superior */
+      border-top: 1.5px dashed var(--border-color); /* Línea punteada decorativa arena */
     }
 
-    /* Precio principal en moneda de referencia ($ o €) */
+    /* Precio principal en moneda de referencia: Rosa Fucsia #EC3787 */
     .price-ref {
-      font-size: 1.35rem; /* Tamaño grande */
-      font-weight: 700; /* Negrita */
-      color: var(--primary-color); /* Color primario */
+      font-size: 1.45rem; /* Tamaño grande y llamativo */
+      font-weight: 800; /* Grosor extra negrita */
+      color: var(--primary-color); /* Rosa fucsia de la paleta */
     }
 
-    /* Precio convertido a Bolívares con tasa BCV */
+    /* Precio convertido a Bolívares con tasa BCV: Azul #0049A6 */
     .price-bcv {
-      font-size: 0.88rem; /* Tamaño compacto */
-      color: var(--text-muted); /* Color atenuado */
-      font-weight: 500; /* Grosor medio */
-      margin-top: 2px; /* Margen superior */
+      font-size: 0.9rem; /* Tamaño compacto */
+      color: var(--text-color); /* Azul corporativo */
+      font-weight: 600; /* Grosor seminegrita */
+      margin-top: 3px; /* Margen superior */
     }
 
     /* Fondo oscuro traslúcido para la ventana modal del carrito */
     .modal-overlay {
       position: fixed; /* Posición fija en la pantalla */
       inset: 0; /* Cubre los cuatro lados */
-      background: rgba(0, 0, 0, 0.65); /* Color negro al 65% de opacidad */
+      background: rgba(0, 73, 166, 0.6); /* Azul corporativo con 60% de opacidad */
       display: none; /* Oculto por defecto */
       align-items: center; /* Centrado vertical */
       justify-content: center; /* Centrado horizontal */
       z-index: 1000; /* Capa sobre todos los demás elementos */
       padding: 15px; /* Espacio para bordes en pantallas pequeñas */
+      backdrop-filter: blur(4px); /* Desenfoque de fondo moderno */
     }
 
     /* Estado activo que despliega la ventana modal */
@@ -327,45 +343,54 @@
 
     /* Caja contenedora del contenido del modal */
     .modal {
-      background: #ffffff; /* Fondo blanco */
+      background: #FFFFFF; /* Fondo blanco */
       border-radius: var(--radius); /* Curvatura */
       width: 100%; /* Ancho completo */
       max-width: 620px; /* Ancho máximo para mantener ergonomía */
       max-height: 90vh; /* Altura máxima del 90% de la ventana */
       overflow-y: auto; /* Habilita scroll vertical si el contenido sobrepasa la pantalla */
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25); /* Sombra pronunciada */
+      box-shadow: 0 24px 50px rgba(0, 73, 166, 0.25); /* Sombra envolvente */
       display: flex; /* Flexbox */
       flex-direction: column; /* Apila encabezado y cuerpo */
+      border: 1.5px solid var(--border-color); /* Borde arena */
     }
 
     /* Encabezado del modal */
     .modal-header {
-      padding: 18px 22px; /* Relleno */
-      border-bottom: 1px solid var(--border-color); /* Línea divisoria */
+      padding: 20px 24px; /* Relleno */
+      border-bottom: 1.5px solid var(--border-color); /* Línea divisoria arena */
       display: flex; /* Disposición en fila */
-      justify-content: space-between; /* Separa título a la izquierda y botón de cierre a la derecha */
+      justify-content: space-between; /* Separa título y botón de cierre */
       align-items: center; /* Centrado vertical */
+      background: #FFF9F0; /* Fondo crema suave */
     }
 
-    /* Título del modal */
+    /* Título del modal en Azul Corporativo #0049A6 */
     .modal-header h3 {
-      font-size: 1.25rem; /* Tamaño de fuente */
+      font-size: 1.3rem; /* Tamaño de fuente */
       font-weight: 700; /* Negrita */
+      color: var(--text-color); /* Azul #0049A6 */
     }
 
     /* Botón para cerrar modal (X) */
     .modal-close {
       background: none; /* Sin fondo */
       border: none; /* Sin borde */
-      font-size: 1.6rem; /* Tamaño grande */
+      font-size: 1.8rem; /* Tamaño grande */
       cursor: pointer; /* Cursor de mano */
-      color: var(--text-muted); /* Color gris */
+      color: var(--text-color); /* Azul corporativo */
       line-height: 1; /* Altura de línea ajustada */
+      transition: color 0.2s; /* Transición */
+    }
+
+    /* Efecto al pasar el cursor sobre la X */
+    .modal-close:hover {
+      color: var(--primary-color); /* Pasa a fucsia */
     }
 
     /* Cuerpo del modal */
     .modal-body {
-      padding: 22px; /* Relleno interno */
+      padding: 24px; /* Relleno interno */
       display: flex; /* Flexbox */
       flex-direction: column; /* Apilado en vertical */
       gap: 16px; /* Separación entre bloques */
@@ -380,24 +405,27 @@
 
     /* Etiquetas de texto del formulario */
     .form-group label {
-      font-size: 0.85rem; /* Tamaño */
+      font-size: 0.88rem; /* Tamaño */
       font-weight: 600; /* Negrita */
-      color: var(--text-color); /* Color de texto del tema */
+      color: var(--text-color); /* Azul #0049A6 */
     }
 
     /* Campos de texto, selects y áreas de texto */
     .form-control {
-      padding: 10px 14px; /* Relleno interno */
-      border: 1px solid var(--border-color); /* Borde estándar */
-      border-radius: 9px; /* Esquinas curvadas */
+      padding: 11px 14px; /* Relleno interno */
+      border: 1.5px solid var(--border-color); /* Borde arena de la paleta */
+      border-radius: 10px; /* Esquinas curvadas */
       font-size: 0.92rem; /* Tamaño */
       outline: none; /* Quita el marco azul predeterminado del navegador */
-      background: #ffffff; /* Fondo blanco */
+      background: #FFFFFF; /* Fondo blanco */
+      color: var(--text-color); /* Texto azul */
+      transition: border-color 0.2s, box-shadow 0.2s; /* Transición */
     }
 
-    /* Resaltado cuando el usuario hace clic en el campo */
+    /* Resaltado cuando el usuario hace clic en el campo: Fucsia #EC3787 */
     .form-control:focus {
-      border-color: var(--primary-color); /* Cambia el color del borde al primario */
+      border-color: var(--primary-color); /* Cambia el borde a fucsia */
+      box-shadow: 0 0 0 3px rgba(236, 55, 135, 0.15); /* Resplandor fucsia suave */
     }
 
     /* Fila de formulario de dos columnas */
@@ -420,23 +448,24 @@
     .cart-item {
       display: flex; /* Flexbox horizontal */
       align-items: center; /* Centrado vertical */
-      justify-content: space-between; /* Información a la izquierda, botones de cantidad a la derecha */
+      justify-content: space-between; /* Información a la izquierda, botones a la derecha */
       padding: 12px; /* Relleno */
-      background: #fafaf9; /* Fondo muy claro */
-      border-radius: 9px; /* Bordes curvados */
-      border: 1px solid var(--border-color); /* Borde tenue */
+      background: #FFF9F0; /* Fondo crema de la paleta */
+      border-radius: 10px; /* Bordes curvados */
+      border: 1px solid var(--border-color); /* Borde arena */
     }
 
     /* Nombre del ítem en el carrito */
     .cart-item-title {
-      font-weight: 600; /* Negrita */
-      font-size: 0.92rem; /* Tamaño */
+      font-weight: 700; /* Negrita */
+      font-size: 0.95rem; /* Tamaño */
+      color: var(--text-color); /* Azul #0049A6 */
     }
 
     /* Detalle de cantidad y precios en el carrito */
     .cart-item-sub {
-      font-size: 0.8rem; /* Letra pequeña */
-      color: var(--text-muted); /* Color suave */
+      font-size: 0.82rem; /* Letra pequeña */
+      color: var(--text-muted); /* Azul suave */
     }
 
     /* Controles de incremento y reducción de cantidades */
@@ -446,54 +475,65 @@
       gap: 8px; /* Espacio entre botones */
     }
 
-    /* Botones pequeños de suma y resta */
+    /* Botones pequeños de suma y resta: Tono arena #F6E2C2 con texto azul */
     .btn-qty {
-      background: #e7e5e4; /* Fondo gris */
+      background: var(--border-color); /* Fondo arena #F6E2C2 */
+      color: var(--text-color); /* Texto azul #0049A6 */
       border: none; /* Sin borde */
-      width: 28px; /* Ancho */
-      height: 28px; /* Alto */
-      border-radius: 6px; /* Curvatura */
+      width: 30px; /* Ancho */
+      height: 30px; /* Alto */
+      border-radius: 8px; /* Curvatura */
       font-weight: bold; /* Negrita */
       cursor: pointer; /* Cursor de mano */
+      transition: background 0.2s; /* Transición */
     }
 
-    /* Cuadro de resumen final de totales */
+    /* Efecto al pasar el cursor sobre los botones de cantidad */
+    .btn-qty:hover {
+      background: var(--primary-color); /* Cambia a fucsia */
+      color: #FFFFFF; /* Texto blanco */
+    }
+
+    /* Cuadro de resumen final de totales: Fondo crema con borde arena */
     .cart-summary {
-      background: #f5f5f4; /* Fondo suave */
-      padding: 16px; /* Relleno interior */
+      background: #FFF9F0; /* Fondo crema vainilla */
+      padding: 16px 20px; /* Relleno interior */
       border-radius: 12px; /* Bordes curvados */
       display: flex; /* Flexbox */
       flex-direction: column; /* Apilado vertical */
-      gap: 6px; /* Separación entre líneas */
+      gap: 8px; /* Separación entre líneas */
+      border: 1.5px solid var(--border-color); /* Borde arena */
     }
 
     /* Líneas individuales del resumen */
     .cart-summary-line {
       display: flex; /* Disposición en fila */
       justify-content: space-between; /* Título a la izquierda, total numérico a la derecha */
-      font-size: 0.95rem; /* Tamaño */
+      font-size: 0.98rem; /* Tamaño */
+      color: var(--text-color); /* Azul #0049A6 */
+      font-weight: 500; /* Grosor medio */
     }
 
     /* Línea resaltada del total en Bolívares con tasa BCV */
     .cart-summary-line.total {
-      font-size: 1.2rem; /* Tamaño mayor */
-      font-weight: 700; /* Negrita */
-      color: var(--primary-color); /* Color de acento primario */
-      border-top: 1px solid #d6d3d1; /* Línea divisoria superior */
-      padding-top: 10px; /* Separación respecto a la línea anterior */
+      font-size: 1.25rem; /* Tamaño mayor */
+      font-weight: 800; /* Extra negrita */
+      color: var(--primary-color); /* Fucsia Cookies 360 #EC3787 */
+      border-top: 1.5px dashed var(--border-color); /* Línea punteada superior */
+      padding-top: 10px; /* Separación superior */
       margin-top: 6px; /* Margen superior */
     }
 
-    /* Botón flotante del carrito pensado para teléfonos celulares */
+    /* Botón flotante del carrito pensado para teléfonos celulares: Verde Pistacho #97B351 */
     .float-cart {
       position: fixed; /* Posición fija en pantalla */
       bottom: 20px; /* Separado del borde inferior */
       right: 20px; /* Separado del borde derecho */
-      background: #10b981; /* Verde esmeralda */
-      color: #ffffff; /* Texto blanco */
+      background: var(--green-pistachio); /* Verde pistacho de la paleta */
+      color: #FFFFFF; /* Texto blanco */
       padding: 14px 22px; /* Relleno generoso para pulsar con el dedo */
       border-radius: 50px; /* Forma de pastilla */
-      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4); /* Sombra verde */
+      box-shadow: 0 10px 24px rgba(151, 179, 81, 0.45); /* Sombra luminosa */
       display: none; /* Oculto por defecto en computadoras */
       align-items: center; /* Centrado */
       gap: 10px; /* Separación */
@@ -505,9 +545,9 @@
     /* Media query para pantallas con un ancho máximo de 600px (móviles) */
     @media (max-width: 600px) {
       .float-cart { display: flex; } /* Muestra el botón flotante en móviles */
-      .banner-container { height: 210px; } /* Ajusta la altura del banner */
-      .logo-img { width: 80px; height: 80px; } /* Reduce ligeramente el logo */
-      .business-info h1 { font-size: 1.5rem; } /* Reduce el tamaño del título */
+      .banner-container { height: 220px; } /* Ajusta la altura del banner en móviles */
+      .logo-img { width: 95px; height: 95px; } /* Ajusta proporcionalmente el logo en móviles */
+      .business-info h1 { font-size: 1.6rem; } /* Reduce el tamaño del título */
       .form-row { grid-template-columns: 1fr; } /* Pasa formularios de dos columnas a una sola columna */
     }
   </style>
@@ -516,24 +556,10 @@
 
 <body>
   <!-- ========================================================================= -->
-  <!-- BARRA SUPERIOR INFORMATIVA: TASA BCV Y METODOS DE PAGO DISPONIBLES       -->
-  <!-- ========================================================================= -->
-  <div class="rate-bar">
-    <div>
-      <!-- Indicador con la bandera de Venezuela y el valor actual de la tasa del BCV -->
-      <span>🇻🇪 <strong>Tasa Oficial BCV:</strong> 1 <span id="rate-ref-label">USD</span> = <span id="display-bcv-rate" class="badge">Bs. --</span></span>
-    </div>
-    <div>
-      <!-- Medios de pago soportados según requerimiento -->
-      <span>Medios de Pago: <strong>Efectivo $, Pago Móvil, Punto de Venta</strong></span>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- ENCABEZADO CON BANNER E IDENTIDAD DEL LOCAL (FOTOS JPG)                  -->
+  <!-- ENCABEZADO CON BANNER E IDENTIDAD DEL LOCAL (BANNER Y LOGO VISIBLES)     -->
   <!-- ========================================================================= -->
   <header class="banner-container" id="banner-bg">
-    <!-- Capa oscura superpuesta para asegurar legibilidad -->
+    <!-- Capa oscura superpuesta con degradado azul para asegurar legibilidad -->
     <div class="banner-overlay"></div>
     <!-- Contenedor con el logo y el nombre del negocio -->
     <div class="header-content">
@@ -606,8 +632,8 @@
           </div>
         </div>
 
-        <!-- Formulario para recolectar datos de despacho y entrega -->
-        <h4 style="font-size: 1rem; font-weight: 600; margin-top:5px;">Datos de Despacho y Pago</h4>
+        <!-- Formulario para recolectar datos de despacho y pago -->
+        <h4 style="font-size: 1rem; font-weight: 700; color:var(--text-color); margin-top:5px;">Datos de Despacho y Pago</h4>
 
         <div class="form-row">
           <div class="form-group">
@@ -647,8 +673,8 @@
           <input type="text" id="order-notes" class="form-control" placeholder="Ej. Empaque para regalo, billete de $20 para vuelto" />
         </div>
 
-        <!-- Botón que genera el texto y abre WhatsApp con el pedido listo -->
-        <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1rem; padding: 12px; background: #25D366;" onclick="sendOrderToWhatsApp()">
+        <!-- Botón verde oficial que arma el mensaje y abre WhatsApp -->
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1.05rem; padding: 13px; background: #25D366; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);" onclick="sendOrderToWhatsApp()">
           📲 Enviar Pedido por WhatsApp
         </button>
       </div>
@@ -661,7 +687,7 @@
   <script>
     // =========================================================================
     // SECCION 1: CONFIGURACION GENERAL DE TU TIENDA (EDITA AQUI TUS DATOS)
-    // Cambia los valores entre comillas según tus necesidades
+    // Paleta de colores oficial extraída de 'PALETA DE COLORES.PDF'
     // =========================================================================
     const MI_CONFIGURACION = {
       // Nombre que aparecerá en el encabezado y en el título de la pestaña
@@ -689,12 +715,16 @@
       // Datos bancarios que se incluirán en el mensaje si el cliente elige pagar con Pago Móvil
       datosPagoMovil: "Banco: Banesco | Teléfono: 0412-0000000 | C.I: V-12345678",
       
-      // Paleta de colores de la página (puedes cambiar los códigos HEX)
+      // Paleta oficial de colores 100% armonizada con el Logo y Banner de Cookies 360
       colores: {
-        fondoPagina: "#fdfbf7", // Color de fondo cálido
-        colorBotonesYPrecios: "#d97706", // Color ámbar/dorado apetitoso
-        fondoTarjetas: "#ffffff", // Color de fondo de las tarjetas de los productos
-        colorTexto: "#292524" // Color oscuro para los textos y títulos
+        fondoPagina: "#FFF9F0", // Crema vainilla suave de la paleta oficial
+        colorBotonesYPrecios: "#EC3787", // Rosa fucsia de la marca
+        colorHoverFucsia: "#FA6BAD", // Rosa más suave para hover
+        fondoTarjetas: "#FFFFFF", // Blanco puro para resaltar las galletas
+        colorTexto: "#0049A6", // Azul corporativo para títulos y textos
+        colorAcentoAzul: "#5173ED", // Azul eléctrico para filtros activos
+        colorVerdePistacho: "#97B351", // Verde pistacho para el carrito
+        colorBordesArena: "#F6E2C2" // Tono arena suave para bordes
       }
     };
 
@@ -844,7 +874,11 @@
       document.documentElement.style.setProperty("--bg-color", MI_CONFIGURACION.colores.fondoPagina);
       document.documentElement.style.setProperty("--card-bg", MI_CONFIGURACION.colores.fondoTarjetas);
       document.documentElement.style.setProperty("--primary-color", MI_CONFIGURACION.colores.colorBotonesYPrecios);
+      document.documentElement.style.setProperty("--secondary-color", MI_CONFIGURACION.colores.colorHoverFucsia);
       document.documentElement.style.setProperty("--text-color", MI_CONFIGURACION.colores.colorTexto);
+      document.documentElement.style.setProperty("--accent-blue", MI_CONFIGURACION.colores.colorAcentoAzul);
+      document.documentElement.style.setProperty("--green-pistachio", MI_CONFIGURACION.colores.colorVerdePistacho);
+      document.documentElement.style.setProperty("--border-color", MI_CONFIGURACION.colores.colorBordesArena);
 
       // Actualiza los textos del título de pestaña, nombre del negocio y slogan
       document.getElementById("page-title").textContent = MI_CONFIGURACION.nombreNegocio + " - Menú Digital";
@@ -856,10 +890,6 @@
 
       // Asigna la foto del banner superior
       document.getElementById("banner-bg").style.backgroundImage = `url('${MI_CONFIGURACION.bannerJPG}')`;
-
-      // Actualiza la tasa del BCV en la barra superior
-      document.getElementById("rate-ref-label").textContent = MI_CONFIGURACION.simboloMoneda;
-      document.getElementById("display-bcv-rate").textContent = `Bs. ${Number(MI_CONFIGURACION.tasaBCV).toFixed(2)}`;
     }
 
     // Extrae y dibuja los botones de categorías disponibles
@@ -902,7 +932,7 @@
         const precioBs = (p.priceRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
         return `
           <div class="product-card">
-            <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.src='https://via.placeholder.com/300x220?text=Foto+JPG'" />
+            <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.src='https://via.placeholder.com/300x230?text=Foto+JPG'" />
             <div class="product-body">
               <h3 class="product-title">${p.name}</h3>
               <p class="product-desc">${p.desc || ''}</p>
@@ -989,7 +1019,7 @@
             </div>
             <div class="cart-qty-controls">
               <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', -1)">-</button>
-              <span style="font-weight:600;">${item.qty}</span>
+              <span style="font-weight:700; color:var(--text-color);">${item.qty}</span>
               <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', 1)">+</button>
             </div>
           </div>
@@ -1069,7 +1099,7 @@
     // SECCION 5: INICIALIZACION AUTOMATICA AL CARGAR LA PAGINA
     // =========================================================================
     window.addEventListener("DOMContentLoaded", () => {
-      aplicarConfiguracionVisual(); // Aplica colores, logo, banner y textos
+      aplicarConfiguracionVisual(); // Aplica colores de la paleta, logo, banner y textos
       renderizarCategorias(); // Dibuja los botones de categorías
       renderizarProductos(); // Dibuja el catálogo de productos
       actualizarContadorCarrito(); // Inicializa el contador del carrito
