@@ -62,11 +62,15 @@
 
     /* Estilos del cuerpo principal de la página */
     body {
-      background-color: var(--bg-color); /* Aplica el color crema vainilla #FFF9F0 */
+      background-color: var(--bg-color); /* Aplica el color crema vainilla #FFF9F0 de respaldo */
       color: var(--text-color); /* Aplica el color azul corporativo #0049A6 */
       min-height: 100vh; /* Asegura altura mínima equivalente a la pantalla completa */
       display: flex; /* Disposición flexible */
       flex-direction: column; /* Organiza los elementos en sentido vertical */
+      background-size: cover; /* Escala la imagen de fondo PNG cubriendo la pantalla */
+      background-repeat: no-repeat; /* Evita que la imagen se corte o repita */
+      background-position: center top; /* Centra la imagen desde la parte superior */
+      background-attachment: fixed; /* Fondo fijo estilo paralaje al desplazarse */
     }
 
     /* Contenedor del encabezado con imagen de banner oficial */
@@ -718,6 +722,9 @@
       // Ruta de tu banner superior (archivo en la carpeta img/)
       bannerJPG: "img/banner.png",
       
+      // Ruta de tu imagen PNG de fondo para la página principal (ejemplo: "img/fondo.png"). Déjala en "" si prefieres solo color sólido
+      fondoPaginaPNG: "img/fondo.png",
+      
       // Tasa oficial de respaldo del Banco Central de Venezuela (Euro BCV) si no hubiera internet
       // ¡Se actualiza automáticamente al entrar a la página gracias a la API oficial!
       tasaBCV: 993.18,
@@ -893,27 +900,41 @@
         // Identificador único del undécimo producto
         id: "p11",
         // Nombre del producto en la carta
-        name: "Brookie - Porcion",
+        name: "Brookie individual (160g)",
         // Categoría a la que pertenece
         category: "Especiales",
         // Precio referencial en euros
         priceRef: 5.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
-        // Descripción de los ingredientes y sabor
-        desc: "170g de perfecta combinación entre brownie húmedo de chocolate oscuro y galleta artesanal de nuestra masa clásica.",
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "La combinación perfecta entre un brownie húmedo, meloso y chocolatoso, con nuestra clásica masa de galleta de vainilla con full chispas de chocolate.<span class=\"perfecta-si\"><strong>Perfecto si:</strong> No puedes decidir entre brownie o galleta.</span>",
         // Ruta de la fotografía del producto
         image: "img/browkie.jpg"
       },
       {
-        // Identificador único del duodécimo producto
+        // Identificador único del duodécimo producto (Nuevo producto tamaño fiesta/evento)
         id: "p12",
         // Nombre del producto en la carta
-        name: "Mini Giro",
+        name: "Brookie para compartir",
+        // Categoría a la que pertenece
+        category: "Especiales",
+        // Precio referencial en euros
+        priceRef: 50.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y detalles del producto
+        desc: "Ideal para cumpleaños, eventos o reuniones especiales. Capa de brownie extra húmedo fusionada con galleta con chispas de chocolate; rinde para 24 porciones de 120gr cada una. (disponible en dos tamaños según tu ocasión).",
+        // Ruta de la fotografía del producto
+        image: "img/brookie-para-compartir.jpg"
+      },
+      {
+        // Identificador único del decimotercer producto
+        id: "p13",
+        // Nombre del producto en la carta
+        name: "Mini giro",
         // Categoría a la que pertenece
         category: "Box",
         // Precio referencial en euros
         priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
-        // Descripción de los ingredientes y sabor
-        desc: "Bocados crujientes llenos de sabor para compartir o disfrutar en cualquier momento del día.",
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Vaso de 30 minigalletas o 140gr de brookie. Incluye un dip individual a elegir<span class=\"perfecta-si\"><strong>Perfecto si:</strong> Te encanta dipear, compartir mientras ves una película o probar varios sabores en un solo empaque.</span>",
         // Ruta de la fotografía del producto
         image: "img/mini-giro.jpg"
       }
@@ -1002,6 +1023,11 @@
 
       // Asigna la foto del banner superior
       document.getElementById("banner-bg").style.backgroundImage = `url('${MI_CONFIGURACION.bannerJPG}')`;
+
+      // Aplica la imagen PNG de fondo a la página principal si está configurada
+      if (MI_CONFIGURACION.fondoPaginaPNG && MI_CONFIGURACION.fondoPaginaPNG.trim() !== "") {
+        document.body.style.backgroundImage = `url('${MI_CONFIGURACION.fondoPaginaPNG}')`;
+      }
     }
 
     // Extrae y dibuja los botones de categorías disponibles
