@@ -301,6 +301,19 @@
       line-height: 1.45; /* Interlineado */
     }
 
+    /* Etiqueta destacada en nueva línea para la recomendación Perfecta si... */
+    .perfecta-si {
+      display: block; /* Ubica la recomendación en una línea independiente */
+      margin-top: 10px; /* Separación superior con el texto principal */
+      font-size: 0.85rem; /* Tamaño de letra compacto y legible */
+      color: var(--text-color); /* Color azul corporativo de la marca */
+      background: rgba(81, 115, 237, 0.08); /* Fondo azul eléctrico muy suave */
+      padding: 8px 12px; /* Relleno interior envolvente */
+      border-radius: 8px; /* Bordes redondeados modernos */
+      border-left: 3px solid var(--accent-blue); /* Franja lateral decorativa azul */
+      line-height: 1.4; /* Interlineado cómodo para lectura */
+    }
+
     /* Contenedor de precios */
     .product-pricing {
       margin-bottom: 16px; /* Margen inferior */
@@ -569,7 +582,7 @@
         <!-- Nombre del local configurable en JavaScript -->
         <h1 id="business-name-display">Cookies 360</h1>
         <!-- Slogan o descripción corta configurable -->
-        <p id="business-slogan-display">Elevamos los grados de antojo</p>
+        <p id="business-slogan-display">El mejor sabor en cada bocado</p>
       </div>
     </div>
   </header>
@@ -697,7 +710,7 @@
       slogan: "El mejor sabor en cada bocado",
       
       // Símbolo de moneda que prefieras usar ("$" para dólares o "€" para euros)
-      simboloMoneda: "$",
+      simboloMoneda: "€",
       
       // Ruta de tu logotipo (archivo en la carpeta img/)
       logoJPG: "img/logo.png",
@@ -740,71 +753,71 @@
         // Identificador único del primer producto
         id: "p1",
         // Nombre del producto en la carta
-        name: "Brookie - Porcion",
+        name: "La que nunca falla",
         // Categoría a la que pertenece
         category: "Clásicas",
-        // Precio referencial en dólares
-        priceRef: 5.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "170g de perfecta combinacion entre brownie humedo de chocolate oscuro y galleta artesanal de nuestra masa clasica.",
+        // Precio referencial en euros
+        priceRef: 2.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa clásica tradicional sin relleno, con trozos de chocolate al 70% y chispas de chocolate con leche. Crocante por fuera y suavecita por dentro. (peso aprox 65gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Eres de gustos clásicos y no te quieres arriesgar.</span>",
         // Ruta de la fotografía del producto
-        image: "img/browkie.jpg"
+        image: "img/la-que-nunca-falla.jpg"
       },
       {
         // Identificador único del segundo producto
         id: "p2",
         // Nombre del producto en la carta
-        name: "Choco-Arequipe",
+        name: "Red Velvet",
         // Categoría a la que pertenece
         category: "Clásicas",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Masa suave de cacao rellena con abundante y cremoso arequipe tradicional.",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa tradicional de red velvet con chispas de chocolate blanco, rellena de un cremoso relleno de queso crema. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Amas los postres con el toque exacto de dulce, salado y cremosidad.</span>",
         // Ruta de la fotografía del producto
-        image: "img/choco-arequipe.jpg"
+        image: "img/red-velvet.jpg"
       },
       {
         // Identificador único del tercer producto
         id: "p3",
         // Nombre del producto en la carta
-        name: "Cookies & Cream",
+        name: "Círculo Vicioso",
         // Categoría a la que pertenece
-        category: "Especiales",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Galleta crujiente con trozos de galleta de chocolate y suave crema blanca.",
+        category: "Clásicas",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa intensa de puro chocolate con chispas de chocolate blanco y oscuro, rellena de un ganache de chocolate. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Eres amante del chocolate y buscas algo extra chocolatoso.</span>",
         // Ruta de la fotografía del producto
-        image: "img/cookies-and-cream.jpg"
+        image: "img/circulo vicioso.jpg"
       },
       {
         // Identificador único del cuarto producto
         id: "p4",
         // Nombre del producto en la carta
-        name: "KitKat Break",
+        name: "Choco-Arequipe",
         // Categoría a la que pertenece
-        category: "Especiales",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Deliciosa galleta rellena con barra KitKat y chocolate con leche fundido.",
+        category: "Clásicas",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Mitad masa clásica de vainilla y mitad masa intensa de chocolate, rellena de una cremosa mezcla de choco-arequipe que se derrite al calentar. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Nunca puedes decidirte entre vainilla, arequipe o chocolate y lo quieres todo junto.</span>",
         // Ruta de la fotografía del producto
-        image: "img/kitkat-break.jpg"
+        image: "img/choco-arequipe.jpg"
       },
       {
         // Identificador único del quinto producto
         id: "p5",
         // Nombre del producto en la carta
-        name: "La Que Nunca Falla",
+        name: "Cookies and Cream",
         // Categoría a la que pertenece
-        category: "Clásicas",
-        // Precio referencial en dólares
-        priceRef: 2.50, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Nuestra clásica infalible con masa dorada tradicional y chispas de chocolate semidulce.",
+        category: "Especiales",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa tradicional con chispas y trozos crocantes de galleta Oreo, rellena de nuestra crema suave especial con más Oreo y topping de chocolate. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Eres fanático de la Oreo y buscas una combinación suave y crocante a la vez.</span>",
         // Ruta de la fotografía del producto
-        image: "img/la-que-nunca-falla.jpg"
+        image: "img/cookies-and-cream.jpg"
       },
       {
         // Identificador único del sexto producto
@@ -813,10 +826,10 @@
         name: "Lemon Pie",
         // Categoría a la que pertenece
         category: "Especiales",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Galleta de masa suave inspirada en el clásico pie de limón con exquisito toque cítrico.",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa tradicional de vainilla con chispas de chocolate blanco, rellena de nuestra crema especial de limón cítrico y fresco, con topping de chocolate blanco y ralladura natural. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Prefieres el balance entre lo cítrico, fresco, dulce y quieres probar algo diferente.</span>",
         // Ruta de la fotografía del producto
         image: "img/lemon-pie.jpg"
       },
@@ -824,71 +837,57 @@
         // Identificador único del séptimo producto
         id: "p7",
         // Nombre del producto en la carta
-        name: "Mini Giro",
+        name: "Kitkat Break",
         // Categoría a la que pertenece
-        category: "Box",
-        // Precio referencial en dólares
-        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Bocados crujientes llenos de sabor para compartir o disfrutar en cualquier momento del día.",
+        category: "Especiales",
+        // Precio referencial en euros
+        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa tradicional con chispas de chocolate y trozos de KitKat, rellena de chocolate con KitKat y topping de chocolate. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Buscas una textura súper crocante y un break crujiente en cada mordisco.</span>",
         // Ruta de la fotografía del producto
-        image: "img/mini-giro.jpg"
+        image: "img/kitkat-break.jpg"
       },
       {
         // Identificador único del octavo producto
         id: "p8",
         // Nombre del producto en la carta
-        name: "Pistacho Real",
+        name: "Choco-Parchita",
         // Categoría a la que pertenece
         category: "Premium",
-        // Precio referencial en dólares
-        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Exquisita masa con auténtico pistacho tostado de primera y centro cremoso irresistible.",
+        // Precio referencial en euros
+        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa de chocolate oscuro con full chispas, rellena de un ganache puro y artesanal de parchita con topping de chocolate. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Te gustan los contrastes intensos entre lo ácido de la fruta y el chocolate oscuro.</span>",
         // Ruta de la fotografía del producto
-        image: "img/pistacho-real.jpg"
+        image: "img/Choco-parchita.jpg"
       },
       {
         // Identificador único del noveno producto
         id: "p9",
         // Nombre del producto en la carta
-        name: "Red Velvet",
+        name: "Pistacho Real",
         // Categoría a la que pertenece
-        category: "Clásicas",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Suave masa sabor terciopelo rojo rellena de cremoso queso crema y chispas de chocolate blanco.",
+        category: "Premium",
+        // Precio referencial en euros
+        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa de vainilla con chispas de chocolate blanco y pistachos tostados, rellena de ganache puro de pistacho y trozos crocantes. (peso aprox 80gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Eres fan del pistacho y buscas un sabor natural, gourmet, sofisticado y diferente a todo lo demás.</span>",
         // Ruta de la fotografía del producto
-        image: "img/red-velvet.jpg"
+        image: "img/pistacho-real.jpg"
       },
       {
-        // Identificador único del décimo producto
+        // Identificador único del décimo producto (Nuevo producto agregado)
         id: "p10",
         // Nombre del producto en la carta
-        name: "Circulo Vicioso",
+        name: "Nuez Crocante",
         // Categoría a la que pertenece
-        category: "Clásicas",
-        // Precio referencial en dólares
-        priceRef: 3.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Deliciosa galleta artesanal rellena con nuestra combinación irresistible de chocolates.",
+        category: "Premium",
+        // Precio referencial en euros
+        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
+        // Descripción de los ingredientes y recomendación en nueva línea
+        desc: "Masa tradicional con chispas de chocolate y nueces en trozos, rellena de chocolate fundido con nueces y con topping de chocolate. (peso aprox 80gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Amas los frutos secos y ese toque casero con extra crocancia.</span>",
         // Ruta de la fotografía del producto
-        image: "img/circulo vicioso.jpg"
-      },
-      {
-        // Identificador único del undécimo producto
-        id: "p11",
-        // Nombre del producto en la carta
-        name: "Choco Parchita",
-        // Categoría a la que pertenece
-        category: "Especiales",
-        // Precio referencial en dólares
-        priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN DOLARES ($)
-        // Descripción de los ingredientes y sabor
-        desc: "Exótica fusión de rico chocolate con el toque cítrico y refrescante de la parchita natural.",
-        // Ruta de la fotografía del producto
-        image: "img/Choco-parchita.jpg"
+        image: "img/nuez-crocante.jpg"
       }
     ];
 
