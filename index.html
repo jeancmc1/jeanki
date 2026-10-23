@@ -38,10 +38,12 @@
       --accent-blue: #5173ED;
       /* #5F89FF: Azul claro para hovers secundarios */
       --accent-blue-light: #5F89FF;
-      /* #97B351: Verde pistacho oficial de la paleta para el botón del carrito */
-      --green-pistachio: #97B351;
-      /* #799916: Verde hoja más oscuro para el hover del carrito */
-      --green-hover: #799916;
+      /* #0049A6: Azul Rey Corporativo para el carrito (máximo contraste sobre fondo crema/pistacho) */
+      --cart-btn-bg: #0049A6;
+      /* #5173ED: Azul Eléctrico para el efecto hover al pasar el cursor */
+      --cart-btn-hover: #5173ED;
+      /* Sombra azul intensa para dar volumen y destacar el botón */
+      --cart-btn-shadow: rgba(0, 73, 166, 0.35);
       /* #F6E2C2: Tono galleta / arena suave para bordes y separadores elegantes */
       --border-color: #F6E2C2;
       /* Azul oscuro traslúcido para textos secundarios */
@@ -173,19 +175,20 @@
       box-shadow: 0 6px 18px rgba(236, 55, 135, 0.45); /* Sombra intensificada */
     }
 
-    /* Botón para abrir el carrito de compras: Verde Pistacho de la paleta #97B351 */
+    /* Botón para abrir el carrito de compras: Azul Rey Corporativo #0049A6 */
     .btn-cart {
-      background: var(--green-pistachio); /* Verde pistacho oficial */
-      color: #FFFFFF; /* Texto blanco */
+      background: var(--cart-btn-bg); /* Azul rey oficial de la paleta para resaltar sobre el fondo */
+      color: #FFFFFF; /* Texto blanco puro */
       position: relative; /* Posición relativa para anclar la insignia de conteo */
-      box-shadow: 0 4px 14px rgba(151, 179, 81, 0.35); /* Sombra verde */
+      box-shadow: 0 4px 16px var(--cart-btn-shadow); /* Sombra luminosa azul */
+      border: 1.5px solid rgba(255, 255, 255, 0.4); /* Borde sutil brillante para despegar del fondo */
     }
 
     /* Efecto al pasar el cursor sobre el botón del carrito */
     .btn-cart:hover {
-      background: var(--green-hover); /* Pasa al verde hoja #799916 */
-      transform: translateY(-2px); /* Elevación */
-      box-shadow: 0 6px 18px rgba(121, 153, 22, 0.4); /* Sombra más fuerte */
+      background: var(--cart-btn-hover); /* Pasa al azul eléctrico #5173ED */
+      transform: translateY(-2px); /* Elevación al pasar el ratón */
+      box-shadow: 0 6px 20px rgba(0, 73, 166, 0.45); /* Sombra intensificada */
     }
 
     /* Contador numérico de productos en el carrito: Rosa #EC3787 */
@@ -541,22 +544,31 @@
       margin-top: 6px; /* Margen superior */
     }
 
-    /* Botón flotante del carrito pensado para teléfonos celulares: Verde Pistacho #97B351 */
+    /* Botón flotante del carrito pensado para teléfonos celulares: Azul Rey Corporativo #0049A6 */
     .float-cart {
       position: fixed; /* Posición fija en pantalla */
       bottom: 20px; /* Separado del borde inferior */
       right: 20px; /* Separado del borde derecho */
-      background: var(--green-pistachio); /* Verde pistacho de la paleta */
+      background: var(--cart-btn-bg); /* Azul rey oficial para destacar sobre el fondo crema/pistacho */
       color: #FFFFFF; /* Texto blanco */
-      padding: 14px 22px; /* Relleno generoso para pulsar con el dedo */
+      padding: 14px 24px; /* Relleno generoso para pulsar con el dedo */
       border-radius: 50px; /* Forma de pastilla */
-      box-shadow: 0 10px 24px rgba(151, 179, 81, 0.45); /* Sombra luminosa */
+      box-shadow: 0 10px 25px var(--cart-btn-shadow); /* Sombra profunda azul */
+      border: 2px solid #FFFFFF; /* Borde blanco brillante para despegar de cualquier fondo */
       display: none; /* Oculto por defecto en computadoras */
       align-items: center; /* Centrado */
       gap: 10px; /* Separación */
       font-weight: 700; /* Negrita */
       z-index: 900; /* Por encima de las tarjetas */
       cursor: pointer; /* Mano al pasar por encima */
+      transition: all 0.25s ease; /* Transición fluida */
+    }
+
+    /* Efecto al pasar el cursor o pulsar sobre el botón flotante */
+    .float-cart:hover {
+      background: var(--cart-btn-hover); /* Pasa al azul eléctrico */
+      transform: translateY(-3px); /* Elevación sutil */
+      box-shadow: 0 14px 30px rgba(0, 73, 166, 0.5); /* Sombra intensificada */
     }
 
     /* Media query para pantallas con un ancho máximo de 600px (móviles) */
@@ -586,7 +598,7 @@
         <!-- Nombre del local configurable en JavaScript -->
         <h1 id="business-name-display">Cookies 360</h1>
         <!-- Slogan o descripción corta configurable -->
-        <p id="business-slogan-display">El mejor sabor en cada bocado</p>
+        <p id="business-slogan-display">Elevamos los grados de antojo</p>
       </div>
     </div>
   </header>
@@ -711,7 +723,7 @@
       nombreNegocio: "Cookies 360",
       
       // Frase, lema o slogan que acompaña al nombre
-      slogan: "El mejor sabor en cada bocado",
+      slogan: "Elevamos los grados de antojo",
       
       // Símbolo de moneda que prefieras usar ("$" para dólares o "€" para euros)
       simboloMoneda: "€",
