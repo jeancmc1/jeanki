@@ -321,6 +321,63 @@
       line-height: 1.4; /* Interlineado cómodo para lectura */
     }
 
+    /* Contenedor de opciones personalizables del producto (versiones y dips) */
+    .product-options {
+      margin: 12px 0 6px 0; /* Margen superior e inferior para separar de la descripción y precio */
+      display: flex; /* Disposición flexible */
+      flex-direction: column; /* Apila los grupos verticalmente */
+      gap: 10px; /* Separación entre el grupo de versión y el de dip */
+    }
+
+    /* Grupo individual de opción (título y botones) */
+    .option-group {
+      display: flex; /* Disposición flexible */
+      flex-direction: column; /* Dirección en columna */
+      gap: 4px; /* Separación entre etiqueta y píldoras */
+    }
+
+    /* Etiqueta descriptiva del selector de opciones */
+    .option-label {
+      font-size: 0.8rem; /* Tamaño de fuente compacto */
+      font-weight: 700; /* Texto en negrita para jerarquía visual */
+      color: var(--text-color); /* Color azul corporativo */
+      display: block; /* Ocupa su propia línea */
+    }
+
+    /* Contenedor envolvente de botones tipo píldora */
+    .option-pills {
+      display: flex; /* Disposición horizontal */
+      flex-wrap: wrap; /* Pasa a la siguiente fila en pantallas pequeñas */
+      gap: 6px; /* Separación entre botones */
+    }
+
+    /* Botón individual tipo píldora para seleccionar versión o dip */
+    .pill-btn {
+      padding: 6px 12px; /* Relleno táctil cómodo para celulares */
+      border-radius: 20px; /* Forma de píldora redondeada */
+      font-size: 0.78rem; /* Tamaño de letra compacto */
+      font-weight: 600; /* Grosor seminegrita */
+      border: 1.5px solid var(--border-color); /* Borde suave de la paleta */
+      background: #FFFFFF; /* Fondo blanco */
+      color: var(--text-color); /* Color azul corporativo */
+      cursor: pointer; /* Cursor de mano interactivo */
+      transition: all 0.2s ease; /* Transición visual suave */
+    }
+
+    /* Efecto al pasar el cursor sobre la píldora inactiva */
+    .pill-btn:hover {
+      border-color: var(--accent-blue); /* Borde azul eléctrico */
+      color: var(--accent-blue); /* Texto azul eléctrico */
+    }
+
+    /* Estilo de la píldora activa seleccionada por el cliente */
+    .pill-btn.active {
+      background: var(--accent-blue); /* Fondo azul eléctrico de la paleta #5173ED */
+      color: #FFFFFF; /* Texto blanco nítido */
+      border-color: var(--accent-blue); /* Borde azul eléctrico a juego */
+      box-shadow: 0 2px 8px rgba(81, 115, 237, 0.35); /* Sombra luminosa azul */
+    }
+
     /* Contenedor de precios */
     .product-pricing {
       margin-bottom: 16px; /* Margen inferior */
@@ -878,7 +935,7 @@
         // Descripción de los ingredientes y recomendación en nueva línea
         desc: "Masa de chocolate oscuro con full chispas, rellena de un ganache puro y artesanal de parchita con topping de chocolate. (peso aprox 75gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Te gustan los contrastes intensos entre lo ácido de la fruta y el chocolate oscuro.</span>",
         // Ruta de la fotografía del producto
-        image: "img/Choco-parchita.jpg"
+        image: "img/choco-parchita.jpg"
       },
       {
         // Identificador único del noveno producto
@@ -891,8 +948,8 @@
         priceRef: 4.00, // <-- COLOCA AQUI TU PRECIO EN EUROS (€)
         // Descripción de los ingredientes y recomendación en nueva línea
         desc: "Masa de vainilla con chispas de chocolate blanco y pistachos tostados, rellena de ganache puro de pistacho y trozos crocantes. (peso aprox 80gr)<span class=\"perfecta-si\"><strong>Perfecta si:</strong> Eres fan del pistacho y buscas un sabor natural, gourmet, sofisticado y diferente a todo lo demás.</span>",
-        // Ruta de la fotografía del producto
-        image: "img/pistacho-real.jpg"
+        // Ruta de la nueva fotografía oficial del producto
+        image: "img/pistacho-real-nueva.jpg"
       },
       {
         // Identificador único del décimo producto (Nuevo producto agregado)
@@ -948,7 +1005,14 @@
         // Descripción de los ingredientes y recomendación en nueva línea
         desc: "Vaso de 30 minigalletas o 140gr de brookie. Incluye un dip individual a elegir<span class=\"perfecta-si\"><strong>Perfecto si:</strong> Te encanta dipear, compartir mientras ves una película o probar varios sabores en un solo empaque.</span>",
         // Ruta de la fotografía del producto
-        image: "img/mini-giro.jpg"
+        image: "img/mini-giro.jpg",
+        // Opciones seleccionables directamente en la tarjeta (Versión y Dip incluido)
+        options: {
+          // Versiones disponibles para elegir
+          versiones: ["30 Mini galletas", "140g Brookie"],
+          // Sabores de dips disponibles para elegir (puedes cambiarlos o agregar más aquí)
+          dips: ["Chocolate clásico", "Chocolate blanco", "Arequipe", "Mixto"]
+        }
       }
     ];
 
@@ -1062,6 +1126,25 @@
       renderizarProductos(); // Filtra y dibuja los productos correspondientes
     }
 
+    // Objeto para registrar la versión y el dip seleccionado en productos con opciones
+    const opcionesSeleccionadas = {};
+
+    // Permite al cliente seleccionar una versión o dip directamente en la tarjeta del producto
+    function seleccionarOpcion(productoId, tipo, valor, elementoBoton) {
+      // Inicializa el registro de opciones del producto si aún no existe
+      if (!opcionesSeleccionadas[productoId]) {
+        opcionesSeleccionadas[productoId] = {};
+      }
+      // Guarda la selección efectuada por el usuario ('version' o 'dip')
+      opcionesSeleccionadas[productoId][tipo] = valor;
+
+      // Actualiza la clase activa en el grupo de botones
+      const contenedor = elementoBoton.parentElement;
+      const botones = contenedor.querySelectorAll(".pill-btn");
+      botones.forEach(btn => btn.classList.remove("active"));
+      elementoBoton.classList.add("active");
+    }
+
     // Dibuja en pantalla las tarjetas de los productos del catálogo
     function renderizarProductos() {
       const cuadricula = document.getElementById("product-grid");
@@ -1080,12 +1163,45 @@
       cuadricula.innerHTML = productosFiltrados.map(p => {
         // Multiplica el precio por la tasa del BCV
         const precioBs = (p.priceRef * MI_CONFIGURACION.tasaBCV).toFixed(2);
+
+        // Genera el bloque de selección si el producto tiene opciones configuradas (ej: Mini giro)
+        let htmlOpciones = "";
+        if (p.options) {
+          const verActiva = (opcionesSeleccionadas[p.id] && opcionesSeleccionadas[p.id].version) || p.options.versiones[0];
+          const dipActivo = (opcionesSeleccionadas[p.id] && opcionesSeleccionadas[p.id].dip) || p.options.dips[0];
+          htmlOpciones = `
+            <div class="product-options">
+              <div class="option-group">
+                <span class="option-label">1. Elige tu versión:</span>
+                <div class="option-pills">
+                  ${p.options.versiones.map(v => `
+                    <button type="button" class="pill-btn ${v === verActiva ? 'active' : ''}" onclick="seleccionarOpcion('${p.id}', 'version', '${v}', this)">
+                      ${v}
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+              <div class="option-group">
+                <span class="option-label">2. Elige tu dip incluido:</span>
+                <div class="option-pills">
+                  ${p.options.dips.map(d => `
+                    <button type="button" class="pill-btn ${d === dipActivo ? 'active' : ''}" onclick="seleccionarOpcion('${p.id}', 'dip', '${d}', this)">
+                      ${d}
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
         return `
           <div class="product-card">
             <img src="${p.image}" alt="${p.name}" class="product-img" onerror="this.src='https://via.placeholder.com/300x230?text=Foto+JPG'" />
             <div class="product-body">
               <h3 class="product-title">${p.name}</h3>
               <p class="product-desc">${p.desc || ''}</p>
+              ${htmlOpciones}
               <div class="product-pricing">
                 <div class="price-ref">${MI_CONFIGURACION.simboloMoneda} ${Number(p.priceRef).toFixed(2)}</div>
                 <div class="price-bcv">Equivalente Euro BCV: Bs. ${precioBs}</div>
@@ -1099,26 +1215,49 @@
       }).join("");
     }
 
-    // Agrega un producto al carrito de compras
+    // Agrega un producto al carrito de compras considerando su versión y dip
     function agregarAlCarrito(productoId) {
-      const itemExistente = carrito.find(item => item.id === productoId);
+      const producto = MIS_PRODUCTOS.find(p => p.id === productoId);
+      if (!producto) return;
+
+      let nombreItem = producto.name;
+      let idCarrito = producto.id;
+
+      // Si el producto cuenta con opciones personalizables
+      if (producto.options) {
+        // Obtiene la versión seleccionada o toma la primera por defecto
+        const verElegida = (opcionesSeleccionadas[productoId] && opcionesSeleccionadas[productoId].version) || producto.options.versiones[0];
+        // Obtiene el dip seleccionado o toma el primero por defecto
+        const dipElegido = (opcionesSeleccionadas[productoId] && opcionesSeleccionadas[productoId].dip) || producto.options.dips[0];
+        // Personaliza el nombre visible para el carrito y WhatsApp
+        nombreItem = `${producto.name} (${verElegida} - Dip: ${dipElegido})`;
+        // Crea un identificador único para registrar diferentes variantes de forma separada
+        idCarrito = `${producto.id}_${verElegida}_${dipElegido}`;
+      }
+
+      // Busca si esta variante específica ya se encuentra en el carrito
+      const itemExistente = carrito.find(item => (item.cartId || item.id) === idCarrito);
       if (itemExistente) {
         itemExistente.qty += 1; // Suma 1 a la cantidad existente
       } else {
-        const producto = MIS_PRODUCTOS.find(p => p.id === productoId);
-        if (producto) carrito.push({ ...producto, qty: 1 }); // Agrega con cantidad inicial de 1
+        carrito.push({
+          ...producto,
+          cartId: idCarrito, // Identificador único de la variante
+          name: nombreItem, // Nombre con versión y dip
+          qty: 1 // Cantidad inicial
+        });
       }
       actualizarContadorCarrito(); // Actualiza contadores visuales
     }
 
-    // Modifica la cantidad de un producto dentro del carrito (+1 o -1)
-    function cambiarCantidadCarrito(productoId, delta) {
-      const item = carrito.find(i => i.id === productoId);
+    // Modifica la cantidad de un producto o variante dentro del carrito (+1 o -1)
+    function cambiarCantidadCarrito(idItem, delta) {
+      const item = carrito.find(i => (i.cartId || i.id) === idItem);
       if (!item) return;
       item.qty += delta; // Suma o resta
       if (item.qty <= 0) {
         // Si la cantidad llega a 0, se retira del carrito
-        carrito = carrito.filter(i => i.id !== productoId);
+        carrito = carrito.filter(i => (i.cartId || i.id) !== idItem);
       }
       actualizarContadorCarrito(); // Actualiza contadores
       renderizarModalCarrito(); // Redibuja la ventana del carrito
@@ -1168,9 +1307,9 @@
               <div class="cart-item-sub">${item.qty} x ${MI_CONFIGURACION.simboloMoneda}${item.priceRef.toFixed(2)} = ${MI_CONFIGURACION.simboloMoneda}${subtotalRef.toFixed(2)} (Bs. ${subtotalBs})</div>
             </div>
             <div class="cart-qty-controls">
-              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', -1)">-</button>
+              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.cartId || item.id}', -1)">-</button>
               <span style="font-weight:700; color:var(--text-color);">${item.qty}</span>
-              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.id}', 1)">+</button>
+              <button class="btn-qty" onclick="cambiarCantidadCarrito('${item.cartId || item.id}', 1)">+</button>
             </div>
           </div>
         `;
